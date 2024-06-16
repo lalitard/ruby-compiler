@@ -1,27 +1,52 @@
- #Inicio aporte Carlos Cabanilla
+#Inicio aporte Carlos Cabanilla
 import ply.lex as lex
+#Aporte de Kevin Ibarra
+reserved = {
+    'def' : 'DEF',
+    'end':'END',
+    'true':'TRUE',
+    'false':'FALSE'
+}
+#
 
+# List of token names.   This is always required
+tokens = (
+   'INTEGER',
+   'PLUS',
+   'MINUS',
+   'TIMES',
+   'DIVIDE',
+   'FLOAT',
+   'IP',
+   #Kevin Ibarra
+   'LIST',
+   'BOOLEAN',
+   'LPAREN',
+   'RPAREN',
+   'POINT',
+   'VARIABLE',
+   'STRING'
+   #
+) + tuple(reserved.values()) #agregar la coma y dos puntos 
 
-#definición de tokens
-tokens = ['INTEGER', 
-          'PLUS', 
-          'MINUS', 
-          'TIMES', 
-          'DIVIDE',
-          'FLOAT',
-          'WORD',
-          'IP'
-          ]
+# Regular expression rules for simple tokens
+t_PLUS    = r'\+'
+t_MINUS   = r'-'
+t_TIMES   = r'\*'
+t_DIVIDE  = r'/'
+#Kevin Ibarra
+t_POINT    = r','
+#
 
-#Expresiones regulares para tokens simples
-t_PLUS = r'\+'
-t_MINUS = r'\-'
-t_TIMES = r'\*'
-t_DIVIDE = r'\/'
+def t_VARIABLE(t):
+    r'[_a-zA-Z]\w*'
+    t.type = reserved.get(t.value,'VARIABLE')
+    return t
 
-#Expresión regular para reconocer direcciones IP
-def t_IP(t):
-    r'(?:\d{1,3}\.){3}\d{1,3}'
+#Expresión regular para reconocer números flotantes
+def t_FLOAT(t):
+    r'-?[0-9]*\.[0-9]*'
+    t.value = float(t.value)
     return t
 
 #Expresión regular para reconocer números enteros y flotantes
@@ -30,37 +55,49 @@ def t_INTEGER(t):
     t.value = int(t.value)    
     return t
 
-#Expresión regular para reconocer palabras
-def t_WORD(t):
-    r'[a-zA-Z]+'
+#Expresión regular para reconocer direcciones IP
+def t_IP(t):
+    r'(?:\d{1,3}\.){3}\d{1,3}'
     return t
 
-#Expresión regular para reconocer números flotantes
-def t_FLOAT(t):
-    r'\d*\.?(\d+|.)'
-    t.value = float(t.value)
+#Kevin Ibarra
+def t_LIST(t):
+    r'\[\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*(,\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*)*\]'
+    t.type = reserved.get(t.value, 'LIST')
     return t
 
-#Ignorar caracteres como espacios y saltos de línea
-t_ignore = ' \n'
+def t_STRING(t):
+  r'[\"\'](\\.|[^\"\'])*[\"\']' #Acepta comillas simples o dobles
+  t.value = t.value[1:-1]  # Eliminar comillas
+  return t
+#
 
-#Manejo de errores de token
+# Define a rule so we can track line numbers
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+# A string containing ignored characters (spaces and tabs)
+t_ignore  = ' \t'
+
+# Error handling rule
 def t_error(t):
-    print("Carácter no válido: '%s'" % t.value[0])
+    print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-#Construcción del analizador léxico
+# Build the lexer
 lexer = lex.lex()
 
 #Informacion a verificar
 data = "La direccion IP del pc involucrado es 194.111.10.3"
-lexer.input(data)
+#Kevin Ibarra
+data_Kevin = '[manzana, naranja, platano] [1,2,3] "Hola mundo"'
+#
+lexer.input(data_Kevin)
 
-#Obtener los tokens reconocidos
+# Tokenize
 while True:
-    token = lexer.token()
-    if not token:
-        break
-    print(token)
-
-#Fin aporte Carlos Cabanilla
+    tok = lexer.token()
+    if not tok: 
+        break      # No more input
+    print(tok)
