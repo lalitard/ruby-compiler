@@ -1,6 +1,8 @@
 #Inicio aporte Carlos Cabanilla
 import ply.lex as lex
-import re
+import logging
+import datatime
+
 #Aporte de Kevin Ibarra
 reserved = {
     'def' : 'DEF',
@@ -102,7 +104,7 @@ def t_FLOAT(t):
 
 #Expresión regular para reconocer números enteros y flotantes
 def t_INTEGER(t):
-    r'\d+'
+    r'\d+' #Acepta números enteros
     t.value = int(t.value)    
     return t
 
@@ -144,12 +146,29 @@ def t_newline(t):
 t_ignore  = ' \t'
 
 # Error handling rule
+#Aporte de Adrian Litardo
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
+    error_message = "Syntax error in input!"#Se modifica para emitir el registro cada vez que se encuentra un error sintactico
+    print(error_message)
+    logging.error(error_message)
 
 # Build the lexer
 lexer = lex.lex()
+
+#Aporte de Adrian Litardo
+#Creacion de logging automatizado para cada usuario
+
+# Se obtiene el nombre de usuario de GitHub y la fecha y hora actuales
+username = "lalitard"  # Reemplaza esto con tu nombre de usuario de GitHub
+now = datetime.datetime.now()
+
+# Se formatea el nombre del archivo de registro
+log_filename = f"sintactico-{username}-{now.strftime('%d%m%Y-%Hh%M')}.txt"
+
+# Configuramos el módulo de registro
+logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(message)s')
+
+#Termina aporte Adrian Litardo
 
 #Informacion a verificar
 data = "La direccion IP del pc involucrado es 194.111.10.3"
