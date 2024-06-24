@@ -1,7 +1,7 @@
 #Inicio aporte Carlos Cabanilla
 import ply.lex as lex
 import logging
-import datatime
+import datetime
 
 #Aporte de Kevin Ibarra
 reserved = {
@@ -16,11 +16,11 @@ reserved = {
     'for':'FOR',
     'in':'IN',
     'print':'PRINT',
-    'input':'INPUT',
     'return':'RETURN',
     'break':'BREAK',
     #Termina aporte Adrian Litardo
-
+    #Empieza aporte Carlos Cabanilla 24/06
+    'input':'INPUT'
 }
 #
 
@@ -55,8 +55,11 @@ tokens = (
     'AND',
     'OR',
     'NOT',
-    'HASH'
-    #Termina aporte Adrian Litardo
+    'HASH',
+    #Termina aporte Adrian Litardo  
+    # Aporte Carlos Cabanilla
+    'EQUAL',
+    'COMILLA' 
 
 ) + tuple(reserved.values())
 
@@ -82,6 +85,9 @@ t_NOT = r'!'
 #Termina aporte Adrian Litardo
 #Kevin Ibarra
 t_POINT = r'.'
+#Aporte de Carlos Cabanilla 24/06
+t_EQUAL= r'='
+t_COMILLA = r'\"'
 
 #Empieza aporte Adrian Litardo
 #Expresion regular para hash
@@ -159,7 +165,7 @@ lexer = lex.lex()
 #Creacion de logging automatizado para cada usuario
 
 # Se obtiene el nombre de usuario de GitHub y la fecha y hora actuales
-username = "lalitard"  # Reemplaza esto con tu nombre de usuario de GitHub
+username = "carlosCabani"  # Reemplaza esto con tu nombre de usuario de GitHub
 now = datetime.datetime.now()
 
 # Se formatea el nombre del archivo de registro
@@ -171,13 +177,13 @@ logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(messag
 #Termina aporte Adrian Litardo
 
 #Informacion a verificar
-data = "La direccion IP del pc involucrado es 194.111.10.3"
+data_Carlos = "La direccion IP 194.111.10.3 es 23.2 > 50 "
 #Kevin Ibarra
 data_Kevin = '[manzana, naranja, platano] [1,2,3] "Hola mundo"'
 #Adrian Litardo
 data_Adrian = 'while x < 5: -3.45 == 3e25960a79dbc69b674cd4ec67a72c62; true != false'
 #
-lexer.input(data_Adrian)
+lexer.input(data_Carlos)
 
 # Tokenize
 while True:
