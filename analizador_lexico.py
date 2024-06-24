@@ -22,8 +22,6 @@ reserved = {
     #Empieza aporte Carlos Cabanilla 24/06
     'input':'INPUT'
 }
-#
-
 # List of token names.   This is always required
 tokens = (
    'INTEGER',
