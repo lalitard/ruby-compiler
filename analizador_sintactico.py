@@ -3,6 +3,7 @@ import logging
 import datetime
 from analizador_lexico import tokens
 
+#Empieza aporte de Carlos Cabanilla 24/06
 username= "carlosCabani" 
 # Configura el registro
 def setup_logging(username):
@@ -10,6 +11,11 @@ def setup_logging(username):
     log_filename = f"logs/sintactico-{username}-{now.strftime('%d%m%Y-%Hh%M')}.txt"
     logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(message)s')
 
+def log_error(message):
+    logging.error(message)
+    print(message)
+
+setup_logging(username)
 
 
 def p_programa(p):
@@ -48,7 +54,6 @@ def p_condicion(p):
     '''condicion : valor comparador valor
     '''
 
-
 def p_comparador(p):
     '''comparador : LESS_THAN
                   | GREATER_THAN
@@ -79,15 +84,18 @@ def p_tupla(p):
 def p_declaracion(p):
     'declaracion : VARIABLE EQUAL valor'
 
-#Empieza aporte de Carlos Cabanilla 24/06
+#Aporte de Carlos Cabanilla 24/06
 def p_solicitud(p):                              
     'solicitud : INPUT LPAREN COMILLA STRING COMILLA RPAREN'
+
+def p_sentenciaCase(p):
+    'case : CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END' 
+
 
 # Regla para manejar errores sintácticos
 def p_error(p):
     error_message = "Syntax error in input!"
-    print(error_message)  # Imprime el mensaje de error en la consola
-    logging.error(error_message)  # Registra el mensaje de error en el archivo de log
+    log_error(error_message)
 
 # Construcción del analizador
 parser = yacc.yacc()
@@ -99,6 +107,10 @@ while True:
     except EOFError:
         break
     if not s: continue
+    #Aporte Carlos Cabanilla 24/06
+ # Configura un nuevo archivo de log para cada entrada
+    setup_logging(username)
+    
     result = parser.parse(s)
     print(result)
 #Termina aporte Adrian Litardo

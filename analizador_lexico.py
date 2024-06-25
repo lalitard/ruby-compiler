@@ -20,7 +20,9 @@ reserved = {
     'break':'BREAK',
     #Termina aporte Adrian Litardo
     #Empieza aporte Carlos Cabanilla 24/06
-    'input':'INPUT'
+    'input':'INPUT',
+    'case': 'CASE',
+    'when': 'WHEN'
 }
 # List of token names.   This is always required
 tokens = (
@@ -140,6 +142,11 @@ def t_WHILE(t):
     t.value = reserved.get(t.value, 'WHILE')
     return t
 #Termina aporte Adrian Litardo
+
+# Aporte Carlos Cabanilla 24/06
+
+
+# Fin aporte Carlos Cabanilla 24/06
 
 # Define a rule so we can track line numbers
 def t_newline(t):
