@@ -3,11 +3,27 @@ import logging
 import datetime
 import sys
 from analizador_lexico import tokens
+# t_BOOLEAN = r'true|false'
+# t_BREAK = r'break'
+# t_DEF = r'def'
+# t_EXPONENT = r'\*\*'
+# t_FALSE = r'false'
+# t_FOR = r'for'
+# t_HASH = r'\#'
+# t_IN = r'in'
+# t_IP = r'(?:\d{1,3}\.){3}\d{1,3}'
+# t_LIST = r'\[\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*(,\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*)*\]'
+# t_NOT = r'not'
+# t_POINT = r'\.'
+# t_RETURN = r'return'
+# t_SEMICOLON = r';'
+# t_TRUE = r'true'
+# t_WHILE = r'while[^:]*:'
 
 
 
 #Empieza aporte de Carlos Cabanilla 24/06
-username= "carlosCabani" 
+username= "lalitard"
 # Configura el registro
 def setup_logging(username):
     now = datetime.datetime.now()
@@ -20,32 +36,13 @@ def log_error(message):
 
 setup_logging(username)
 
-def logOutput(user, algoritmo):
-    datime = datetime.datetime.now()
-    timeStamp = datime.strftime("%d%m%Y-%Hh%M")
-    dirString = f"logs/sintactico-{user}-{timeStamp}.txt"
-    sys.stdout = open(dirString, 'w')
-    for line in algoritmo:
-        try:
-            sentence = line.strip()
-            sentence = sentence.strip("\n")
-            s = sentence
-        except EOFError:
-            break
-        if not s:
-            continue
-        print(sentence)
-        result = parser.parse(s)
-        print(result)
-    sys.stdout.close()
-
 def p_programa(p):
     '''programa : expresion
                 | imprimir
-                | tupla
                 | declaracion
                 | sentenciaIf
                 | solicitud
+                | sentenciaCase
     '''
 
 
@@ -56,7 +53,6 @@ def p_expresion(p):
 #Aporte Adrian Litardo 24/06
 def p_expresion_binaria(p):
     '''expresion : expresion operador valor
-                 | valor
     '''
 
 def p_expresion_par(p):
@@ -120,10 +116,10 @@ def p_condicion(p):
 def p_comparador(p):
     '''comparador : LESS_THAN
                   | GREATER_THAN
-                  | EQUAL
-                  | NOT_EQUAL
-                  | LESS_EQUAL
-                  | GREATER_EQUAL
+                  | EQUALS
+                  | NOT_EQUALS
+                  | LESS_EQUAL_THAN
+                  | GREATER_EQUAL_THAN
     '''
 
 def p_conector(p):
@@ -142,7 +138,7 @@ def p_solicitud(p):
     'solicitud : INPUT LPAREN COMILLA STRING COMILLA RPAREN'
 
 def p_sentenciaCase(p):
-    'case : CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END' 
+    'sentenciaCase : CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END'
 
 
 # Regla para manejar errores sintácticos
@@ -160,9 +156,10 @@ while True:
     except EOFError:
         break
     if not s:
-        break
+        continue
     #Aporte Carlos Cabanilla 24/06
  # Configura un nuevo archivo de log para cada entrada
     setup_logging(username)
-    logOutput(username, [s])
+    result = parser.parse(s)
+    print(result)
 #Termina aporte Adrian Litardo

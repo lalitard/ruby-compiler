@@ -173,16 +173,6 @@ lexer = lex.lex()
 #Aporte de Adrian Litardo
 #Creacion de logging automatizado para cada usuario
 
-# Se obtiene el nombre de usuario de GitHub y la fecha y hora actuales
-username = "carlosCabani"  # Reemplaza esto con tu nombre de usuario de GitHub
-now = datetime.datetime.now()
-
-# Se formatea el nombre del archivo de registro
-log_filename = f"sintactico-{username}-{now.strftime('%d%m%Y-%Hh%M')}.txt"
-
-# Configuramos el módulo de registro
-logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(message)s')
-
 #Termina aporte Adrian Litardo
 
 #Informacion a verificar
@@ -195,8 +185,8 @@ data_Adrian = 'while x < 5: -3.45 == 3e25960a79dbc69b674cd4ec67a72c62; true != f
 lexer.input(data_Carlos)
 
 # Tokenize
-while True:
-    tok = lexer.token()
-    if not tok: 
-        break      # No more input
-    print(tok)
+#while True:
+#    tok = lexer.token()
+#    if not tok:
+#        break      # No more input
+#    print(tok)
