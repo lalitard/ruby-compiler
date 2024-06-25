@@ -95,15 +95,6 @@ def p_sentenciaIf(p):
     'sentenciaIf : IF LPAREN condicion RPAREN COLON programa ELSE programa'
 
 
-def p_condicion(p):
-    '''condicion : valor comparador valor
-    '''
-
-def p_comparador(p):
-    '''comparador : LESS_THAN
-                  | GREATER_THAN
-    '''
-
 
 def p_valor(p):
     '''valor : VARIABLE
