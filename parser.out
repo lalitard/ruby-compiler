@@ -6,7 +6,6 @@ Unused terminals:
     BOOLEAN
     BREAK
     DEF
-    END
     EQUALS
     EXPONENT
     FALSE
@@ -33,91 +32,101 @@ Rule 1     programa -> expresion
 Rule 2     programa -> imprimir
 Rule 3     programa -> tupla
 Rule 4     programa -> declaracion
-Rule 5     programa -> if
+Rule 5     programa -> sentenciaIf
 Rule 6     programa -> solicitud
 Rule 7     expresion -> valor operador valor
-Rule 8     imprimir -> PRINT LPAREN valores RPAREN
-Rule 9     imprimir -> PRINT LPAREN RPAREN
-Rule 10    valores -> valor
-Rule 11    valores -> valor COMMA valores
-Rule 12    if -> IF LPAREN condicion RPAREN COLON programa ELSE programa
-Rule 13    condicion -> valor comparador valor
-Rule 14    comparador -> LESS_THAN
-Rule 15    comparador -> GREATER_THAN
-Rule 16    valor -> VARIABLE
-Rule 17    valor -> INTEGER
-Rule 18    valor -> FLOAT
-Rule 19    valor -> tupla
-Rule 20    valor -> expresion
-Rule 21    operador -> PLUS
-Rule 22    operador -> MINUS
-Rule 23    operador -> TIMES
-Rule 24    operador -> DIVIDE
-Rule 25    tupla -> LPAREN valores RPAREN
-Rule 26    declaracion -> VARIABLE EQUAL valor
-Rule 27    solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN
+Rule 8     expresion -> expresion operador valor
+Rule 9     expresion -> valor
+Rule 10    expresion -> LPAREN expresion RPAREN
+Rule 11    expresion -> expresion TIMES valor
+Rule 12    expresion -> expresion DIVIDE valor
+Rule 13    expresion -> expresion PLUS valor
+Rule 14    expresion -> expresion MINUS valor
+Rule 15    imprimir -> PRINT LPAREN valores RPAREN
+Rule 16    imprimir -> PRINT LPAREN RPAREN
+Rule 17    valores -> valor
+Rule 18    valores -> valor COMMA valores
+Rule 19    sentenciaIf -> IF LPAREN condicion RPAREN COLON programa ELSE programa
+Rule 20    condicion -> valor comparador valor
+Rule 21    comparador -> LESS_THAN
+Rule 22    comparador -> GREATER_THAN
+Rule 23    valor -> VARIABLE
+Rule 24    valor -> INTEGER
+Rule 25    valor -> FLOAT
+Rule 26    valor -> tupla
+Rule 27    operador -> PLUS
+Rule 28    operador -> MINUS
+Rule 29    operador -> TIMES
+Rule 30    operador -> DIVIDE
+Rule 31    tupla -> LPAREN valores RPAREN
+Rule 32    declaracion -> VARIABLE EQUAL valor
+Rule 33    solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN
+Rule 34    case -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
 
 Terminals, with rules where they appear
 
 AND                  : 
 BOOLEAN              : 
 BREAK                : 
-COLON                : 12
-COMILLA              : 27 27
-COMMA                : 11
+CASE                 : 34
+COLON                : 19
+COMILLA              : 33 33
+COMMA                : 18
 DEF                  : 
-DIVIDE               : 24
-ELSE                 : 12
-END                  : 
-EQUAL                : 26
+DIVIDE               : 12 30
+ELSE                 : 19 34
+END                  : 34
+EQUAL                : 32
 EQUALS               : 
 EXPONENT             : 
 FALSE                : 
-FLOAT                : 18
+FLOAT                : 25
 FOR                  : 
 GREATER_EQUAL_THAN   : 
-GREATER_THAN         : 15
+GREATER_THAN         : 22
 HASH                 : 
-IF                   : 12
+IF                   : 19
 IN                   : 
-INPUT                : 27
-INTEGER              : 17
+INPUT                : 33
+INTEGER              : 24
 IP                   : 
 LESS_EQUAL_THAN      : 
-LESS_THAN            : 14
+LESS_THAN            : 21
 LIST                 : 
-LPAREN               : 8 9 12 25 27
-MINUS                : 22
+LPAREN               : 10 15 16 19 31 33
+MINUS                : 14 28
 NOT                  : 
 NOT_EQUALS           : 
 OR                   : 
-PLUS                 : 21
+PLUS                 : 13 27
 POINT                : 
-PRINT                : 8 9
+PRINT                : 15 16
 RETURN               : 
-RPAREN               : 8 9 12 25 27
+RPAREN               : 10 15 16 19 31 33
 SEMICOLON            : 
-STRING               : 27
-TIMES                : 23
+STRING               : 33
+TIMES                : 11 29
 TRUE                 : 
-VARIABLE             : 16 26
+VARIABLE             : 23 32
+WHEN                 : 34 34
 WHILE                : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-comparador           : 13
-condicion            : 12
+case                 : 
+comparador           : 20
+condicion            : 19 34 34
 declaracion          : 4
-expresion            : 1 20
-if                   : 5
+expresion            : 1 8 10 11 12 13 14
 imprimir             : 2
-operador             : 7
-programa             : 12 12 0
+operador             : 7 8
+programa             : 19 19 34 34 34 0
+sentenciaIf          : 5
 solicitud            : 6
-tupla                : 3 19
-valor                : 7 7 10 11 13 13 26
-valores              : 8 11 25
+tupla                : 3 26
+valor                : 7 7 8 9 11 12 13 14 17 18 20 20 32 34
+valores              : 15 18 31
 
 Parsing method: LALR
 
@@ -128,23 +137,29 @@ state 0
     (2) programa -> . imprimir
     (3) programa -> . tupla
     (4) programa -> . declaracion
-    (5) programa -> . if
+    (5) programa -> . sentenciaIf
     (6) programa -> . solicitud
     (7) expresion -> . valor operador valor
-    (8) imprimir -> . PRINT LPAREN valores RPAREN
-    (9) imprimir -> . PRINT LPAREN RPAREN
-    (25) tupla -> . LPAREN valores RPAREN
-    (26) declaracion -> . VARIABLE EQUAL valor
-    (12) if -> . IF LPAREN condicion RPAREN COLON programa ELSE programa
-    (27) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
+    (8) expresion -> . expresion operador valor
+    (9) expresion -> . valor
+    (10) expresion -> . LPAREN expresion RPAREN
+    (11) expresion -> . expresion TIMES valor
+    (12) expresion -> . expresion DIVIDE valor
+    (13) expresion -> . expresion PLUS valor
+    (14) expresion -> . expresion MINUS valor
+    (15) imprimir -> . PRINT LPAREN valores RPAREN
+    (16) imprimir -> . PRINT LPAREN RPAREN
+    (31) tupla -> . LPAREN valores RPAREN
+    (32) declaracion -> . VARIABLE EQUAL valor
+    (19) sentenciaIf -> . IF LPAREN condicion RPAREN COLON programa ELSE programa
+    (33) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
 
-    PRINT           shift and go to state 9
-    LPAREN          shift and go to state 10
+    LPAREN          shift and go to state 9
+    PRINT           shift and go to state 10
     VARIABLE        shift and go to state 11
     IF              shift and go to state 12
     INPUT           shift and go to state 13
@@ -156,7 +171,7 @@ state 0
     imprimir                       shift and go to state 3
     tupla                          shift and go to state 4
     declaracion                    shift and go to state 5
-    if                             shift and go to state 6
+    sentenciaIf                    shift and go to state 6
     solicitud                      shift and go to state 7
     valor                          shift and go to state 8
 
@@ -169,15 +184,24 @@ state 1
 state 2
 
     (1) programa -> expresion .
-    (20) valor -> expresion .
+    (8) expresion -> expresion . operador valor
+    (11) expresion -> expresion . TIMES valor
+    (12) expresion -> expresion . DIVIDE valor
+    (13) expresion -> expresion . PLUS valor
+    (14) expresion -> expresion . MINUS valor
+    (27) operador -> . PLUS
+    (28) operador -> . MINUS
+    (29) operador -> . TIMES
+    (30) operador -> . DIVIDE
 
     $end            reduce using rule 1 (programa -> expresion .)
     ELSE            reduce using rule 1 (programa -> expresion .)
-    PLUS            reduce using rule 20 (valor -> expresion .)
-    MINUS           reduce using rule 20 (valor -> expresion .)
-    TIMES           reduce using rule 20 (valor -> expresion .)
-    DIVIDE          reduce using rule 20 (valor -> expresion .)
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
+    operador                       shift and go to state 16
 
 state 3
 
@@ -190,14 +214,19 @@ state 3
 state 4
 
     (3) programa -> tupla .
-    (19) valor -> tupla .
+    (26) valor -> tupla .
 
+  ! reduce/reduce conflict for $end resolved using rule 3 (programa -> tupla .)
+  ! reduce/reduce conflict for ELSE resolved using rule 3 (programa -> tupla .)
     $end            reduce using rule 3 (programa -> tupla .)
     ELSE            reduce using rule 3 (programa -> tupla .)
-    PLUS            reduce using rule 19 (valor -> tupla .)
-    MINUS           reduce using rule 19 (valor -> tupla .)
-    TIMES           reduce using rule 19 (valor -> tupla .)
-    DIVIDE          reduce using rule 19 (valor -> tupla .)
+    PLUS            reduce using rule 26 (valor -> tupla .)
+    MINUS           reduce using rule 26 (valor -> tupla .)
+    TIMES           reduce using rule 26 (valor -> tupla .)
+    DIVIDE          reduce using rule 26 (valor -> tupla .)
+
+  ! $end            [ reduce using rule 26 (valor -> tupla .) ]
+  ! ELSE            [ reduce using rule 26 (valor -> tupla .) ]
 
 
 state 5
@@ -210,10 +239,10 @@ state 5
 
 state 6
 
-    (5) programa -> if .
+    (5) programa -> sentenciaIf .
 
-    $end            reduce using rule 5 (programa -> if .)
-    ELSE            reduce using rule 5 (programa -> if .)
+    $end            reduce using rule 5 (programa -> sentenciaIf .)
+    ELSE            reduce using rule 5 (programa -> sentenciaIf .)
 
 
 state 7
@@ -227,650 +256,890 @@ state 7
 state 8
 
     (7) expresion -> valor . operador valor
-    (21) operador -> . PLUS
-    (22) operador -> . MINUS
-    (23) operador -> . TIMES
-    (24) operador -> . DIVIDE
-
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    TIMES           shift and go to state 19
-    DIVIDE          shift and go to state 20
-
-    operador                       shift and go to state 16
-
-state 9
-
-    (8) imprimir -> PRINT . LPAREN valores RPAREN
-    (9) imprimir -> PRINT . LPAREN RPAREN
-
-    LPAREN          shift and go to state 21
-
-
-state 10
-
-    (25) tupla -> LPAREN . valores RPAREN
-    (10) valores -> . valor
-    (11) valores -> . valor COMMA valores
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
-    (25) tupla -> . LPAREN valores RPAREN
-    (7) expresion -> . valor operador valor
-
-    VARIABLE        shift and go to state 24
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
-    LPAREN          shift and go to state 10
-
-    valores                        shift and go to state 22
-    valor                          shift and go to state 23
-    tupla                          shift and go to state 25
-    expresion                      shift and go to state 26
-
-state 11
-
-    (26) declaracion -> VARIABLE . EQUAL valor
-    (16) valor -> VARIABLE .
-
-    EQUAL           shift and go to state 27
-    PLUS            reduce using rule 16 (valor -> VARIABLE .)
-    MINUS           reduce using rule 16 (valor -> VARIABLE .)
-    TIMES           reduce using rule 16 (valor -> VARIABLE .)
-    DIVIDE          reduce using rule 16 (valor -> VARIABLE .)
-
-
-state 12
-
-    (12) if -> IF . LPAREN condicion RPAREN COLON programa ELSE programa
-
-    LPAREN          shift and go to state 28
-
-
-state 13
-
-    (27) solicitud -> INPUT . LPAREN COMILLA STRING COMILLA RPAREN
-
-    LPAREN          shift and go to state 29
-
-
-state 14
-
-    (17) valor -> INTEGER .
-
-    PLUS            reduce using rule 17 (valor -> INTEGER .)
-    MINUS           reduce using rule 17 (valor -> INTEGER .)
-    TIMES           reduce using rule 17 (valor -> INTEGER .)
-    DIVIDE          reduce using rule 17 (valor -> INTEGER .)
-    COMMA           reduce using rule 17 (valor -> INTEGER .)
-    RPAREN          reduce using rule 17 (valor -> INTEGER .)
-    $end            reduce using rule 17 (valor -> INTEGER .)
-    ELSE            reduce using rule 17 (valor -> INTEGER .)
-    LESS_THAN       reduce using rule 17 (valor -> INTEGER .)
-    GREATER_THAN    reduce using rule 17 (valor -> INTEGER .)
-
-
-state 15
-
-    (18) valor -> FLOAT .
-
-    PLUS            reduce using rule 18 (valor -> FLOAT .)
-    MINUS           reduce using rule 18 (valor -> FLOAT .)
-    TIMES           reduce using rule 18 (valor -> FLOAT .)
-    DIVIDE          reduce using rule 18 (valor -> FLOAT .)
-    COMMA           reduce using rule 18 (valor -> FLOAT .)
-    RPAREN          reduce using rule 18 (valor -> FLOAT .)
-    $end            reduce using rule 18 (valor -> FLOAT .)
-    ELSE            reduce using rule 18 (valor -> FLOAT .)
-    LESS_THAN       reduce using rule 18 (valor -> FLOAT .)
-    GREATER_THAN    reduce using rule 18 (valor -> FLOAT .)
-
-
-state 16
-
-    (7) expresion -> valor operador . valor
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
-    (25) tupla -> . LPAREN valores RPAREN
-    (7) expresion -> . valor operador valor
-
-    VARIABLE        shift and go to state 24
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
-    LPAREN          shift and go to state 10
-
-    valor                          shift and go to state 30
-    tupla                          shift and go to state 25
-    expresion                      shift and go to state 26
-
-state 17
-
-    (21) operador -> PLUS .
-
-    VARIABLE        reduce using rule 21 (operador -> PLUS .)
-    INTEGER         reduce using rule 21 (operador -> PLUS .)
-    FLOAT           reduce using rule 21 (operador -> PLUS .)
-    LPAREN          reduce using rule 21 (operador -> PLUS .)
-
-
-state 18
-
-    (22) operador -> MINUS .
-
-    VARIABLE        reduce using rule 22 (operador -> MINUS .)
-    INTEGER         reduce using rule 22 (operador -> MINUS .)
-    FLOAT           reduce using rule 22 (operador -> MINUS .)
-    LPAREN          reduce using rule 22 (operador -> MINUS .)
-
-
-state 19
-
-    (23) operador -> TIMES .
-
-    VARIABLE        reduce using rule 23 (operador -> TIMES .)
-    INTEGER         reduce using rule 23 (operador -> TIMES .)
-    FLOAT           reduce using rule 23 (operador -> TIMES .)
-    LPAREN          reduce using rule 23 (operador -> TIMES .)
-
-
-state 20
-
-    (24) operador -> DIVIDE .
-
-    VARIABLE        reduce using rule 24 (operador -> DIVIDE .)
-    INTEGER         reduce using rule 24 (operador -> DIVIDE .)
-    FLOAT           reduce using rule 24 (operador -> DIVIDE .)
-    LPAREN          reduce using rule 24 (operador -> DIVIDE .)
-
-
-state 21
-
-    (8) imprimir -> PRINT LPAREN . valores RPAREN
-    (9) imprimir -> PRINT LPAREN . RPAREN
-    (10) valores -> . valor
-    (11) valores -> . valor COMMA valores
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
-    (25) tupla -> . LPAREN valores RPAREN
-    (7) expresion -> . valor operador valor
-
-    RPAREN          shift and go to state 32
-    VARIABLE        shift and go to state 24
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
-    LPAREN          shift and go to state 10
-
-    valores                        shift and go to state 31
-    valor                          shift and go to state 23
-    tupla                          shift and go to state 25
-    expresion                      shift and go to state 26
-
-state 22
-
-    (25) tupla -> LPAREN valores . RPAREN
-
-    RPAREN          shift and go to state 33
-
-
-state 23
-
-    (10) valores -> valor .
-    (11) valores -> valor . COMMA valores
-    (7) expresion -> valor . operador valor
-    (21) operador -> . PLUS
-    (22) operador -> . MINUS
-    (23) operador -> . TIMES
-    (24) operador -> . DIVIDE
-
-    RPAREN          reduce using rule 10 (valores -> valor .)
-    COMMA           shift and go to state 34
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    TIMES           shift and go to state 19
-    DIVIDE          shift and go to state 20
-
-    operador                       shift and go to state 16
-
-state 24
-
-    (16) valor -> VARIABLE .
-
-    COMMA           reduce using rule 16 (valor -> VARIABLE .)
-    PLUS            reduce using rule 16 (valor -> VARIABLE .)
-    MINUS           reduce using rule 16 (valor -> VARIABLE .)
-    TIMES           reduce using rule 16 (valor -> VARIABLE .)
-    DIVIDE          reduce using rule 16 (valor -> VARIABLE .)
-    RPAREN          reduce using rule 16 (valor -> VARIABLE .)
-    $end            reduce using rule 16 (valor -> VARIABLE .)
-    ELSE            reduce using rule 16 (valor -> VARIABLE .)
-    LESS_THAN       reduce using rule 16 (valor -> VARIABLE .)
-    GREATER_THAN    reduce using rule 16 (valor -> VARIABLE .)
-
-
-state 25
-
-    (19) valor -> tupla .
-
-    COMMA           reduce using rule 19 (valor -> tupla .)
-    PLUS            reduce using rule 19 (valor -> tupla .)
-    MINUS           reduce using rule 19 (valor -> tupla .)
-    TIMES           reduce using rule 19 (valor -> tupla .)
-    DIVIDE          reduce using rule 19 (valor -> tupla .)
-    RPAREN          reduce using rule 19 (valor -> tupla .)
-    $end            reduce using rule 19 (valor -> tupla .)
-    ELSE            reduce using rule 19 (valor -> tupla .)
-    LESS_THAN       reduce using rule 19 (valor -> tupla .)
-    GREATER_THAN    reduce using rule 19 (valor -> tupla .)
-
-
-state 26
-
-    (20) valor -> expresion .
-
-    COMMA           reduce using rule 20 (valor -> expresion .)
-    PLUS            reduce using rule 20 (valor -> expresion .)
-    MINUS           reduce using rule 20 (valor -> expresion .)
-    TIMES           reduce using rule 20 (valor -> expresion .)
-    DIVIDE          reduce using rule 20 (valor -> expresion .)
-    RPAREN          reduce using rule 20 (valor -> expresion .)
-    $end            reduce using rule 20 (valor -> expresion .)
-    ELSE            reduce using rule 20 (valor -> expresion .)
-    LESS_THAN       reduce using rule 20 (valor -> expresion .)
-    GREATER_THAN    reduce using rule 20 (valor -> expresion .)
-
-
-state 27
-
-    (26) declaracion -> VARIABLE EQUAL . valor
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
-    (25) tupla -> . LPAREN valores RPAREN
-    (7) expresion -> . valor operador valor
-
-    VARIABLE        shift and go to state 24
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
-    LPAREN          shift and go to state 10
-
-    valor                          shift and go to state 35
-    tupla                          shift and go to state 25
-    expresion                      shift and go to state 26
-
-state 28
-
-    (12) if -> IF LPAREN . condicion RPAREN COLON programa ELSE programa
-    (13) condicion -> . valor comparador valor
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
-    (25) tupla -> . LPAREN valores RPAREN
-    (7) expresion -> . valor operador valor
-
-    VARIABLE        shift and go to state 24
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
-    LPAREN          shift and go to state 10
-
-    condicion                      shift and go to state 36
-    valor                          shift and go to state 37
-    tupla                          shift and go to state 25
-    expresion                      shift and go to state 26
-
-state 29
-
-    (27) solicitud -> INPUT LPAREN . COMILLA STRING COMILLA RPAREN
-
-    COMILLA         shift and go to state 38
-
-
-state 30
-
-    (7) expresion -> valor operador valor .
-    (7) expresion -> valor . operador valor
-    (21) operador -> . PLUS
-    (22) operador -> . MINUS
-    (23) operador -> . TIMES
-    (24) operador -> . DIVIDE
+    (9) expresion -> valor .
+    (27) operador -> . PLUS
+    (28) operador -> . MINUS
+    (29) operador -> . TIMES
+    (30) operador -> . DIVIDE
 
   ! shift/reduce conflict for PLUS resolved as shift
   ! shift/reduce conflict for MINUS resolved as shift
   ! shift/reduce conflict for TIMES resolved as shift
   ! shift/reduce conflict for DIVIDE resolved as shift
-    $end            reduce using rule 7 (expresion -> valor operador valor .)
-    COMMA           reduce using rule 7 (expresion -> valor operador valor .)
-    RPAREN          reduce using rule 7 (expresion -> valor operador valor .)
-    ELSE            reduce using rule 7 (expresion -> valor operador valor .)
-    LESS_THAN       reduce using rule 7 (expresion -> valor operador valor .)
-    GREATER_THAN    reduce using rule 7 (expresion -> valor operador valor .)
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    TIMES           shift and go to state 19
-    DIVIDE          shift and go to state 20
+    $end            reduce using rule 9 (expresion -> valor .)
+    ELSE            reduce using rule 9 (expresion -> valor .)
+    PLUS            shift and go to state 22
+    MINUS           shift and go to state 23
+    TIMES           shift and go to state 24
+    DIVIDE          shift and go to state 25
 
-  ! PLUS            [ reduce using rule 7 (expresion -> valor operador valor .) ]
-  ! MINUS           [ reduce using rule 7 (expresion -> valor operador valor .) ]
-  ! TIMES           [ reduce using rule 7 (expresion -> valor operador valor .) ]
-  ! DIVIDE          [ reduce using rule 7 (expresion -> valor operador valor .) ]
+  ! TIMES           [ reduce using rule 9 (expresion -> valor .) ]
+  ! DIVIDE          [ reduce using rule 9 (expresion -> valor .) ]
+  ! PLUS            [ reduce using rule 9 (expresion -> valor .) ]
+  ! MINUS           [ reduce using rule 9 (expresion -> valor .) ]
+
+    operador                       shift and go to state 21
+
+state 9
+
+    (10) expresion -> LPAREN . expresion RPAREN
+    (31) tupla -> LPAREN . valores RPAREN
+    (7) expresion -> . valor operador valor
+    (8) expresion -> . expresion operador valor
+    (9) expresion -> . valor
+    (10) expresion -> . LPAREN expresion RPAREN
+    (11) expresion -> . expresion TIMES valor
+    (12) expresion -> . expresion DIVIDE valor
+    (13) expresion -> . expresion PLUS valor
+    (14) expresion -> . expresion MINUS valor
+    (17) valores -> . valor
+    (18) valores -> . valor COMMA valores
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+    LPAREN          shift and go to state 9
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+
+    expresion                      shift and go to state 26
+    valores                        shift and go to state 27
+    valor                          shift and go to state 28
+    tupla                          shift and go to state 30
+
+state 10
+
+    (15) imprimir -> PRINT . LPAREN valores RPAREN
+    (16) imprimir -> PRINT . LPAREN RPAREN
+
+    LPAREN          shift and go to state 31
+
+
+state 11
+
+    (32) declaracion -> VARIABLE . EQUAL valor
+    (23) valor -> VARIABLE .
+
+    EQUAL           shift and go to state 32
+    PLUS            reduce using rule 23 (valor -> VARIABLE .)
+    MINUS           reduce using rule 23 (valor -> VARIABLE .)
+    TIMES           reduce using rule 23 (valor -> VARIABLE .)
+    DIVIDE          reduce using rule 23 (valor -> VARIABLE .)
+    $end            reduce using rule 23 (valor -> VARIABLE .)
+    ELSE            reduce using rule 23 (valor -> VARIABLE .)
+
+
+state 12
+
+    (19) sentenciaIf -> IF . LPAREN condicion RPAREN COLON programa ELSE programa
+
+    LPAREN          shift and go to state 33
+
+
+state 13
+
+    (33) solicitud -> INPUT . LPAREN COMILLA STRING COMILLA RPAREN
+
+    LPAREN          shift and go to state 34
+
+
+state 14
+
+    (24) valor -> INTEGER .
+
+    PLUS            reduce using rule 24 (valor -> INTEGER .)
+    MINUS           reduce using rule 24 (valor -> INTEGER .)
+    TIMES           reduce using rule 24 (valor -> INTEGER .)
+    DIVIDE          reduce using rule 24 (valor -> INTEGER .)
+    $end            reduce using rule 24 (valor -> INTEGER .)
+    COMMA           reduce using rule 24 (valor -> INTEGER .)
+    RPAREN          reduce using rule 24 (valor -> INTEGER .)
+    ELSE            reduce using rule 24 (valor -> INTEGER .)
+    LESS_THAN       reduce using rule 24 (valor -> INTEGER .)
+    GREATER_THAN    reduce using rule 24 (valor -> INTEGER .)
+
+
+state 15
+
+    (25) valor -> FLOAT .
+
+    PLUS            reduce using rule 25 (valor -> FLOAT .)
+    MINUS           reduce using rule 25 (valor -> FLOAT .)
+    TIMES           reduce using rule 25 (valor -> FLOAT .)
+    DIVIDE          reduce using rule 25 (valor -> FLOAT .)
+    $end            reduce using rule 25 (valor -> FLOAT .)
+    COMMA           reduce using rule 25 (valor -> FLOAT .)
+    RPAREN          reduce using rule 25 (valor -> FLOAT .)
+    ELSE            reduce using rule 25 (valor -> FLOAT .)
+    LESS_THAN       reduce using rule 25 (valor -> FLOAT .)
+    GREATER_THAN    reduce using rule 25 (valor -> FLOAT .)
+
+
+state 16
+
+    (8) expresion -> expresion operador . valor
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
+
+    valor                          shift and go to state 35
+    tupla                          shift and go to state 30
+
+state 17
+
+    (11) expresion -> expresion TIMES . valor
+    (29) operador -> TIMES .
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
+
+  ! VARIABLE        [ reduce using rule 29 (operador -> TIMES .) ]
+  ! INTEGER         [ reduce using rule 29 (operador -> TIMES .) ]
+  ! FLOAT           [ reduce using rule 29 (operador -> TIMES .) ]
+  ! LPAREN          [ reduce using rule 29 (operador -> TIMES .) ]
+
+    valor                          shift and go to state 37
+    tupla                          shift and go to state 30
+
+state 18
+
+    (12) expresion -> expresion DIVIDE . valor
+    (30) operador -> DIVIDE .
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
+
+  ! VARIABLE        [ reduce using rule 30 (operador -> DIVIDE .) ]
+  ! INTEGER         [ reduce using rule 30 (operador -> DIVIDE .) ]
+  ! FLOAT           [ reduce using rule 30 (operador -> DIVIDE .) ]
+  ! LPAREN          [ reduce using rule 30 (operador -> DIVIDE .) ]
+
+    valor                          shift and go to state 38
+    tupla                          shift and go to state 30
+
+state 19
+
+    (13) expresion -> expresion PLUS . valor
+    (27) operador -> PLUS .
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
+
+  ! VARIABLE        [ reduce using rule 27 (operador -> PLUS .) ]
+  ! INTEGER         [ reduce using rule 27 (operador -> PLUS .) ]
+  ! FLOAT           [ reduce using rule 27 (operador -> PLUS .) ]
+  ! LPAREN          [ reduce using rule 27 (operador -> PLUS .) ]
+
+    valor                          shift and go to state 39
+    tupla                          shift and go to state 30
+
+state 20
+
+    (14) expresion -> expresion MINUS . valor
+    (28) operador -> MINUS .
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
+
+  ! VARIABLE        [ reduce using rule 28 (operador -> MINUS .) ]
+  ! INTEGER         [ reduce using rule 28 (operador -> MINUS .) ]
+  ! FLOAT           [ reduce using rule 28 (operador -> MINUS .) ]
+  ! LPAREN          [ reduce using rule 28 (operador -> MINUS .) ]
+
+    valor                          shift and go to state 40
+    tupla                          shift and go to state 30
+
+state 21
+
+    (7) expresion -> valor operador . valor
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
+
+    valor                          shift and go to state 41
+    tupla                          shift and go to state 30
+
+state 22
+
+    (27) operador -> PLUS .
+
+    VARIABLE        reduce using rule 27 (operador -> PLUS .)
+    INTEGER         reduce using rule 27 (operador -> PLUS .)
+    FLOAT           reduce using rule 27 (operador -> PLUS .)
+    LPAREN          reduce using rule 27 (operador -> PLUS .)
+
+
+state 23
+
+    (28) operador -> MINUS .
+
+    VARIABLE        reduce using rule 28 (operador -> MINUS .)
+    INTEGER         reduce using rule 28 (operador -> MINUS .)
+    FLOAT           reduce using rule 28 (operador -> MINUS .)
+    LPAREN          reduce using rule 28 (operador -> MINUS .)
+
+
+state 24
+
+    (29) operador -> TIMES .
+
+    VARIABLE        reduce using rule 29 (operador -> TIMES .)
+    INTEGER         reduce using rule 29 (operador -> TIMES .)
+    FLOAT           reduce using rule 29 (operador -> TIMES .)
+    LPAREN          reduce using rule 29 (operador -> TIMES .)
+
+
+state 25
+
+    (30) operador -> DIVIDE .
+
+    VARIABLE        reduce using rule 30 (operador -> DIVIDE .)
+    INTEGER         reduce using rule 30 (operador -> DIVIDE .)
+    FLOAT           reduce using rule 30 (operador -> DIVIDE .)
+    LPAREN          reduce using rule 30 (operador -> DIVIDE .)
+
+
+state 26
+
+    (10) expresion -> LPAREN expresion . RPAREN
+    (8) expresion -> expresion . operador valor
+    (11) expresion -> expresion . TIMES valor
+    (12) expresion -> expresion . DIVIDE valor
+    (13) expresion -> expresion . PLUS valor
+    (14) expresion -> expresion . MINUS valor
+    (27) operador -> . PLUS
+    (28) operador -> . MINUS
+    (29) operador -> . TIMES
+    (30) operador -> . DIVIDE
+
+    RPAREN          shift and go to state 42
+    TIMES           shift and go to state 17
+    DIVIDE          shift and go to state 18
+    PLUS            shift and go to state 19
+    MINUS           shift and go to state 20
 
     operador                       shift and go to state 16
+
+state 27
+
+    (31) tupla -> LPAREN valores . RPAREN
+
+    RPAREN          shift and go to state 43
+
+
+state 28
+
+    (7) expresion -> valor . operador valor
+    (9) expresion -> valor .
+    (17) valores -> valor .
+    (18) valores -> valor . COMMA valores
+    (27) operador -> . PLUS
+    (28) operador -> . MINUS
+    (29) operador -> . TIMES
+    (30) operador -> . DIVIDE
+
+  ! reduce/reduce conflict for RPAREN resolved using rule 9 (expresion -> valor .)
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    RPAREN          reduce using rule 9 (expresion -> valor .)
+    COMMA           shift and go to state 44
+    PLUS            shift and go to state 22
+    MINUS           shift and go to state 23
+    TIMES           shift and go to state 24
+    DIVIDE          shift and go to state 25
+
+  ! TIMES           [ reduce using rule 9 (expresion -> valor .) ]
+  ! DIVIDE          [ reduce using rule 9 (expresion -> valor .) ]
+  ! PLUS            [ reduce using rule 9 (expresion -> valor .) ]
+  ! MINUS           [ reduce using rule 9 (expresion -> valor .) ]
+  ! RPAREN          [ reduce using rule 17 (valores -> valor .) ]
+
+    operador                       shift and go to state 21
+
+state 29
+
+    (23) valor -> VARIABLE .
+
+    COMMA           reduce using rule 23 (valor -> VARIABLE .)
+    PLUS            reduce using rule 23 (valor -> VARIABLE .)
+    MINUS           reduce using rule 23 (valor -> VARIABLE .)
+    TIMES           reduce using rule 23 (valor -> VARIABLE .)
+    DIVIDE          reduce using rule 23 (valor -> VARIABLE .)
+    RPAREN          reduce using rule 23 (valor -> VARIABLE .)
+    $end            reduce using rule 23 (valor -> VARIABLE .)
+    ELSE            reduce using rule 23 (valor -> VARIABLE .)
+    LESS_THAN       reduce using rule 23 (valor -> VARIABLE .)
+    GREATER_THAN    reduce using rule 23 (valor -> VARIABLE .)
+
+
+state 30
+
+    (26) valor -> tupla .
+
+    COMMA           reduce using rule 26 (valor -> tupla .)
+    PLUS            reduce using rule 26 (valor -> tupla .)
+    MINUS           reduce using rule 26 (valor -> tupla .)
+    TIMES           reduce using rule 26 (valor -> tupla .)
+    DIVIDE          reduce using rule 26 (valor -> tupla .)
+    RPAREN          reduce using rule 26 (valor -> tupla .)
+    $end            reduce using rule 26 (valor -> tupla .)
+    ELSE            reduce using rule 26 (valor -> tupla .)
+    LESS_THAN       reduce using rule 26 (valor -> tupla .)
+    GREATER_THAN    reduce using rule 26 (valor -> tupla .)
+
 
 state 31
 
-    (8) imprimir -> PRINT LPAREN valores . RPAREN
+    (15) imprimir -> PRINT LPAREN . valores RPAREN
+    (16) imprimir -> PRINT LPAREN . RPAREN
+    (17) valores -> . valor
+    (18) valores -> . valor COMMA valores
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
 
-    RPAREN          shift and go to state 39
+    RPAREN          shift and go to state 46
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
 
+    valores                        shift and go to state 45
+    valor                          shift and go to state 47
+    tupla                          shift and go to state 30
 
 state 32
 
-    (9) imprimir -> PRINT LPAREN RPAREN .
+    (32) declaracion -> VARIABLE EQUAL . valor
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
 
-    $end            reduce using rule 9 (imprimir -> PRINT LPAREN RPAREN .)
-    ELSE            reduce using rule 9 (imprimir -> PRINT LPAREN RPAREN .)
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
 
+    valor                          shift and go to state 48
+    tupla                          shift and go to state 30
 
 state 33
 
-    (25) tupla -> LPAREN valores RPAREN .
+    (19) sentenciaIf -> IF LPAREN . condicion RPAREN COLON programa ELSE programa
+    (20) condicion -> . valor comparador valor
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
 
-    $end            reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    PLUS            reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    MINUS           reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    TIMES           reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    DIVIDE          reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    COMMA           reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    RPAREN          reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    ELSE            reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    LESS_THAN       reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
-    GREATER_THAN    reduce using rule 25 (tupla -> LPAREN valores RPAREN .)
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
 
+    condicion                      shift and go to state 49
+    valor                          shift and go to state 50
+    tupla                          shift and go to state 30
 
 state 34
 
-    (11) valores -> valor COMMA . valores
-    (10) valores -> . valor
-    (11) valores -> . valor COMMA valores
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
-    (25) tupla -> . LPAREN valores RPAREN
-    (7) expresion -> . valor operador valor
+    (33) solicitud -> INPUT LPAREN . COMILLA STRING COMILLA RPAREN
 
-    VARIABLE        shift and go to state 24
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
-    LPAREN          shift and go to state 10
+    COMILLA         shift and go to state 51
 
-    valor                          shift and go to state 23
-    valores                        shift and go to state 40
-    tupla                          shift and go to state 25
-    expresion                      shift and go to state 26
 
 state 35
 
-    (26) declaracion -> VARIABLE EQUAL valor .
-    (7) expresion -> valor . operador valor
-    (21) operador -> . PLUS
-    (22) operador -> . MINUS
-    (23) operador -> . TIMES
-    (24) operador -> . DIVIDE
+    (8) expresion -> expresion operador valor .
 
-    $end            reduce using rule 26 (declaracion -> VARIABLE EQUAL valor .)
-    ELSE            reduce using rule 26 (declaracion -> VARIABLE EQUAL valor .)
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    TIMES           shift and go to state 19
-    DIVIDE          shift and go to state 20
+    TIMES           reduce using rule 8 (expresion -> expresion operador valor .)
+    DIVIDE          reduce using rule 8 (expresion -> expresion operador valor .)
+    PLUS            reduce using rule 8 (expresion -> expresion operador valor .)
+    MINUS           reduce using rule 8 (expresion -> expresion operador valor .)
+    $end            reduce using rule 8 (expresion -> expresion operador valor .)
+    RPAREN          reduce using rule 8 (expresion -> expresion operador valor .)
+    ELSE            reduce using rule 8 (expresion -> expresion operador valor .)
 
-    operador                       shift and go to state 16
 
 state 36
 
-    (12) if -> IF LPAREN condicion . RPAREN COLON programa ELSE programa
+    (31) tupla -> LPAREN . valores RPAREN
+    (17) valores -> . valor
+    (18) valores -> . valor COMMA valores
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
 
-    RPAREN          shift and go to state 41
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
 
+    valores                        shift and go to state 27
+    valor                          shift and go to state 47
+    tupla                          shift and go to state 30
 
 state 37
 
-    (13) condicion -> valor . comparador valor
-    (7) expresion -> valor . operador valor
-    (14) comparador -> . LESS_THAN
-    (15) comparador -> . GREATER_THAN
-    (21) operador -> . PLUS
-    (22) operador -> . MINUS
-    (23) operador -> . TIMES
-    (24) operador -> . DIVIDE
+    (11) expresion -> expresion TIMES valor .
 
-    LESS_THAN       shift and go to state 43
-    GREATER_THAN    shift and go to state 44
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    TIMES           shift and go to state 19
-    DIVIDE          shift and go to state 20
+    TIMES           reduce using rule 11 (expresion -> expresion TIMES valor .)
+    DIVIDE          reduce using rule 11 (expresion -> expresion TIMES valor .)
+    PLUS            reduce using rule 11 (expresion -> expresion TIMES valor .)
+    MINUS           reduce using rule 11 (expresion -> expresion TIMES valor .)
+    $end            reduce using rule 11 (expresion -> expresion TIMES valor .)
+    RPAREN          reduce using rule 11 (expresion -> expresion TIMES valor .)
+    ELSE            reduce using rule 11 (expresion -> expresion TIMES valor .)
 
-    comparador                     shift and go to state 42
-    operador                       shift and go to state 16
 
 state 38
 
-    (27) solicitud -> INPUT LPAREN COMILLA . STRING COMILLA RPAREN
+    (12) expresion -> expresion DIVIDE valor .
 
-    STRING          shift and go to state 45
+    TIMES           reduce using rule 12 (expresion -> expresion DIVIDE valor .)
+    DIVIDE          reduce using rule 12 (expresion -> expresion DIVIDE valor .)
+    PLUS            reduce using rule 12 (expresion -> expresion DIVIDE valor .)
+    MINUS           reduce using rule 12 (expresion -> expresion DIVIDE valor .)
+    $end            reduce using rule 12 (expresion -> expresion DIVIDE valor .)
+    RPAREN          reduce using rule 12 (expresion -> expresion DIVIDE valor .)
+    ELSE            reduce using rule 12 (expresion -> expresion DIVIDE valor .)
 
 
 state 39
 
-    (8) imprimir -> PRINT LPAREN valores RPAREN .
+    (13) expresion -> expresion PLUS valor .
 
-    $end            reduce using rule 8 (imprimir -> PRINT LPAREN valores RPAREN .)
-    ELSE            reduce using rule 8 (imprimir -> PRINT LPAREN valores RPAREN .)
+    TIMES           reduce using rule 13 (expresion -> expresion PLUS valor .)
+    DIVIDE          reduce using rule 13 (expresion -> expresion PLUS valor .)
+    PLUS            reduce using rule 13 (expresion -> expresion PLUS valor .)
+    MINUS           reduce using rule 13 (expresion -> expresion PLUS valor .)
+    $end            reduce using rule 13 (expresion -> expresion PLUS valor .)
+    RPAREN          reduce using rule 13 (expresion -> expresion PLUS valor .)
+    ELSE            reduce using rule 13 (expresion -> expresion PLUS valor .)
 
 
 state 40
 
-    (11) valores -> valor COMMA valores .
+    (14) expresion -> expresion MINUS valor .
 
-    RPAREN          reduce using rule 11 (valores -> valor COMMA valores .)
+    TIMES           reduce using rule 14 (expresion -> expresion MINUS valor .)
+    DIVIDE          reduce using rule 14 (expresion -> expresion MINUS valor .)
+    PLUS            reduce using rule 14 (expresion -> expresion MINUS valor .)
+    MINUS           reduce using rule 14 (expresion -> expresion MINUS valor .)
+    $end            reduce using rule 14 (expresion -> expresion MINUS valor .)
+    RPAREN          reduce using rule 14 (expresion -> expresion MINUS valor .)
+    ELSE            reduce using rule 14 (expresion -> expresion MINUS valor .)
 
 
 state 41
 
-    (12) if -> IF LPAREN condicion RPAREN . COLON programa ELSE programa
+    (7) expresion -> valor operador valor .
 
-    COLON           shift and go to state 46
+    TIMES           reduce using rule 7 (expresion -> valor operador valor .)
+    DIVIDE          reduce using rule 7 (expresion -> valor operador valor .)
+    PLUS            reduce using rule 7 (expresion -> valor operador valor .)
+    MINUS           reduce using rule 7 (expresion -> valor operador valor .)
+    $end            reduce using rule 7 (expresion -> valor operador valor .)
+    RPAREN          reduce using rule 7 (expresion -> valor operador valor .)
+    ELSE            reduce using rule 7 (expresion -> valor operador valor .)
 
 
 state 42
 
-    (13) condicion -> valor comparador . valor
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
-    (25) tupla -> . LPAREN valores RPAREN
-    (7) expresion -> . valor operador valor
+    (10) expresion -> LPAREN expresion RPAREN .
 
-    VARIABLE        shift and go to state 24
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
-    LPAREN          shift and go to state 10
+    TIMES           reduce using rule 10 (expresion -> LPAREN expresion RPAREN .)
+    DIVIDE          reduce using rule 10 (expresion -> LPAREN expresion RPAREN .)
+    PLUS            reduce using rule 10 (expresion -> LPAREN expresion RPAREN .)
+    MINUS           reduce using rule 10 (expresion -> LPAREN expresion RPAREN .)
+    $end            reduce using rule 10 (expresion -> LPAREN expresion RPAREN .)
+    RPAREN          reduce using rule 10 (expresion -> LPAREN expresion RPAREN .)
+    ELSE            reduce using rule 10 (expresion -> LPAREN expresion RPAREN .)
 
-    valor                          shift and go to state 47
-    tupla                          shift and go to state 25
-    expresion                      shift and go to state 26
 
 state 43
 
-    (14) comparador -> LESS_THAN .
+    (31) tupla -> LPAREN valores RPAREN .
 
-    VARIABLE        reduce using rule 14 (comparador -> LESS_THAN .)
-    INTEGER         reduce using rule 14 (comparador -> LESS_THAN .)
-    FLOAT           reduce using rule 14 (comparador -> LESS_THAN .)
-    LPAREN          reduce using rule 14 (comparador -> LESS_THAN .)
+    $end            reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    PLUS            reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    MINUS           reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    TIMES           reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    DIVIDE          reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    COMMA           reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    RPAREN          reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    ELSE            reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    LESS_THAN       reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
+    GREATER_THAN    reduce using rule 31 (tupla -> LPAREN valores RPAREN .)
 
 
 state 44
 
-    (15) comparador -> GREATER_THAN .
+    (18) valores -> valor COMMA . valores
+    (17) valores -> . valor
+    (18) valores -> . valor COMMA valores
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
 
-    VARIABLE        reduce using rule 15 (comparador -> GREATER_THAN .)
-    INTEGER         reduce using rule 15 (comparador -> GREATER_THAN .)
-    FLOAT           reduce using rule 15 (comparador -> GREATER_THAN .)
-    LPAREN          reduce using rule 15 (comparador -> GREATER_THAN .)
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
 
+    valor                          shift and go to state 47
+    valores                        shift and go to state 52
+    tupla                          shift and go to state 30
 
 state 45
 
-    (27) solicitud -> INPUT LPAREN COMILLA STRING . COMILLA RPAREN
+    (15) imprimir -> PRINT LPAREN valores . RPAREN
 
-    COMILLA         shift and go to state 48
+    RPAREN          shift and go to state 53
 
 
 state 46
 
-    (12) if -> IF LPAREN condicion RPAREN COLON . programa ELSE programa
-    (1) programa -> . expresion
-    (2) programa -> . imprimir
-    (3) programa -> . tupla
-    (4) programa -> . declaracion
-    (5) programa -> . if
-    (6) programa -> . solicitud
-    (7) expresion -> . valor operador valor
-    (8) imprimir -> . PRINT LPAREN valores RPAREN
-    (9) imprimir -> . PRINT LPAREN RPAREN
-    (25) tupla -> . LPAREN valores RPAREN
-    (26) declaracion -> . VARIABLE EQUAL valor
-    (12) if -> . IF LPAREN condicion RPAREN COLON programa ELSE programa
-    (27) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
+    (16) imprimir -> PRINT LPAREN RPAREN .
 
-    PRINT           shift and go to state 9
-    LPAREN          shift and go to state 10
-    VARIABLE        shift and go to state 11
-    IF              shift and go to state 12
-    INPUT           shift and go to state 13
-    INTEGER         shift and go to state 14
-    FLOAT           shift and go to state 15
+    $end            reduce using rule 16 (imprimir -> PRINT LPAREN RPAREN .)
+    ELSE            reduce using rule 16 (imprimir -> PRINT LPAREN RPAREN .)
 
-    programa                       shift and go to state 49
-    expresion                      shift and go to state 2
-    imprimir                       shift and go to state 3
-    tupla                          shift and go to state 4
-    declaracion                    shift and go to state 5
-    if                             shift and go to state 6
-    solicitud                      shift and go to state 7
-    valor                          shift and go to state 8
 
 state 47
 
-    (13) condicion -> valor comparador valor .
-    (7) expresion -> valor . operador valor
-    (21) operador -> . PLUS
-    (22) operador -> . MINUS
-    (23) operador -> . TIMES
-    (24) operador -> . DIVIDE
+    (17) valores -> valor .
+    (18) valores -> valor . COMMA valores
 
-    RPAREN          reduce using rule 13 (condicion -> valor comparador valor .)
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
-    TIMES           shift and go to state 19
-    DIVIDE          shift and go to state 20
+    RPAREN          reduce using rule 17 (valores -> valor .)
+    COMMA           shift and go to state 44
 
-    operador                       shift and go to state 16
 
 state 48
 
-    (27) solicitud -> INPUT LPAREN COMILLA STRING COMILLA . RPAREN
+    (32) declaracion -> VARIABLE EQUAL valor .
 
-    RPAREN          shift and go to state 50
+    $end            reduce using rule 32 (declaracion -> VARIABLE EQUAL valor .)
+    ELSE            reduce using rule 32 (declaracion -> VARIABLE EQUAL valor .)
 
 
 state 49
 
-    (12) if -> IF LPAREN condicion RPAREN COLON programa . ELSE programa
+    (19) sentenciaIf -> IF LPAREN condicion . RPAREN COLON programa ELSE programa
 
-    ELSE            shift and go to state 51
+    RPAREN          shift and go to state 54
 
 
 state 50
 
-    (27) solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .
+    (20) condicion -> valor . comparador valor
+    (21) comparador -> . LESS_THAN
+    (22) comparador -> . GREATER_THAN
 
-    $end            reduce using rule 27 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
-    ELSE            reduce using rule 27 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
+    LESS_THAN       shift and go to state 56
+    GREATER_THAN    shift and go to state 57
 
+    comparador                     shift and go to state 55
 
 state 51
 
-    (12) if -> IF LPAREN condicion RPAREN COLON programa ELSE . programa
+    (33) solicitud -> INPUT LPAREN COMILLA . STRING COMILLA RPAREN
+
+    STRING          shift and go to state 58
+
+
+state 52
+
+    (18) valores -> valor COMMA valores .
+
+    RPAREN          reduce using rule 18 (valores -> valor COMMA valores .)
+
+
+state 53
+
+    (15) imprimir -> PRINT LPAREN valores RPAREN .
+
+    $end            reduce using rule 15 (imprimir -> PRINT LPAREN valores RPAREN .)
+    ELSE            reduce using rule 15 (imprimir -> PRINT LPAREN valores RPAREN .)
+
+
+state 54
+
+    (19) sentenciaIf -> IF LPAREN condicion RPAREN . COLON programa ELSE programa
+
+    COLON           shift and go to state 59
+
+
+state 55
+
+    (20) condicion -> valor comparador . valor
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+    (31) tupla -> . LPAREN valores RPAREN
+
+    VARIABLE        shift and go to state 29
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+    LPAREN          shift and go to state 36
+
+    valor                          shift and go to state 60
+    tupla                          shift and go to state 30
+
+state 56
+
+    (21) comparador -> LESS_THAN .
+
+    VARIABLE        reduce using rule 21 (comparador -> LESS_THAN .)
+    INTEGER         reduce using rule 21 (comparador -> LESS_THAN .)
+    FLOAT           reduce using rule 21 (comparador -> LESS_THAN .)
+    LPAREN          reduce using rule 21 (comparador -> LESS_THAN .)
+
+
+state 57
+
+    (22) comparador -> GREATER_THAN .
+
+    VARIABLE        reduce using rule 22 (comparador -> GREATER_THAN .)
+    INTEGER         reduce using rule 22 (comparador -> GREATER_THAN .)
+    FLOAT           reduce using rule 22 (comparador -> GREATER_THAN .)
+    LPAREN          reduce using rule 22 (comparador -> GREATER_THAN .)
+
+
+state 58
+
+    (33) solicitud -> INPUT LPAREN COMILLA STRING . COMILLA RPAREN
+
+    COMILLA         shift and go to state 61
+
+
+state 59
+
+    (19) sentenciaIf -> IF LPAREN condicion RPAREN COLON . programa ELSE programa
     (1) programa -> . expresion
     (2) programa -> . imprimir
     (3) programa -> . tupla
     (4) programa -> . declaracion
-    (5) programa -> . if
+    (5) programa -> . sentenciaIf
     (6) programa -> . solicitud
     (7) expresion -> . valor operador valor
-    (8) imprimir -> . PRINT LPAREN valores RPAREN
-    (9) imprimir -> . PRINT LPAREN RPAREN
-    (25) tupla -> . LPAREN valores RPAREN
-    (26) declaracion -> . VARIABLE EQUAL valor
-    (12) if -> . IF LPAREN condicion RPAREN COLON programa ELSE programa
-    (27) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
-    (16) valor -> . VARIABLE
-    (17) valor -> . INTEGER
-    (18) valor -> . FLOAT
-    (19) valor -> . tupla
-    (20) valor -> . expresion
+    (8) expresion -> . expresion operador valor
+    (9) expresion -> . valor
+    (10) expresion -> . LPAREN expresion RPAREN
+    (11) expresion -> . expresion TIMES valor
+    (12) expresion -> . expresion DIVIDE valor
+    (13) expresion -> . expresion PLUS valor
+    (14) expresion -> . expresion MINUS valor
+    (15) imprimir -> . PRINT LPAREN valores RPAREN
+    (16) imprimir -> . PRINT LPAREN RPAREN
+    (31) tupla -> . LPAREN valores RPAREN
+    (32) declaracion -> . VARIABLE EQUAL valor
+    (19) sentenciaIf -> . IF LPAREN condicion RPAREN COLON programa ELSE programa
+    (33) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
 
-    PRINT           shift and go to state 9
-    LPAREN          shift and go to state 10
+    LPAREN          shift and go to state 9
+    PRINT           shift and go to state 10
     VARIABLE        shift and go to state 11
     IF              shift and go to state 12
     INPUT           shift and go to state 13
     INTEGER         shift and go to state 14
     FLOAT           shift and go to state 15
 
-    programa                       shift and go to state 52
+    programa                       shift and go to state 62
     expresion                      shift and go to state 2
     imprimir                       shift and go to state 3
     tupla                          shift and go to state 4
     declaracion                    shift and go to state 5
-    if                             shift and go to state 6
+    sentenciaIf                    shift and go to state 6
     solicitud                      shift and go to state 7
     valor                          shift and go to state 8
 
-state 52
+state 60
 
-    (12) if -> IF LPAREN condicion RPAREN COLON programa ELSE programa .
+    (20) condicion -> valor comparador valor .
 
-    $end            reduce using rule 12 (if -> IF LPAREN condicion RPAREN COLON programa ELSE programa .)
-    ELSE            reduce using rule 12 (if -> IF LPAREN condicion RPAREN COLON programa ELSE programa .)
+    RPAREN          reduce using rule 20 (condicion -> valor comparador valor .)
+
+
+state 61
+
+    (33) solicitud -> INPUT LPAREN COMILLA STRING COMILLA . RPAREN
+
+    RPAREN          shift and go to state 63
+
+
+state 62
+
+    (19) sentenciaIf -> IF LPAREN condicion RPAREN COLON programa . ELSE programa
+
+    ELSE            shift and go to state 64
+
+
+state 63
+
+    (33) solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .
+
+    $end            reduce using rule 33 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
+    ELSE            reduce using rule 33 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
+
+
+state 64
+
+    (19) sentenciaIf -> IF LPAREN condicion RPAREN COLON programa ELSE . programa
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . tupla
+    (4) programa -> . declaracion
+    (5) programa -> . sentenciaIf
+    (6) programa -> . solicitud
+    (7) expresion -> . valor operador valor
+    (8) expresion -> . expresion operador valor
+    (9) expresion -> . valor
+    (10) expresion -> . LPAREN expresion RPAREN
+    (11) expresion -> . expresion TIMES valor
+    (12) expresion -> . expresion DIVIDE valor
+    (13) expresion -> . expresion PLUS valor
+    (14) expresion -> . expresion MINUS valor
+    (15) imprimir -> . PRINT LPAREN valores RPAREN
+    (16) imprimir -> . PRINT LPAREN RPAREN
+    (31) tupla -> . LPAREN valores RPAREN
+    (32) declaracion -> . VARIABLE EQUAL valor
+    (19) sentenciaIf -> . IF LPAREN condicion RPAREN COLON programa ELSE programa
+    (33) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (23) valor -> . VARIABLE
+    (24) valor -> . INTEGER
+    (25) valor -> . FLOAT
+    (26) valor -> . tupla
+
+    LPAREN          shift and go to state 9
+    PRINT           shift and go to state 10
+    VARIABLE        shift and go to state 11
+    IF              shift and go to state 12
+    INPUT           shift and go to state 13
+    INTEGER         shift and go to state 14
+    FLOAT           shift and go to state 15
+
+    programa                       shift and go to state 65
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    tupla                          shift and go to state 4
+    declaracion                    shift and go to state 5
+    sentenciaIf                    shift and go to state 6
+    solicitud                      shift and go to state 7
+    valor                          shift and go to state 8
+
+state 65
+
+    (19) sentenciaIf -> IF LPAREN condicion RPAREN COLON programa ELSE programa .
+
+    $end            reduce using rule 19 (sentenciaIf -> IF LPAREN condicion RPAREN COLON programa ELSE programa .)
+    ELSE            reduce using rule 19 (sentenciaIf -> IF LPAREN condicion RPAREN COLON programa ELSE programa .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 30 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 30 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 30 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 30 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 8 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 8 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 8 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 8 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 17 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 17 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 17 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 17 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 18 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 18 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 18 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 18 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 19 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 19 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 19 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 19 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 20 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 20 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 20 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 20 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 28 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 28 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 28 resolved as shift
+WARNING: reduce/reduce conflict in state 4 resolved using rule (programa -> tupla)
+WARNING: rejected rule (valor -> tupla) in state 4
+WARNING: reduce/reduce conflict in state 28 resolved using rule (expresion -> valor)
+WARNING: rejected rule (valores -> valor) in state 28

@@ -88,6 +88,10 @@ t_POINT = r'.'
 #Aporte de Carlos Cabanilla 24/06
 t_EQUAL= r'='
 t_COMILLA = r'\"'
+#Aporte Adrian Litardo 24/06
+t_LPAREN  = r'\('
+t_RPAREN  = r'\)'
+
 
 #Empieza aporte Adrian Litardo
 #Expresion regular para hash
