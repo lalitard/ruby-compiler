@@ -76,7 +76,25 @@ def p_operador(p):
                 | DIVIDE
     '''
 
+#Aporte Kevin Ibarra
+def p_condicion(p):
+    '''condicion : valor comparador valor
+                 | condicion conector condicion
+    '''
 
+def p_comparador(p):
+    '''comparador : LESS_THAN
+                  | GREATER_THAN
+                  | EQUAL
+                  | NOT_EQUAL
+                  | LESS_EQUAL
+                  | GREATER_EQUAL
+    '''
+
+def p_conector(p):
+    '''conector : AND
+                | OR
+    '''
 def p_tupla(p):
     'tupla : LPAREN valores RPAREN'
 
