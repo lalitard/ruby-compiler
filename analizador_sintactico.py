@@ -1,7 +1,10 @@
 import ply.yacc as yacc
 import logging
 import datetime
+import sys
 from analizador_lexico import tokens
+
+
 
 #Empieza aporte de Carlos Cabanilla 24/06
 username= "carlosCabani" 
@@ -17,21 +20,63 @@ def log_error(message):
 
 setup_logging(username)
 
+def logOutput(user, algoritmo):
+    datime = datetime.datetime.now()
+    timeStamp = datime.strftime("%d%m%Y-%Hh%M")
+    dirString = f"logs/sintactico-{user}-{timeStamp}.txt"
+    sys.stdout = open(dirString, 'w')
+    for line in algoritmo:
+        try:
+            sentence = line.strip()
+            sentence = sentence.strip("\n")
+            s = sentence
+        except EOFError:
+            break
+        if not s:
+            continue
+        print(sentence)
+        result = parser.parse(s)
+        print(result)
+    sys.stdout.close()
 
 def p_programa(p):
     '''programa : expresion
                 | imprimir
                 | tupla
                 | declaracion
-                | if
+                | sentenciaIf
                 | solicitud
     '''
 
 
 def p_expresion(p):
-    'expresion : valor operador valor'
+    '''expresion : valor operador valor
+    '''
 
+#Aporte Adrian Litardo 24/06
+def p_expresion_binaria(p):
+    '''expresion : expresion operador valor
+                 | valor
+    '''
 
+def p_expresion_par(p):
+    'expresion : LPAREN expresion RPAREN'
+    p[0] = p[2]
+
+def p_expresion_mul_div(p):
+    '''expresion : expresion TIMES valor
+                 | expresion DIVIDE valor
+    '''
+    p[0] = (p[2], p[1], p[3])
+
+def p_expresion_add_sub(p):
+    '''expresion : expresion PLUS valor
+                 | expresion MINUS valor
+    '''
+    p[0] = (p[2], p[1], p[3])
+
+#Con esta reglas manejamos las precedencias de las operaciones en la expresion
+#Termina aporte Adrian Litardo
 def p_imprimir(p):
     'imprimir : PRINT LPAREN valores RPAREN'
 
@@ -47,7 +92,7 @@ def p_valores(p):
 
 
 def p_sentenciaIf(p):
-    'if : IF LPAREN condicion RPAREN COLON programa ELSE programa'
+    'sentenciaIf : IF LPAREN condicion RPAREN COLON programa ELSE programa'
 
 
 def p_condicion(p):
@@ -65,7 +110,6 @@ def p_valor(p):
              | INTEGER
              | FLOAT
              | tupla
-             | expresion
     '''
 
 
@@ -106,11 +150,10 @@ while True:
         s = input('lp > ')
     except EOFError:
         break
-    if not s: continue
+    if not s:
+        break
     #Aporte Carlos Cabanilla 24/06
  # Configura un nuevo archivo de log para cada entrada
     setup_logging(username)
-    
-    result = parser.parse(s)
-    print(result)
+    logOutput(username, [s])
 #Termina aporte Adrian Litardo
