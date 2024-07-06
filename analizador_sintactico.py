@@ -23,7 +23,7 @@ from analizador_lexico import tokens
 
 
 #Empieza aporte de Carlos Cabanilla 24/06
-username= "lalitard"
+username= "kevin523523"
 # Configura el registro
 def setup_logging(username):
     now = datetime.datetime.now()
