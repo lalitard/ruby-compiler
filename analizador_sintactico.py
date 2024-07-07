@@ -3,22 +3,7 @@ import logging
 import datetime
 import sys
 from analizador_lexico import tokens
-# t_BOOLEAN = r'true|false'
-# t_BREAK = r'break'
-# t_DEF = r'def'
-# t_EXPONENT = r'\*\*'
-# t_FALSE = r'false'
-# t_FOR = r'for'
-# t_HASH = r'\#'
-# t_IN = r'in'
-# t_IP = r'(?:\d{1,3}\.){3}\d{1,3}'
-# t_LIST = r'\[\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*(,\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*)*\]'
-# t_NOT = r'not'
-# t_POINT = r'\.'
-# t_RETURN = r'return'
-# t_SEMICOLON = r';'
-# t_TRUE = r'true'
-# t_WHILE = r'while[^:]*:'
+
 
 
 
@@ -43,17 +28,21 @@ def p_programa(p):
                 | sentenciaIf
                 | solicitud
                 | sentenciaCase
+                | sentenciaWhile
     '''
 
 
 def p_expresion(p):
     '''expresion : valor operador valor
+                | expresion_binaria
+                | expresion_par
+                | expresion_mul_div
+                | expresion_add_sub
     '''
 
 #Aporte Adrian Litardo 24/06
 def p_expresion_binaria(p):
-    '''expresion : expresion operador valor
-    '''
+    '''expresion : expresion operador valor'''
 
 def p_expresion_par(p):
     'expresion : LPAREN expresion RPAREN'
@@ -88,15 +77,15 @@ def p_valores(p):
 
 
 def p_sentenciaIf(p):
-    'sentenciaIf : IF LPAREN condicion RPAREN COLON programa ELSE programa'
+    '''sentenciaIf : IF condicion programa ELSE programa END'''
 
-
+def p_sentenciaWhile(p):
+    '''sentenciaWhile : WHILE condicion programa END'''
 
 def p_valor(p):
     '''valor : VARIABLE
              | INTEGER
              | FLOAT
-             | tupla
     '''
 
 

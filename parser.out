@@ -4,504 +4,145 @@ Unused terminals:
 
     BOOLEAN
     BREAK
-    CASE
     COLON
-    COMILLA
     DEF
-    ELSE
-    END
     EXPONENT
     FALSE
     FOR
     HASH
-    IF
     IN
     IP
-    LPAREN
     NOT
-    PRINT
     RETURN
-    RPAREN
     SEMICOLON
-    STRING
     TRUE
-    WHEN
-    WHILE
 
 Grammar
 
 Rule 0     S' -> programa
 Rule 1     programa -> expresion
-Rule 2     programa -> list
-Rule 3     programa -> length_list
-Rule 4     programa -> declaracion
-Rule 5     expresion -> valor operador valor
-Rule 6     declaracion -> VARIABLE EQUAL valor
-Rule 7     declaracion -> VARIABLE EQUAL LIST
-Rule 8     list -> LCOR valores RCOR
-Rule 9     valores -> valor
-Rule 10    valores -> valor COMMA valores
-Rule 11    condicion -> valor comparador valor
-Rule 12    condicion -> condicion conector condicion
-Rule 13    valor -> VARIABLE
-Rule 14    valor -> INTEGER
-Rule 15    valor -> FLOAT
-Rule 16    valor -> expresion
-Rule 17    operador -> PLUS
-Rule 18    operador -> MINUS
-Rule 19    operador -> TIMES
-Rule 20    operador -> DIVIDE
-Rule 21    comparador -> LESS_THAN
-Rule 22    comparador -> GREATER_THAN
-Rule 23    comparador -> EQUALS
-Rule 24    comparador -> NOT_EQUALS
-Rule 25    comparador -> LESS_EQUAL_THAN
-Rule 26    comparador -> GREATER_EQUAL_THAN
-Rule 27    conector -> AND
-Rule 28    conector -> OR
-Rule 29    length_list -> valor POINT LENGTH
+Rule 2     programa -> imprimir
+Rule 3     programa -> sentenciaIf
+Rule 4     programa -> solicitud
+Rule 5     programa -> sentenciaCase
+Rule 6     programa -> sentenciaWhile
+Rule 7     programa -> list
+Rule 8     programa -> length_list
+Rule 9     programa -> declaracion
+Rule 10    expresion -> valor operador valor
+Rule 11    expresion -> expresion_binaria
+Rule 12    expresion -> expresion_par
+Rule 13    expresion -> expresion_mul_div
+Rule 14    expresion -> expresion_add_sub
+Rule 15    expresion -> expresion operador valor
+Rule 16    expresion -> LPAREN expresion RPAREN
+Rule 17    expresion -> expresion TIMES valor
+Rule 18    expresion -> expresion DIVIDE valor
+Rule 19    expresion -> expresion PLUS valor
+Rule 20    expresion -> expresion MINUS valor
+Rule 21    imprimir -> PRINT LPAREN valores RPAREN
+Rule 22    imprimir -> PRINT LPAREN RPAREN
+Rule 23    declaracion -> VARIABLE EQUAL valor
+Rule 24    declaracion -> VARIABLE EQUAL LIST
+Rule 25    list -> LCOR valores RCOR
+Rule 26    valores -> valor
+Rule 27    valores -> valor COMMA valores
+Rule 28    condicion -> valor comparador valor
+Rule 29    condicion -> condicion conector condicion
+Rule 30    valor -> VARIABLE
+Rule 31    valor -> INTEGER
+Rule 32    valor -> FLOAT
+Rule 33    valor -> expresion
+Rule 34    operador -> PLUS
+Rule 35    operador -> MINUS
+Rule 36    operador -> TIMES
+Rule 37    operador -> DIVIDE
+Rule 38    comparador -> LESS_THAN
+Rule 39    comparador -> GREATER_THAN
+Rule 40    comparador -> EQUALS
+Rule 41    comparador -> NOT_EQUALS
+Rule 42    comparador -> LESS_EQUAL_THAN
+Rule 43    comparador -> GREATER_EQUAL_THAN
+Rule 44    conector -> AND
+Rule 45    conector -> OR
+Rule 46    solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN
+Rule 47    sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+Rule 48    sentenciaIf -> IF condicion programa ELSE programa END
+Rule 49    sentenciaWhile -> WHILE condicion programa END
+Rule 50    length_list -> valor POINT LENGTH
 
 Terminals, with rules where they appear
 
-AND                  : 27
+AND                  : 44
 BOOLEAN              : 
 BREAK                : 
-CASE                 : 
+CASE                 : 47
 COLON                : 
-COMILLA              : 
-COMMA                : 10
+COMILLA              : 46 46
+COMMA                : 27
 DEF                  : 
-DIVIDE               : 20
-ELSE                 : 
-END                  : 
-EQUAL                : 6 7
-EQUALS               : 23
+DIVIDE               : 18 37
+ELSE                 : 47 48
+END                  : 47 48 49
+EQUAL                : 23 24
+EQUALS               : 40
 EXPONENT             : 
 FALSE                : 
-FLOAT                : 15
+FLOAT                : 32
 FOR                  : 
-GREATER_EQUAL_THAN   : 26
-GREATER_THAN         : 22
+GREATER_EQUAL_THAN   : 43
+GREATER_THAN         : 39
 HASH                 : 
-IF                   : 
+IF                   : 48
 IN                   : 
-INTEGER              : 14
+INPUT                : 46
+INTEGER              : 31
 IP                   : 
-LCOR                 : 8
-LENGTH               : 29
-LESS_EQUAL_THAN      : 25
-LESS_THAN            : 21
-LIST                 : 7
-LPAREN               : 
-MINUS                : 18
+LCOR                 : 25
+LENGTH               : 50
+LESS_EQUAL_THAN      : 42
+LESS_THAN            : 38
+LIST                 : 24
+LPAREN               : 16 21 22 46
+MINUS                : 20 35
 NOT                  : 
-NOT_EQUALS           : 24
-OR                   : 28
-PLUS                 : 17
-POINT                : 29
-PRINT                : 
-RCOR                 : 8
+NOT_EQUALS           : 41
+OR                   : 45
+PLUS                 : 19 34
+POINT                : 50
+PRINT                : 21 22
+RCOR                 : 25
 RETURN               : 
-RPAREN               : 
+RPAREN               : 16 21 22 46
 SEMICOLON            : 
-STRING               : 
-TIMES                : 19
+STRING               : 46
+TIMES                : 17 36
 TRUE                 : 
-VARIABLE             : 6 7 13
-WHEN                 : 
-WHILE                : 
+VARIABLE             : 23 24 30
+WHEN                 : 47 47
+WHILE                : 49
 error                : 
 
 Nonterminals, with rules where they appear
 
-comparador           : 11
-condicion            : 12 12
-conector             : 12
-declaracion          : 4
-expresion            : 1 16
-length_list          : 3
-list                 : 2
-operador             : 5
-programa             : 0
-valor                : 5 5 6 9 10 11 11 29
-valores              : 8 10
+comparador           : 28
+condicion            : 29 29 47 47 48 49
+conector             : 29
+declaracion          : 9
+expresion            : 1 15 16 17 18 19 20 33
+expresion_add_sub    : 14
+expresion_binaria    : 11
+expresion_mul_div    : 13
+expresion_par        : 12
+imprimir             : 2
+length_list          : 8
+list                 : 7
+operador             : 10 15
+programa             : 47 47 47 48 48 49 0
+sentenciaCase        : 5
+sentenciaIf          : 3
+sentenciaWhile       : 6
+solicitud            : 4
+valor                : 10 10 15 17 18 19 20 23 26 27 28 28 47 50
+valores              : 21 25 27
 
-Parsing method: LALR
-
-state 0
-
-    (0) S' -> . programa
-    (1) programa -> . expresion
-    (2) programa -> . list
-    (3) programa -> . length_list
-    (4) programa -> . declaracion
-    (5) expresion -> . valor operador valor
-    (8) list -> . LCOR valores RCOR
-    (29) length_list -> . valor POINT LENGTH
-    (6) declaracion -> . VARIABLE EQUAL valor
-    (7) declaracion -> . VARIABLE EQUAL LIST
-    (13) valor -> . VARIABLE
-    (14) valor -> . INTEGER
-    (15) valor -> . FLOAT
-    (16) valor -> . expresion
-
-    LCOR            shift and go to state 7
-    VARIABLE        shift and go to state 8
-    INTEGER         shift and go to state 9
-    FLOAT           shift and go to state 10
-
-    programa                       shift and go to state 1
-    expresion                      shift and go to state 2
-    list                           shift and go to state 3
-    length_list                    shift and go to state 4
-    declaracion                    shift and go to state 5
-    valor                          shift and go to state 6
-
-state 1
-
-    (0) S' -> programa .
-
-
-
-state 2
-
-    (1) programa -> expresion .
-    (16) valor -> expresion .
-
-    $end            reduce using rule 1 (programa -> expresion .)
-    POINT           reduce using rule 16 (valor -> expresion .)
-    PLUS            reduce using rule 16 (valor -> expresion .)
-    MINUS           reduce using rule 16 (valor -> expresion .)
-    TIMES           reduce using rule 16 (valor -> expresion .)
-    DIVIDE          reduce using rule 16 (valor -> expresion .)
-
-
-state 3
-
-    (2) programa -> list .
-
-    $end            reduce using rule 2 (programa -> list .)
-
-
-state 4
-
-    (3) programa -> length_list .
-
-    $end            reduce using rule 3 (programa -> length_list .)
-
-
-state 5
-
-    (4) programa -> declaracion .
-
-    $end            reduce using rule 4 (programa -> declaracion .)
-
-
-state 6
-
-    (5) expresion -> valor . operador valor
-    (29) length_list -> valor . POINT LENGTH
-    (17) operador -> . PLUS
-    (18) operador -> . MINUS
-    (19) operador -> . TIMES
-    (20) operador -> . DIVIDE
-
-    POINT           shift and go to state 12
-    PLUS            shift and go to state 13
-    MINUS           shift and go to state 14
-    TIMES           shift and go to state 15
-    DIVIDE          shift and go to state 16
-
-    operador                       shift and go to state 11
-
-state 7
-
-    (8) list -> LCOR . valores RCOR
-    (9) valores -> . valor
-    (10) valores -> . valor COMMA valores
-    (13) valor -> . VARIABLE
-    (14) valor -> . INTEGER
-    (15) valor -> . FLOAT
-    (16) valor -> . expresion
-    (5) expresion -> . valor operador valor
-
-    VARIABLE        shift and go to state 19
-    INTEGER         shift and go to state 9
-    FLOAT           shift and go to state 10
-
-    valores                        shift and go to state 17
-    valor                          shift and go to state 18
-    expresion                      shift and go to state 20
-
-state 8
-
-    (6) declaracion -> VARIABLE . EQUAL valor
-    (7) declaracion -> VARIABLE . EQUAL LIST
-    (13) valor -> VARIABLE .
-
-    EQUAL           shift and go to state 21
-    POINT           reduce using rule 13 (valor -> VARIABLE .)
-    PLUS            reduce using rule 13 (valor -> VARIABLE .)
-    MINUS           reduce using rule 13 (valor -> VARIABLE .)
-    TIMES           reduce using rule 13 (valor -> VARIABLE .)
-    DIVIDE          reduce using rule 13 (valor -> VARIABLE .)
-
-
-state 9
-
-    (14) valor -> INTEGER .
-
-    POINT           reduce using rule 14 (valor -> INTEGER .)
-    PLUS            reduce using rule 14 (valor -> INTEGER .)
-    MINUS           reduce using rule 14 (valor -> INTEGER .)
-    TIMES           reduce using rule 14 (valor -> INTEGER .)
-    DIVIDE          reduce using rule 14 (valor -> INTEGER .)
-    COMMA           reduce using rule 14 (valor -> INTEGER .)
-    RCOR            reduce using rule 14 (valor -> INTEGER .)
-    $end            reduce using rule 14 (valor -> INTEGER .)
-
-
-state 10
-
-    (15) valor -> FLOAT .
-
-    POINT           reduce using rule 15 (valor -> FLOAT .)
-    PLUS            reduce using rule 15 (valor -> FLOAT .)
-    MINUS           reduce using rule 15 (valor -> FLOAT .)
-    TIMES           reduce using rule 15 (valor -> FLOAT .)
-    DIVIDE          reduce using rule 15 (valor -> FLOAT .)
-    COMMA           reduce using rule 15 (valor -> FLOAT .)
-    RCOR            reduce using rule 15 (valor -> FLOAT .)
-    $end            reduce using rule 15 (valor -> FLOAT .)
-
-
-state 11
-
-    (5) expresion -> valor operador . valor
-    (13) valor -> . VARIABLE
-    (14) valor -> . INTEGER
-    (15) valor -> . FLOAT
-    (16) valor -> . expresion
-    (5) expresion -> . valor operador valor
-
-    VARIABLE        shift and go to state 19
-    INTEGER         shift and go to state 9
-    FLOAT           shift and go to state 10
-
-    valor                          shift and go to state 22
-    expresion                      shift and go to state 20
-
-state 12
-
-    (29) length_list -> valor POINT . LENGTH
-
-    LENGTH          shift and go to state 23
-
-
-state 13
-
-    (17) operador -> PLUS .
-
-    VARIABLE        reduce using rule 17 (operador -> PLUS .)
-    INTEGER         reduce using rule 17 (operador -> PLUS .)
-    FLOAT           reduce using rule 17 (operador -> PLUS .)
-
-
-state 14
-
-    (18) operador -> MINUS .
-
-    VARIABLE        reduce using rule 18 (operador -> MINUS .)
-    INTEGER         reduce using rule 18 (operador -> MINUS .)
-    FLOAT           reduce using rule 18 (operador -> MINUS .)
-
-
-state 15
-
-    (19) operador -> TIMES .
-
-    VARIABLE        reduce using rule 19 (operador -> TIMES .)
-    INTEGER         reduce using rule 19 (operador -> TIMES .)
-    FLOAT           reduce using rule 19 (operador -> TIMES .)
-
-
-state 16
-
-    (20) operador -> DIVIDE .
-
-    VARIABLE        reduce using rule 20 (operador -> DIVIDE .)
-    INTEGER         reduce using rule 20 (operador -> DIVIDE .)
-    FLOAT           reduce using rule 20 (operador -> DIVIDE .)
-
-
-state 17
-
-    (8) list -> LCOR valores . RCOR
-
-    RCOR            shift and go to state 24
-
-
-state 18
-
-    (9) valores -> valor .
-    (10) valores -> valor . COMMA valores
-    (5) expresion -> valor . operador valor
-    (17) operador -> . PLUS
-    (18) operador -> . MINUS
-    (19) operador -> . TIMES
-    (20) operador -> . DIVIDE
-
-    RCOR            reduce using rule 9 (valores -> valor .)
-    COMMA           shift and go to state 25
-    PLUS            shift and go to state 13
-    MINUS           shift and go to state 14
-    TIMES           shift and go to state 15
-    DIVIDE          shift and go to state 16
-
-    operador                       shift and go to state 11
-
-state 19
-
-    (13) valor -> VARIABLE .
-
-    COMMA           reduce using rule 13 (valor -> VARIABLE .)
-    PLUS            reduce using rule 13 (valor -> VARIABLE .)
-    MINUS           reduce using rule 13 (valor -> VARIABLE .)
-    TIMES           reduce using rule 13 (valor -> VARIABLE .)
-    DIVIDE          reduce using rule 13 (valor -> VARIABLE .)
-    RCOR            reduce using rule 13 (valor -> VARIABLE .)
-    $end            reduce using rule 13 (valor -> VARIABLE .)
-    POINT           reduce using rule 13 (valor -> VARIABLE .)
-
-
-state 20
-
-    (16) valor -> expresion .
-
-    COMMA           reduce using rule 16 (valor -> expresion .)
-    PLUS            reduce using rule 16 (valor -> expresion .)
-    MINUS           reduce using rule 16 (valor -> expresion .)
-    TIMES           reduce using rule 16 (valor -> expresion .)
-    DIVIDE          reduce using rule 16 (valor -> expresion .)
-    RCOR            reduce using rule 16 (valor -> expresion .)
-    $end            reduce using rule 16 (valor -> expresion .)
-    POINT           reduce using rule 16 (valor -> expresion .)
-
-
-state 21
-
-    (6) declaracion -> VARIABLE EQUAL . valor
-    (7) declaracion -> VARIABLE EQUAL . LIST
-    (13) valor -> . VARIABLE
-    (14) valor -> . INTEGER
-    (15) valor -> . FLOAT
-    (16) valor -> . expresion
-    (5) expresion -> . valor operador valor
-
-    LIST            shift and go to state 27
-    VARIABLE        shift and go to state 19
-    INTEGER         shift and go to state 9
-    FLOAT           shift and go to state 10
-
-    valor                          shift and go to state 26
-    expresion                      shift and go to state 20
-
-state 22
-
-    (5) expresion -> valor operador valor .
-    (5) expresion -> valor . operador valor
-    (17) operador -> . PLUS
-    (18) operador -> . MINUS
-    (19) operador -> . TIMES
-    (20) operador -> . DIVIDE
-
-  ! shift/reduce conflict for PLUS resolved as shift
-  ! shift/reduce conflict for MINUS resolved as shift
-  ! shift/reduce conflict for TIMES resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-    $end            reduce using rule 5 (expresion -> valor operador valor .)
-    POINT           reduce using rule 5 (expresion -> valor operador valor .)
-    COMMA           reduce using rule 5 (expresion -> valor operador valor .)
-    RCOR            reduce using rule 5 (expresion -> valor operador valor .)
-    PLUS            shift and go to state 13
-    MINUS           shift and go to state 14
-    TIMES           shift and go to state 15
-    DIVIDE          shift and go to state 16
-
-  ! PLUS            [ reduce using rule 5 (expresion -> valor operador valor .) ]
-  ! MINUS           [ reduce using rule 5 (expresion -> valor operador valor .) ]
-  ! TIMES           [ reduce using rule 5 (expresion -> valor operador valor .) ]
-  ! DIVIDE          [ reduce using rule 5 (expresion -> valor operador valor .) ]
-
-    operador                       shift and go to state 11
-
-state 23
-
-    (29) length_list -> valor POINT LENGTH .
-
-    $end            reduce using rule 29 (length_list -> valor POINT LENGTH .)
-
-
-state 24
-
-    (8) list -> LCOR valores RCOR .
-
-    $end            reduce using rule 8 (list -> LCOR valores RCOR .)
-
-
-state 25
-
-    (10) valores -> valor COMMA . valores
-    (9) valores -> . valor
-    (10) valores -> . valor COMMA valores
-    (13) valor -> . VARIABLE
-    (14) valor -> . INTEGER
-    (15) valor -> . FLOAT
-    (16) valor -> . expresion
-    (5) expresion -> . valor operador valor
-
-    VARIABLE        shift and go to state 19
-    INTEGER         shift and go to state 9
-    FLOAT           shift and go to state 10
-
-    valor                          shift and go to state 18
-    valores                        shift and go to state 28
-    expresion                      shift and go to state 20
-
-state 26
-
-    (6) declaracion -> VARIABLE EQUAL valor .
-    (5) expresion -> valor . operador valor
-    (17) operador -> . PLUS
-    (18) operador -> . MINUS
-    (19) operador -> . TIMES
-    (20) operador -> . DIVIDE
-
-    $end            reduce using rule 6 (declaracion -> VARIABLE EQUAL valor .)
-    PLUS            shift and go to state 13
-    MINUS           shift and go to state 14
-    TIMES           shift and go to state 15
-    DIVIDE          shift and go to state 16
-
-    operador                       shift and go to state 11
-
-state 27
-
-    (7) declaracion -> VARIABLE EQUAL LIST .
-
-    $end            reduce using rule 7 (declaracion -> VARIABLE EQUAL LIST .)
-
-
-state 28
-
-    (10) valores -> valor COMMA valores .
-
-    RCOR            reduce using rule 10 (valores -> valor COMMA valores .)
-
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for PLUS in state 22 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 22 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 22 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 22 resolved as shift

@@ -18,6 +18,7 @@ reserved = {
     'print':'PRINT',
     'return':'RETURN',
     'break':'BREAK',
+    'input':'INPUT',
     #Termina aporte Adrian Litardo
     #Empieza aporte Carlos Cabanilla 24/06
     'case': 'CASE',
@@ -98,6 +99,17 @@ t_RPAREN  = r'\)'
 
 
 #Empieza aporte Adrian Litardo
+#Aporte Adrian Litardo 07/07
+#Expresion regular para symbol
+def t_SYMBOL(t):
+    r':[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = 'SYMBOL'
+    return t
+#Expresion regular para nil
+def t_NIL(t):
+    r'nil'
+    t.type = 'NIL'
+    return t
 #Expresion regular para hash
 def t_HASH(t):
     r'[a-fA-F0-9]{32}' #Solo acepta hash de 32 caracteres
@@ -178,13 +190,13 @@ lexer = lex.lex()
 
 #Termina aporte Adrian Litardo
 
-#Informacion a verificar
+"""#Informacion a verificar
 data_Carlos = "La direccion IP 194.111.10.3 es 23.2 > 50 "
 #Kevin Ibarra
 data_Kevin = '[1, 2, 3] [1,2,3] ="Hola mundo"'
 #Adrian Litardo
 data_Adrian = 'while x < 5: -3.45 == 3e25960a79dbc69b674cd4ec67a72c62; true != false'
-#
+
 lexer.input(data_Kevin)
 
 # Tokenize
@@ -192,4 +204,4 @@ lexer.input(data_Kevin)
     #tok = lexer.token()
     #if not tok:
         #break      # No more input
-    #print(tok)
+    #print(tok)"""
