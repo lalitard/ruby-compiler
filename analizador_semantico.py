@@ -26,6 +26,7 @@ variables = {}
 def p_programa(p):
     '''programa : expresion
                 | imprimir
+                | imprimir_vacio
                 | sentenciaIf
                 | solicitud
                 | sentenciaCase
@@ -67,20 +68,20 @@ def p_expresion(p):
         return
     #Fin aporte semantico Adrian Litardo
 def p_expresion_binaria(p):
-    '''expresion : expresion operador valor'''
+    '''expresion_binaria : expresion operador valor'''
 
 def p_expresion_par(p):
-    'expresion : LPAREN expresion RPAREN'
+    'expresion_par : LPAREN expresion RPAREN'
     p[0] = p[2]
 
 def p_expresion_mul_div(p):
-    '''expresion : expresion TIMES valor
+    '''expresion_mul_div : expresion TIMES valor
                  | expresion DIVIDE valor
     '''
     p[0] = (p[2], p[1], p[3])
 
 def p_expresion_add_sub(p):
-    '''expresion : expresion PLUS valor
+    '''expresion_add_sub : expresion PLUS valor
                  | expresion MINUS valor
     '''
     p[0] = (p[2], p[1], p[3])
@@ -90,7 +91,7 @@ def p_imprimir(p):
 
 
 def p_imprimir_vacio(p):
-    'imprimir : PRINT LPAREN RPAREN'
+    'imprimir_vacio : PRINT LPAREN RPAREN'
 
 def p_declaracion(p):
     '''declaracion : VARIABLE EQUAL valor

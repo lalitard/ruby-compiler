@@ -34,14 +34,14 @@ Rule 11    expresion -> expresion_binaria
 Rule 12    expresion -> expresion_par
 Rule 13    expresion -> expresion_mul_div
 Rule 14    expresion -> expresion_add_sub
-Rule 15    expresion -> expresion operador valor
-Rule 16    expresion -> LPAREN expresion RPAREN
-Rule 17    expresion -> expresion TIMES valor
-Rule 18    expresion -> expresion DIVIDE valor
-Rule 19    expresion -> expresion PLUS valor
-Rule 20    expresion -> expresion MINUS valor
+Rule 15    expresion_binaria -> expresion operador valor
+Rule 16    expresion_par -> LPAREN expresion RPAREN
+Rule 17    expresion_mul_div -> expresion TIMES valor
+Rule 18    expresion_mul_div -> expresion DIVIDE valor
+Rule 19    expresion_add_sub -> expresion PLUS valor
+Rule 20    expresion_add_sub -> expresion MINUS valor
 Rule 21    imprimir -> PRINT LPAREN valores RPAREN
-Rule 22    imprimir -> PRINT LPAREN RPAREN
+Rule 22    imprimir_vacio -> PRINT LPAREN RPAREN
 Rule 23    declaracion -> VARIABLE EQUAL valor
 Rule 24    declaracion -> VARIABLE EQUAL LIST
 Rule 25    list -> LCOR valores RCOR
@@ -135,6 +135,7 @@ expresion_binaria    : 11
 expresion_mul_div    : 13
 expresion_par        : 12
 imprimir             : 2
+imprimir_vacio       : 
 length_list          : 8
 list                 : 7
 operador             : 10 15
@@ -146,3 +147,2458 @@ solicitud            : 4
 valor                : 10 10 15 17 18 19 20 23 26 27 28 28 47 50
 valores              : 21 25 27
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . sentenciaIf
+    (4) programa -> . solicitud
+    (5) programa -> . sentenciaCase
+    (6) programa -> . sentenciaWhile
+    (7) programa -> . list
+    (8) programa -> . length_list
+    (9) programa -> . declaracion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (21) imprimir -> . PRINT LPAREN valores RPAREN
+    (48) sentenciaIf -> . IF condicion programa ELSE programa END
+    (46) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (47) sentenciaCase -> . CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (49) sentenciaWhile -> . WHILE condicion programa END
+    (25) list -> . LCOR valores RCOR
+    (50) length_list -> . valor POINT LENGTH
+    (23) declaracion -> . VARIABLE EQUAL valor
+    (24) declaracion -> . VARIABLE EQUAL LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    PRINT           shift and go to state 16
+    IF              shift and go to state 18
+    INPUT           shift and go to state 19
+    CASE            shift and go to state 20
+    WHILE           shift and go to state 21
+    LCOR            shift and go to state 22
+    VARIABLE        shift and go to state 23
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    programa                       shift and go to state 1
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    sentenciaIf                    shift and go to state 4
+    solicitud                      shift and go to state 5
+    sentenciaCase                  shift and go to state 6
+    sentenciaWhile                 shift and go to state 7
+    list                           shift and go to state 8
+    length_list                    shift and go to state 9
+    declaracion                    shift and go to state 10
+    valor                          shift and go to state 11
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> expresion .
+    (33) valor -> expresion .
+    (15) expresion_binaria -> expresion . operador valor
+    (17) expresion_mul_div -> expresion . TIMES valor
+    (18) expresion_mul_div -> expresion . DIVIDE valor
+    (19) expresion_add_sub -> expresion . PLUS valor
+    (20) expresion_add_sub -> expresion . MINUS valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    $end            reduce using rule 1 (programa -> expresion .)
+    ELSE            reduce using rule 1 (programa -> expresion .)
+    END             reduce using rule 1 (programa -> expresion .)
+    WHEN            reduce using rule 1 (programa -> expresion .)
+    POINT           reduce using rule 33 (valor -> expresion .)
+    TIMES           shift and go to state 27
+    DIVIDE          shift and go to state 28
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+
+  ! PLUS            [ reduce using rule 33 (valor -> expresion .) ]
+  ! MINUS           [ reduce using rule 33 (valor -> expresion .) ]
+  ! TIMES           [ reduce using rule 33 (valor -> expresion .) ]
+  ! DIVIDE          [ reduce using rule 33 (valor -> expresion .) ]
+
+    operador                       shift and go to state 26
+
+state 3
+
+    (2) programa -> imprimir .
+
+    $end            reduce using rule 2 (programa -> imprimir .)
+    ELSE            reduce using rule 2 (programa -> imprimir .)
+    END             reduce using rule 2 (programa -> imprimir .)
+    WHEN            reduce using rule 2 (programa -> imprimir .)
+
+
+state 4
+
+    (3) programa -> sentenciaIf .
+
+    $end            reduce using rule 3 (programa -> sentenciaIf .)
+    ELSE            reduce using rule 3 (programa -> sentenciaIf .)
+    END             reduce using rule 3 (programa -> sentenciaIf .)
+    WHEN            reduce using rule 3 (programa -> sentenciaIf .)
+
+
+state 5
+
+    (4) programa -> solicitud .
+
+    $end            reduce using rule 4 (programa -> solicitud .)
+    ELSE            reduce using rule 4 (programa -> solicitud .)
+    END             reduce using rule 4 (programa -> solicitud .)
+    WHEN            reduce using rule 4 (programa -> solicitud .)
+
+
+state 6
+
+    (5) programa -> sentenciaCase .
+
+    $end            reduce using rule 5 (programa -> sentenciaCase .)
+    ELSE            reduce using rule 5 (programa -> sentenciaCase .)
+    END             reduce using rule 5 (programa -> sentenciaCase .)
+    WHEN            reduce using rule 5 (programa -> sentenciaCase .)
+
+
+state 7
+
+    (6) programa -> sentenciaWhile .
+
+    $end            reduce using rule 6 (programa -> sentenciaWhile .)
+    ELSE            reduce using rule 6 (programa -> sentenciaWhile .)
+    END             reduce using rule 6 (programa -> sentenciaWhile .)
+    WHEN            reduce using rule 6 (programa -> sentenciaWhile .)
+
+
+state 8
+
+    (7) programa -> list .
+
+    $end            reduce using rule 7 (programa -> list .)
+    ELSE            reduce using rule 7 (programa -> list .)
+    END             reduce using rule 7 (programa -> list .)
+    WHEN            reduce using rule 7 (programa -> list .)
+
+
+state 9
+
+    (8) programa -> length_list .
+
+    $end            reduce using rule 8 (programa -> length_list .)
+    ELSE            reduce using rule 8 (programa -> length_list .)
+    END             reduce using rule 8 (programa -> length_list .)
+    WHEN            reduce using rule 8 (programa -> length_list .)
+
+
+state 10
+
+    (9) programa -> declaracion .
+
+    $end            reduce using rule 9 (programa -> declaracion .)
+    ELSE            reduce using rule 9 (programa -> declaracion .)
+    END             reduce using rule 9 (programa -> declaracion .)
+    WHEN            reduce using rule 9 (programa -> declaracion .)
+
+
+state 11
+
+    (10) expresion -> valor . operador valor
+    (50) length_list -> valor . POINT LENGTH
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+    POINT           shift and go to state 32
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+    operador                       shift and go to state 31
+
+state 12
+
+    (11) expresion -> expresion_binaria .
+
+    TIMES           reduce using rule 11 (expresion -> expresion_binaria .)
+    DIVIDE          reduce using rule 11 (expresion -> expresion_binaria .)
+    PLUS            reduce using rule 11 (expresion -> expresion_binaria .)
+    MINUS           reduce using rule 11 (expresion -> expresion_binaria .)
+    $end            reduce using rule 11 (expresion -> expresion_binaria .)
+    POINT           reduce using rule 11 (expresion -> expresion_binaria .)
+    RPAREN          reduce using rule 11 (expresion -> expresion_binaria .)
+    LESS_THAN       reduce using rule 11 (expresion -> expresion_binaria .)
+    GREATER_THAN    reduce using rule 11 (expresion -> expresion_binaria .)
+    EQUALS          reduce using rule 11 (expresion -> expresion_binaria .)
+    NOT_EQUALS      reduce using rule 11 (expresion -> expresion_binaria .)
+    LESS_EQUAL_THAN reduce using rule 11 (expresion -> expresion_binaria .)
+    GREATER_EQUAL_THAN reduce using rule 11 (expresion -> expresion_binaria .)
+    WHEN            reduce using rule 11 (expresion -> expresion_binaria .)
+    COMMA           reduce using rule 11 (expresion -> expresion_binaria .)
+    RCOR            reduce using rule 11 (expresion -> expresion_binaria .)
+    ELSE            reduce using rule 11 (expresion -> expresion_binaria .)
+    END             reduce using rule 11 (expresion -> expresion_binaria .)
+    AND             reduce using rule 11 (expresion -> expresion_binaria .)
+    OR              reduce using rule 11 (expresion -> expresion_binaria .)
+    PRINT           reduce using rule 11 (expresion -> expresion_binaria .)
+    IF              reduce using rule 11 (expresion -> expresion_binaria .)
+    INPUT           reduce using rule 11 (expresion -> expresion_binaria .)
+    CASE            reduce using rule 11 (expresion -> expresion_binaria .)
+    WHILE           reduce using rule 11 (expresion -> expresion_binaria .)
+    LCOR            reduce using rule 11 (expresion -> expresion_binaria .)
+    VARIABLE        reduce using rule 11 (expresion -> expresion_binaria .)
+    INTEGER         reduce using rule 11 (expresion -> expresion_binaria .)
+    FLOAT           reduce using rule 11 (expresion -> expresion_binaria .)
+    LPAREN          reduce using rule 11 (expresion -> expresion_binaria .)
+
+
+state 13
+
+    (12) expresion -> expresion_par .
+
+    TIMES           reduce using rule 12 (expresion -> expresion_par .)
+    DIVIDE          reduce using rule 12 (expresion -> expresion_par .)
+    PLUS            reduce using rule 12 (expresion -> expresion_par .)
+    MINUS           reduce using rule 12 (expresion -> expresion_par .)
+    $end            reduce using rule 12 (expresion -> expresion_par .)
+    POINT           reduce using rule 12 (expresion -> expresion_par .)
+    RPAREN          reduce using rule 12 (expresion -> expresion_par .)
+    LESS_THAN       reduce using rule 12 (expresion -> expresion_par .)
+    GREATER_THAN    reduce using rule 12 (expresion -> expresion_par .)
+    EQUALS          reduce using rule 12 (expresion -> expresion_par .)
+    NOT_EQUALS      reduce using rule 12 (expresion -> expresion_par .)
+    LESS_EQUAL_THAN reduce using rule 12 (expresion -> expresion_par .)
+    GREATER_EQUAL_THAN reduce using rule 12 (expresion -> expresion_par .)
+    WHEN            reduce using rule 12 (expresion -> expresion_par .)
+    COMMA           reduce using rule 12 (expresion -> expresion_par .)
+    RCOR            reduce using rule 12 (expresion -> expresion_par .)
+    ELSE            reduce using rule 12 (expresion -> expresion_par .)
+    END             reduce using rule 12 (expresion -> expresion_par .)
+    AND             reduce using rule 12 (expresion -> expresion_par .)
+    OR              reduce using rule 12 (expresion -> expresion_par .)
+    PRINT           reduce using rule 12 (expresion -> expresion_par .)
+    IF              reduce using rule 12 (expresion -> expresion_par .)
+    INPUT           reduce using rule 12 (expresion -> expresion_par .)
+    CASE            reduce using rule 12 (expresion -> expresion_par .)
+    WHILE           reduce using rule 12 (expresion -> expresion_par .)
+    LCOR            reduce using rule 12 (expresion -> expresion_par .)
+    VARIABLE        reduce using rule 12 (expresion -> expresion_par .)
+    INTEGER         reduce using rule 12 (expresion -> expresion_par .)
+    FLOAT           reduce using rule 12 (expresion -> expresion_par .)
+    LPAREN          reduce using rule 12 (expresion -> expresion_par .)
+
+
+state 14
+
+    (13) expresion -> expresion_mul_div .
+
+    TIMES           reduce using rule 13 (expresion -> expresion_mul_div .)
+    DIVIDE          reduce using rule 13 (expresion -> expresion_mul_div .)
+    PLUS            reduce using rule 13 (expresion -> expresion_mul_div .)
+    MINUS           reduce using rule 13 (expresion -> expresion_mul_div .)
+    $end            reduce using rule 13 (expresion -> expresion_mul_div .)
+    POINT           reduce using rule 13 (expresion -> expresion_mul_div .)
+    RPAREN          reduce using rule 13 (expresion -> expresion_mul_div .)
+    LESS_THAN       reduce using rule 13 (expresion -> expresion_mul_div .)
+    GREATER_THAN    reduce using rule 13 (expresion -> expresion_mul_div .)
+    EQUALS          reduce using rule 13 (expresion -> expresion_mul_div .)
+    NOT_EQUALS      reduce using rule 13 (expresion -> expresion_mul_div .)
+    LESS_EQUAL_THAN reduce using rule 13 (expresion -> expresion_mul_div .)
+    GREATER_EQUAL_THAN reduce using rule 13 (expresion -> expresion_mul_div .)
+    WHEN            reduce using rule 13 (expresion -> expresion_mul_div .)
+    COMMA           reduce using rule 13 (expresion -> expresion_mul_div .)
+    RCOR            reduce using rule 13 (expresion -> expresion_mul_div .)
+    ELSE            reduce using rule 13 (expresion -> expresion_mul_div .)
+    END             reduce using rule 13 (expresion -> expresion_mul_div .)
+    AND             reduce using rule 13 (expresion -> expresion_mul_div .)
+    OR              reduce using rule 13 (expresion -> expresion_mul_div .)
+    PRINT           reduce using rule 13 (expresion -> expresion_mul_div .)
+    IF              reduce using rule 13 (expresion -> expresion_mul_div .)
+    INPUT           reduce using rule 13 (expresion -> expresion_mul_div .)
+    CASE            reduce using rule 13 (expresion -> expresion_mul_div .)
+    WHILE           reduce using rule 13 (expresion -> expresion_mul_div .)
+    LCOR            reduce using rule 13 (expresion -> expresion_mul_div .)
+    VARIABLE        reduce using rule 13 (expresion -> expresion_mul_div .)
+    INTEGER         reduce using rule 13 (expresion -> expresion_mul_div .)
+    FLOAT           reduce using rule 13 (expresion -> expresion_mul_div .)
+    LPAREN          reduce using rule 13 (expresion -> expresion_mul_div .)
+
+
+state 15
+
+    (14) expresion -> expresion_add_sub .
+
+    TIMES           reduce using rule 14 (expresion -> expresion_add_sub .)
+    DIVIDE          reduce using rule 14 (expresion -> expresion_add_sub .)
+    PLUS            reduce using rule 14 (expresion -> expresion_add_sub .)
+    MINUS           reduce using rule 14 (expresion -> expresion_add_sub .)
+    $end            reduce using rule 14 (expresion -> expresion_add_sub .)
+    POINT           reduce using rule 14 (expresion -> expresion_add_sub .)
+    RPAREN          reduce using rule 14 (expresion -> expresion_add_sub .)
+    LESS_THAN       reduce using rule 14 (expresion -> expresion_add_sub .)
+    GREATER_THAN    reduce using rule 14 (expresion -> expresion_add_sub .)
+    EQUALS          reduce using rule 14 (expresion -> expresion_add_sub .)
+    NOT_EQUALS      reduce using rule 14 (expresion -> expresion_add_sub .)
+    LESS_EQUAL_THAN reduce using rule 14 (expresion -> expresion_add_sub .)
+    GREATER_EQUAL_THAN reduce using rule 14 (expresion -> expresion_add_sub .)
+    WHEN            reduce using rule 14 (expresion -> expresion_add_sub .)
+    COMMA           reduce using rule 14 (expresion -> expresion_add_sub .)
+    RCOR            reduce using rule 14 (expresion -> expresion_add_sub .)
+    ELSE            reduce using rule 14 (expresion -> expresion_add_sub .)
+    END             reduce using rule 14 (expresion -> expresion_add_sub .)
+    AND             reduce using rule 14 (expresion -> expresion_add_sub .)
+    OR              reduce using rule 14 (expresion -> expresion_add_sub .)
+    PRINT           reduce using rule 14 (expresion -> expresion_add_sub .)
+    IF              reduce using rule 14 (expresion -> expresion_add_sub .)
+    INPUT           reduce using rule 14 (expresion -> expresion_add_sub .)
+    CASE            reduce using rule 14 (expresion -> expresion_add_sub .)
+    WHILE           reduce using rule 14 (expresion -> expresion_add_sub .)
+    LCOR            reduce using rule 14 (expresion -> expresion_add_sub .)
+    VARIABLE        reduce using rule 14 (expresion -> expresion_add_sub .)
+    INTEGER         reduce using rule 14 (expresion -> expresion_add_sub .)
+    FLOAT           reduce using rule 14 (expresion -> expresion_add_sub .)
+    LPAREN          reduce using rule 14 (expresion -> expresion_add_sub .)
+
+
+state 16
+
+    (21) imprimir -> PRINT . LPAREN valores RPAREN
+
+    LPAREN          shift and go to state 37
+
+
+state 17
+
+    (16) expresion_par -> LPAREN . expresion RPAREN
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    expresion                      shift and go to state 38
+    valor                          shift and go to state 39
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 18
+
+    (48) sentenciaIf -> IF . condicion programa ELSE programa END
+    (28) condicion -> . valor comparador valor
+    (29) condicion -> . condicion conector condicion
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    condicion                      shift and go to state 41
+    valor                          shift and go to state 42
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 19
+
+    (46) solicitud -> INPUT . LPAREN COMILLA STRING COMILLA RPAREN
+
+    LPAREN          shift and go to state 44
+
+
+state 20
+
+    (47) sentenciaCase -> CASE . valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 45
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 21
+
+    (49) sentenciaWhile -> WHILE . condicion programa END
+    (28) condicion -> . valor comparador valor
+    (29) condicion -> . condicion conector condicion
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    condicion                      shift and go to state 46
+    valor                          shift and go to state 42
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 22
+
+    (25) list -> LCOR . valores RCOR
+    (26) valores -> . valor
+    (27) valores -> . valor COMMA valores
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valores                        shift and go to state 47
+    valor                          shift and go to state 48
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 23
+
+    (23) declaracion -> VARIABLE . EQUAL valor
+    (24) declaracion -> VARIABLE . EQUAL LIST
+    (30) valor -> VARIABLE .
+
+    EQUAL           shift and go to state 49
+    POINT           reduce using rule 30 (valor -> VARIABLE .)
+    PLUS            reduce using rule 30 (valor -> VARIABLE .)
+    MINUS           reduce using rule 30 (valor -> VARIABLE .)
+    TIMES           reduce using rule 30 (valor -> VARIABLE .)
+    DIVIDE          reduce using rule 30 (valor -> VARIABLE .)
+
+
+state 24
+
+    (31) valor -> INTEGER .
+
+    POINT           reduce using rule 31 (valor -> INTEGER .)
+    PLUS            reduce using rule 31 (valor -> INTEGER .)
+    MINUS           reduce using rule 31 (valor -> INTEGER .)
+    TIMES           reduce using rule 31 (valor -> INTEGER .)
+    DIVIDE          reduce using rule 31 (valor -> INTEGER .)
+    LESS_THAN       reduce using rule 31 (valor -> INTEGER .)
+    GREATER_THAN    reduce using rule 31 (valor -> INTEGER .)
+    EQUALS          reduce using rule 31 (valor -> INTEGER .)
+    NOT_EQUALS      reduce using rule 31 (valor -> INTEGER .)
+    LESS_EQUAL_THAN reduce using rule 31 (valor -> INTEGER .)
+    GREATER_EQUAL_THAN reduce using rule 31 (valor -> INTEGER .)
+    WHEN            reduce using rule 31 (valor -> INTEGER .)
+    COMMA           reduce using rule 31 (valor -> INTEGER .)
+    RCOR            reduce using rule 31 (valor -> INTEGER .)
+    $end            reduce using rule 31 (valor -> INTEGER .)
+    RPAREN          reduce using rule 31 (valor -> INTEGER .)
+    ELSE            reduce using rule 31 (valor -> INTEGER .)
+    END             reduce using rule 31 (valor -> INTEGER .)
+    AND             reduce using rule 31 (valor -> INTEGER .)
+    OR              reduce using rule 31 (valor -> INTEGER .)
+    PRINT           reduce using rule 31 (valor -> INTEGER .)
+    IF              reduce using rule 31 (valor -> INTEGER .)
+    INPUT           reduce using rule 31 (valor -> INTEGER .)
+    CASE            reduce using rule 31 (valor -> INTEGER .)
+    WHILE           reduce using rule 31 (valor -> INTEGER .)
+    LCOR            reduce using rule 31 (valor -> INTEGER .)
+    VARIABLE        reduce using rule 31 (valor -> INTEGER .)
+    INTEGER         reduce using rule 31 (valor -> INTEGER .)
+    FLOAT           reduce using rule 31 (valor -> INTEGER .)
+    LPAREN          reduce using rule 31 (valor -> INTEGER .)
+
+
+state 25
+
+    (32) valor -> FLOAT .
+
+    POINT           reduce using rule 32 (valor -> FLOAT .)
+    PLUS            reduce using rule 32 (valor -> FLOAT .)
+    MINUS           reduce using rule 32 (valor -> FLOAT .)
+    TIMES           reduce using rule 32 (valor -> FLOAT .)
+    DIVIDE          reduce using rule 32 (valor -> FLOAT .)
+    LESS_THAN       reduce using rule 32 (valor -> FLOAT .)
+    GREATER_THAN    reduce using rule 32 (valor -> FLOAT .)
+    EQUALS          reduce using rule 32 (valor -> FLOAT .)
+    NOT_EQUALS      reduce using rule 32 (valor -> FLOAT .)
+    LESS_EQUAL_THAN reduce using rule 32 (valor -> FLOAT .)
+    GREATER_EQUAL_THAN reduce using rule 32 (valor -> FLOAT .)
+    WHEN            reduce using rule 32 (valor -> FLOAT .)
+    COMMA           reduce using rule 32 (valor -> FLOAT .)
+    RCOR            reduce using rule 32 (valor -> FLOAT .)
+    $end            reduce using rule 32 (valor -> FLOAT .)
+    RPAREN          reduce using rule 32 (valor -> FLOAT .)
+    ELSE            reduce using rule 32 (valor -> FLOAT .)
+    END             reduce using rule 32 (valor -> FLOAT .)
+    AND             reduce using rule 32 (valor -> FLOAT .)
+    OR              reduce using rule 32 (valor -> FLOAT .)
+    PRINT           reduce using rule 32 (valor -> FLOAT .)
+    IF              reduce using rule 32 (valor -> FLOAT .)
+    INPUT           reduce using rule 32 (valor -> FLOAT .)
+    CASE            reduce using rule 32 (valor -> FLOAT .)
+    WHILE           reduce using rule 32 (valor -> FLOAT .)
+    LCOR            reduce using rule 32 (valor -> FLOAT .)
+    VARIABLE        reduce using rule 32 (valor -> FLOAT .)
+    INTEGER         reduce using rule 32 (valor -> FLOAT .)
+    FLOAT           reduce using rule 32 (valor -> FLOAT .)
+    LPAREN          reduce using rule 32 (valor -> FLOAT .)
+
+
+state 26
+
+    (15) expresion_binaria -> expresion operador . valor
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    expresion                      shift and go to state 43
+    valor                          shift and go to state 50
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 27
+
+    (17) expresion_mul_div -> expresion TIMES . valor
+    (36) operador -> TIMES .
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+  ! VARIABLE        [ reduce using rule 36 (operador -> TIMES .) ]
+  ! INTEGER         [ reduce using rule 36 (operador -> TIMES .) ]
+  ! FLOAT           [ reduce using rule 36 (operador -> TIMES .) ]
+  ! LPAREN          [ reduce using rule 36 (operador -> TIMES .) ]
+
+    expresion                      shift and go to state 43
+    valor                          shift and go to state 51
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 28
+
+    (18) expresion_mul_div -> expresion DIVIDE . valor
+    (37) operador -> DIVIDE .
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+  ! VARIABLE        [ reduce using rule 37 (operador -> DIVIDE .) ]
+  ! INTEGER         [ reduce using rule 37 (operador -> DIVIDE .) ]
+  ! FLOAT           [ reduce using rule 37 (operador -> DIVIDE .) ]
+  ! LPAREN          [ reduce using rule 37 (operador -> DIVIDE .) ]
+
+    expresion                      shift and go to state 43
+    valor                          shift and go to state 52
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 29
+
+    (19) expresion_add_sub -> expresion PLUS . valor
+    (34) operador -> PLUS .
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+  ! VARIABLE        [ reduce using rule 34 (operador -> PLUS .) ]
+  ! INTEGER         [ reduce using rule 34 (operador -> PLUS .) ]
+  ! FLOAT           [ reduce using rule 34 (operador -> PLUS .) ]
+  ! LPAREN          [ reduce using rule 34 (operador -> PLUS .) ]
+
+    expresion                      shift and go to state 43
+    valor                          shift and go to state 53
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 30
+
+    (20) expresion_add_sub -> expresion MINUS . valor
+    (35) operador -> MINUS .
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for INTEGER resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LPAREN resolved as shift
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+  ! VARIABLE        [ reduce using rule 35 (operador -> MINUS .) ]
+  ! INTEGER         [ reduce using rule 35 (operador -> MINUS .) ]
+  ! FLOAT           [ reduce using rule 35 (operador -> MINUS .) ]
+  ! LPAREN          [ reduce using rule 35 (operador -> MINUS .) ]
+
+    expresion                      shift and go to state 43
+    valor                          shift and go to state 54
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 31
+
+    (10) expresion -> valor operador . valor
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 55
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 32
+
+    (50) length_list -> valor POINT . LENGTH
+
+    LENGTH          shift and go to state 56
+
+
+state 33
+
+    (34) operador -> PLUS .
+
+    VARIABLE        reduce using rule 34 (operador -> PLUS .)
+    INTEGER         reduce using rule 34 (operador -> PLUS .)
+    FLOAT           reduce using rule 34 (operador -> PLUS .)
+    LPAREN          reduce using rule 34 (operador -> PLUS .)
+
+
+state 34
+
+    (35) operador -> MINUS .
+
+    VARIABLE        reduce using rule 35 (operador -> MINUS .)
+    INTEGER         reduce using rule 35 (operador -> MINUS .)
+    FLOAT           reduce using rule 35 (operador -> MINUS .)
+    LPAREN          reduce using rule 35 (operador -> MINUS .)
+
+
+state 35
+
+    (36) operador -> TIMES .
+
+    VARIABLE        reduce using rule 36 (operador -> TIMES .)
+    INTEGER         reduce using rule 36 (operador -> TIMES .)
+    FLOAT           reduce using rule 36 (operador -> TIMES .)
+    LPAREN          reduce using rule 36 (operador -> TIMES .)
+
+
+state 36
+
+    (37) operador -> DIVIDE .
+
+    VARIABLE        reduce using rule 37 (operador -> DIVIDE .)
+    INTEGER         reduce using rule 37 (operador -> DIVIDE .)
+    FLOAT           reduce using rule 37 (operador -> DIVIDE .)
+    LPAREN          reduce using rule 37 (operador -> DIVIDE .)
+
+
+state 37
+
+    (21) imprimir -> PRINT LPAREN . valores RPAREN
+    (26) valores -> . valor
+    (27) valores -> . valor COMMA valores
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valores                        shift and go to state 57
+    valor                          shift and go to state 48
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 38
+
+    (16) expresion_par -> LPAREN expresion . RPAREN
+    (33) valor -> expresion .
+    (15) expresion_binaria -> expresion . operador valor
+    (17) expresion_mul_div -> expresion . TIMES valor
+    (18) expresion_mul_div -> expresion . DIVIDE valor
+    (19) expresion_add_sub -> expresion . PLUS valor
+    (20) expresion_add_sub -> expresion . MINUS valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    RPAREN          shift and go to state 58
+    TIMES           shift and go to state 27
+    DIVIDE          shift and go to state 28
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+
+  ! PLUS            [ reduce using rule 33 (valor -> expresion .) ]
+  ! MINUS           [ reduce using rule 33 (valor -> expresion .) ]
+  ! TIMES           [ reduce using rule 33 (valor -> expresion .) ]
+  ! DIVIDE          [ reduce using rule 33 (valor -> expresion .) ]
+
+    operador                       shift and go to state 26
+
+state 39
+
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+    operador                       shift and go to state 31
+
+state 40
+
+    (30) valor -> VARIABLE .
+
+    PLUS            reduce using rule 30 (valor -> VARIABLE .)
+    MINUS           reduce using rule 30 (valor -> VARIABLE .)
+    TIMES           reduce using rule 30 (valor -> VARIABLE .)
+    DIVIDE          reduce using rule 30 (valor -> VARIABLE .)
+    LESS_THAN       reduce using rule 30 (valor -> VARIABLE .)
+    GREATER_THAN    reduce using rule 30 (valor -> VARIABLE .)
+    EQUALS          reduce using rule 30 (valor -> VARIABLE .)
+    NOT_EQUALS      reduce using rule 30 (valor -> VARIABLE .)
+    LESS_EQUAL_THAN reduce using rule 30 (valor -> VARIABLE .)
+    GREATER_EQUAL_THAN reduce using rule 30 (valor -> VARIABLE .)
+    WHEN            reduce using rule 30 (valor -> VARIABLE .)
+    COMMA           reduce using rule 30 (valor -> VARIABLE .)
+    RCOR            reduce using rule 30 (valor -> VARIABLE .)
+    $end            reduce using rule 30 (valor -> VARIABLE .)
+    POINT           reduce using rule 30 (valor -> VARIABLE .)
+    RPAREN          reduce using rule 30 (valor -> VARIABLE .)
+    ELSE            reduce using rule 30 (valor -> VARIABLE .)
+    END             reduce using rule 30 (valor -> VARIABLE .)
+    AND             reduce using rule 30 (valor -> VARIABLE .)
+    OR              reduce using rule 30 (valor -> VARIABLE .)
+    PRINT           reduce using rule 30 (valor -> VARIABLE .)
+    IF              reduce using rule 30 (valor -> VARIABLE .)
+    INPUT           reduce using rule 30 (valor -> VARIABLE .)
+    CASE            reduce using rule 30 (valor -> VARIABLE .)
+    WHILE           reduce using rule 30 (valor -> VARIABLE .)
+    LCOR            reduce using rule 30 (valor -> VARIABLE .)
+    VARIABLE        reduce using rule 30 (valor -> VARIABLE .)
+    INTEGER         reduce using rule 30 (valor -> VARIABLE .)
+    FLOAT           reduce using rule 30 (valor -> VARIABLE .)
+    LPAREN          reduce using rule 30 (valor -> VARIABLE .)
+
+
+state 41
+
+    (48) sentenciaIf -> IF condicion . programa ELSE programa END
+    (29) condicion -> condicion . conector condicion
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . sentenciaIf
+    (4) programa -> . solicitud
+    (5) programa -> . sentenciaCase
+    (6) programa -> . sentenciaWhile
+    (7) programa -> . list
+    (8) programa -> . length_list
+    (9) programa -> . declaracion
+    (44) conector -> . AND
+    (45) conector -> . OR
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (21) imprimir -> . PRINT LPAREN valores RPAREN
+    (48) sentenciaIf -> . IF condicion programa ELSE programa END
+    (46) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (47) sentenciaCase -> . CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (49) sentenciaWhile -> . WHILE condicion programa END
+    (25) list -> . LCOR valores RCOR
+    (50) length_list -> . valor POINT LENGTH
+    (23) declaracion -> . VARIABLE EQUAL valor
+    (24) declaracion -> . VARIABLE EQUAL LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    AND             shift and go to state 61
+    OR              shift and go to state 62
+    PRINT           shift and go to state 16
+    IF              shift and go to state 18
+    INPUT           shift and go to state 19
+    CASE            shift and go to state 20
+    WHILE           shift and go to state 21
+    LCOR            shift and go to state 22
+    VARIABLE        shift and go to state 23
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    programa                       shift and go to state 59
+    conector                       shift and go to state 60
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    sentenciaIf                    shift and go to state 4
+    solicitud                      shift and go to state 5
+    sentenciaCase                  shift and go to state 6
+    sentenciaWhile                 shift and go to state 7
+    list                           shift and go to state 8
+    length_list                    shift and go to state 9
+    declaracion                    shift and go to state 10
+    valor                          shift and go to state 11
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 42
+
+    (28) condicion -> valor . comparador valor
+    (10) expresion -> valor . operador valor
+    (38) comparador -> . LESS_THAN
+    (39) comparador -> . GREATER_THAN
+    (40) comparador -> . EQUALS
+    (41) comparador -> . NOT_EQUALS
+    (42) comparador -> . LESS_EQUAL_THAN
+    (43) comparador -> . GREATER_EQUAL_THAN
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+    LESS_THAN       shift and go to state 64
+    GREATER_THAN    shift and go to state 65
+    EQUALS          shift and go to state 66
+    NOT_EQUALS      shift and go to state 67
+    LESS_EQUAL_THAN shift and go to state 68
+    GREATER_EQUAL_THAN shift and go to state 69
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+    comparador                     shift and go to state 63
+    operador                       shift and go to state 31
+
+state 43
+
+    (33) valor -> expresion .
+    (15) expresion_binaria -> expresion . operador valor
+    (17) expresion_mul_div -> expresion . TIMES valor
+    (18) expresion_mul_div -> expresion . DIVIDE valor
+    (19) expresion_add_sub -> expresion . PLUS valor
+    (20) expresion_add_sub -> expresion . MINUS valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+    LESS_THAN       reduce using rule 33 (valor -> expresion .)
+    GREATER_THAN    reduce using rule 33 (valor -> expresion .)
+    EQUALS          reduce using rule 33 (valor -> expresion .)
+    NOT_EQUALS      reduce using rule 33 (valor -> expresion .)
+    LESS_EQUAL_THAN reduce using rule 33 (valor -> expresion .)
+    GREATER_EQUAL_THAN reduce using rule 33 (valor -> expresion .)
+    WHEN            reduce using rule 33 (valor -> expresion .)
+    COMMA           reduce using rule 33 (valor -> expresion .)
+    RCOR            reduce using rule 33 (valor -> expresion .)
+    $end            reduce using rule 33 (valor -> expresion .)
+    POINT           reduce using rule 33 (valor -> expresion .)
+    RPAREN          reduce using rule 33 (valor -> expresion .)
+    ELSE            reduce using rule 33 (valor -> expresion .)
+    END             reduce using rule 33 (valor -> expresion .)
+    AND             reduce using rule 33 (valor -> expresion .)
+    OR              reduce using rule 33 (valor -> expresion .)
+    PRINT           reduce using rule 33 (valor -> expresion .)
+    IF              reduce using rule 33 (valor -> expresion .)
+    INPUT           reduce using rule 33 (valor -> expresion .)
+    CASE            reduce using rule 33 (valor -> expresion .)
+    WHILE           reduce using rule 33 (valor -> expresion .)
+    LCOR            reduce using rule 33 (valor -> expresion .)
+    VARIABLE        reduce using rule 33 (valor -> expresion .)
+    INTEGER         reduce using rule 33 (valor -> expresion .)
+    FLOAT           reduce using rule 33 (valor -> expresion .)
+    LPAREN          reduce using rule 33 (valor -> expresion .)
+    TIMES           shift and go to state 27
+    DIVIDE          shift and go to state 28
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+
+  ! PLUS            [ reduce using rule 33 (valor -> expresion .) ]
+  ! MINUS           [ reduce using rule 33 (valor -> expresion .) ]
+  ! TIMES           [ reduce using rule 33 (valor -> expresion .) ]
+  ! DIVIDE          [ reduce using rule 33 (valor -> expresion .) ]
+
+    operador                       shift and go to state 26
+
+state 44
+
+    (46) solicitud -> INPUT LPAREN . COMILLA STRING COMILLA RPAREN
+
+    COMILLA         shift and go to state 70
+
+
+state 45
+
+    (47) sentenciaCase -> CASE valor . WHEN condicion programa WHEN condicion programa ELSE programa END
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+    WHEN            shift and go to state 71
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+    operador                       shift and go to state 31
+
+state 46
+
+    (49) sentenciaWhile -> WHILE condicion . programa END
+    (29) condicion -> condicion . conector condicion
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . sentenciaIf
+    (4) programa -> . solicitud
+    (5) programa -> . sentenciaCase
+    (6) programa -> . sentenciaWhile
+    (7) programa -> . list
+    (8) programa -> . length_list
+    (9) programa -> . declaracion
+    (44) conector -> . AND
+    (45) conector -> . OR
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (21) imprimir -> . PRINT LPAREN valores RPAREN
+    (48) sentenciaIf -> . IF condicion programa ELSE programa END
+    (46) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (47) sentenciaCase -> . CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (49) sentenciaWhile -> . WHILE condicion programa END
+    (25) list -> . LCOR valores RCOR
+    (50) length_list -> . valor POINT LENGTH
+    (23) declaracion -> . VARIABLE EQUAL valor
+    (24) declaracion -> . VARIABLE EQUAL LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    AND             shift and go to state 61
+    OR              shift and go to state 62
+    PRINT           shift and go to state 16
+    IF              shift and go to state 18
+    INPUT           shift and go to state 19
+    CASE            shift and go to state 20
+    WHILE           shift and go to state 21
+    LCOR            shift and go to state 22
+    VARIABLE        shift and go to state 23
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    programa                       shift and go to state 72
+    conector                       shift and go to state 60
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    sentenciaIf                    shift and go to state 4
+    solicitud                      shift and go to state 5
+    sentenciaCase                  shift and go to state 6
+    sentenciaWhile                 shift and go to state 7
+    list                           shift and go to state 8
+    length_list                    shift and go to state 9
+    declaracion                    shift and go to state 10
+    valor                          shift and go to state 11
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 47
+
+    (25) list -> LCOR valores . RCOR
+
+    RCOR            shift and go to state 73
+
+
+state 48
+
+    (26) valores -> valor .
+    (27) valores -> valor . COMMA valores
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+    RCOR            reduce using rule 26 (valores -> valor .)
+    RPAREN          reduce using rule 26 (valores -> valor .)
+    COMMA           shift and go to state 74
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+    operador                       shift and go to state 31
+
+state 49
+
+    (23) declaracion -> VARIABLE EQUAL . valor
+    (24) declaracion -> VARIABLE EQUAL . LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    LIST            shift and go to state 76
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 75
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 50
+
+    (15) expresion_binaria -> expresion operador valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    $end            reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    POINT           reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    RPAREN          reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    LESS_THAN       reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    GREATER_THAN    reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    EQUALS          reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    NOT_EQUALS      reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    LESS_EQUAL_THAN reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    GREATER_EQUAL_THAN reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    WHEN            reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    COMMA           reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    RCOR            reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    ELSE            reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    END             reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    AND             reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    OR              reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    PRINT           reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    IF              reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    INPUT           reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    CASE            reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    WHILE           reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    LCOR            reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    VARIABLE        reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    INTEGER         reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    FLOAT           reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    LPAREN          reduce using rule 15 (expresion_binaria -> expresion operador valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! TIMES           [ reduce using rule 15 (expresion_binaria -> expresion operador valor .) ]
+  ! DIVIDE          [ reduce using rule 15 (expresion_binaria -> expresion operador valor .) ]
+  ! PLUS            [ reduce using rule 15 (expresion_binaria -> expresion operador valor .) ]
+  ! MINUS           [ reduce using rule 15 (expresion_binaria -> expresion operador valor .) ]
+
+    operador                       shift and go to state 31
+
+state 51
+
+    (17) expresion_mul_div -> expresion TIMES valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    $end            reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    POINT           reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    RPAREN          reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    LESS_THAN       reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    GREATER_THAN    reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    EQUALS          reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    NOT_EQUALS      reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    LESS_EQUAL_THAN reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    GREATER_EQUAL_THAN reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    WHEN            reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    COMMA           reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    RCOR            reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    ELSE            reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    END             reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    AND             reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    OR              reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    PRINT           reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    IF              reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    INPUT           reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    CASE            reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    WHILE           reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    LCOR            reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    VARIABLE        reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    INTEGER         reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    FLOAT           reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    LPAREN          reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! TIMES           [ reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .) ]
+  ! DIVIDE          [ reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .) ]
+  ! PLUS            [ reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .) ]
+  ! MINUS           [ reduce using rule 17 (expresion_mul_div -> expresion TIMES valor .) ]
+
+    operador                       shift and go to state 31
+
+state 52
+
+    (18) expresion_mul_div -> expresion DIVIDE valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    $end            reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    POINT           reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    RPAREN          reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    LESS_THAN       reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    GREATER_THAN    reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    EQUALS          reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    NOT_EQUALS      reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    LESS_EQUAL_THAN reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    GREATER_EQUAL_THAN reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    WHEN            reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    COMMA           reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    RCOR            reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    ELSE            reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    END             reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    AND             reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    OR              reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    PRINT           reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    IF              reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    INPUT           reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    CASE            reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    WHILE           reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    LCOR            reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    VARIABLE        reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    INTEGER         reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    FLOAT           reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    LPAREN          reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! TIMES           [ reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .) ]
+  ! DIVIDE          [ reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .) ]
+  ! PLUS            [ reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .) ]
+  ! MINUS           [ reduce using rule 18 (expresion_mul_div -> expresion DIVIDE valor .) ]
+
+    operador                       shift and go to state 31
+
+state 53
+
+    (19) expresion_add_sub -> expresion PLUS valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    $end            reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    POINT           reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    RPAREN          reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    LESS_THAN       reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    GREATER_THAN    reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    EQUALS          reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    NOT_EQUALS      reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    LESS_EQUAL_THAN reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    GREATER_EQUAL_THAN reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    WHEN            reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    COMMA           reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    RCOR            reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    ELSE            reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    END             reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    AND             reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    OR              reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    PRINT           reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    IF              reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    INPUT           reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    CASE            reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    WHILE           reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    LCOR            reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    VARIABLE        reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    INTEGER         reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    FLOAT           reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    LPAREN          reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! TIMES           [ reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .) ]
+  ! DIVIDE          [ reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .) ]
+  ! PLUS            [ reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .) ]
+  ! MINUS           [ reduce using rule 19 (expresion_add_sub -> expresion PLUS valor .) ]
+
+    operador                       shift and go to state 31
+
+state 54
+
+    (20) expresion_add_sub -> expresion MINUS valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    $end            reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    POINT           reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    RPAREN          reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    LESS_THAN       reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    GREATER_THAN    reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    EQUALS          reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    NOT_EQUALS      reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    LESS_EQUAL_THAN reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    GREATER_EQUAL_THAN reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    WHEN            reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    COMMA           reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    RCOR            reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    ELSE            reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    END             reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    AND             reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    OR              reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    PRINT           reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    IF              reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    INPUT           reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    CASE            reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    WHILE           reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    LCOR            reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    VARIABLE        reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    INTEGER         reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    FLOAT           reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    LPAREN          reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! TIMES           [ reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .) ]
+  ! DIVIDE          [ reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .) ]
+  ! PLUS            [ reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .) ]
+  ! MINUS           [ reduce using rule 20 (expresion_add_sub -> expresion MINUS valor .) ]
+
+    operador                       shift and go to state 31
+
+state 55
+
+    (10) expresion -> valor operador valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    $end            reduce using rule 10 (expresion -> valor operador valor .)
+    POINT           reduce using rule 10 (expresion -> valor operador valor .)
+    RPAREN          reduce using rule 10 (expresion -> valor operador valor .)
+    LESS_THAN       reduce using rule 10 (expresion -> valor operador valor .)
+    GREATER_THAN    reduce using rule 10 (expresion -> valor operador valor .)
+    EQUALS          reduce using rule 10 (expresion -> valor operador valor .)
+    NOT_EQUALS      reduce using rule 10 (expresion -> valor operador valor .)
+    LESS_EQUAL_THAN reduce using rule 10 (expresion -> valor operador valor .)
+    GREATER_EQUAL_THAN reduce using rule 10 (expresion -> valor operador valor .)
+    WHEN            reduce using rule 10 (expresion -> valor operador valor .)
+    COMMA           reduce using rule 10 (expresion -> valor operador valor .)
+    RCOR            reduce using rule 10 (expresion -> valor operador valor .)
+    ELSE            reduce using rule 10 (expresion -> valor operador valor .)
+    END             reduce using rule 10 (expresion -> valor operador valor .)
+    AND             reduce using rule 10 (expresion -> valor operador valor .)
+    OR              reduce using rule 10 (expresion -> valor operador valor .)
+    PRINT           reduce using rule 10 (expresion -> valor operador valor .)
+    IF              reduce using rule 10 (expresion -> valor operador valor .)
+    INPUT           reduce using rule 10 (expresion -> valor operador valor .)
+    CASE            reduce using rule 10 (expresion -> valor operador valor .)
+    WHILE           reduce using rule 10 (expresion -> valor operador valor .)
+    LCOR            reduce using rule 10 (expresion -> valor operador valor .)
+    VARIABLE        reduce using rule 10 (expresion -> valor operador valor .)
+    INTEGER         reduce using rule 10 (expresion -> valor operador valor .)
+    FLOAT           reduce using rule 10 (expresion -> valor operador valor .)
+    LPAREN          reduce using rule 10 (expresion -> valor operador valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+  ! TIMES           [ reduce using rule 10 (expresion -> valor operador valor .) ]
+  ! DIVIDE          [ reduce using rule 10 (expresion -> valor operador valor .) ]
+  ! PLUS            [ reduce using rule 10 (expresion -> valor operador valor .) ]
+  ! MINUS           [ reduce using rule 10 (expresion -> valor operador valor .) ]
+
+    operador                       shift and go to state 31
+
+state 56
+
+    (50) length_list -> valor POINT LENGTH .
+
+    $end            reduce using rule 50 (length_list -> valor POINT LENGTH .)
+    ELSE            reduce using rule 50 (length_list -> valor POINT LENGTH .)
+    END             reduce using rule 50 (length_list -> valor POINT LENGTH .)
+    WHEN            reduce using rule 50 (length_list -> valor POINT LENGTH .)
+
+
+state 57
+
+    (21) imprimir -> PRINT LPAREN valores . RPAREN
+
+    RPAREN          shift and go to state 77
+
+
+state 58
+
+    (16) expresion_par -> LPAREN expresion RPAREN .
+
+    TIMES           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    DIVIDE          reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    PLUS            reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    MINUS           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    $end            reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    POINT           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    RPAREN          reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    LESS_THAN       reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    GREATER_THAN    reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    EQUALS          reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    NOT_EQUALS      reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    LESS_EQUAL_THAN reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    GREATER_EQUAL_THAN reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    WHEN            reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    COMMA           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    RCOR            reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    ELSE            reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    END             reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    AND             reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    OR              reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    PRINT           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    IF              reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    INPUT           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    CASE            reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    WHILE           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    LCOR            reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    VARIABLE        reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    INTEGER         reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    FLOAT           reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+    LPAREN          reduce using rule 16 (expresion_par -> LPAREN expresion RPAREN .)
+
+
+state 59
+
+    (48) sentenciaIf -> IF condicion programa . ELSE programa END
+
+    ELSE            shift and go to state 78
+
+
+state 60
+
+    (29) condicion -> condicion conector . condicion
+    (28) condicion -> . valor comparador valor
+    (29) condicion -> . condicion conector condicion
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    condicion                      shift and go to state 79
+    valor                          shift and go to state 42
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 61
+
+    (44) conector -> AND .
+
+    VARIABLE        reduce using rule 44 (conector -> AND .)
+    INTEGER         reduce using rule 44 (conector -> AND .)
+    FLOAT           reduce using rule 44 (conector -> AND .)
+    LPAREN          reduce using rule 44 (conector -> AND .)
+
+
+state 62
+
+    (45) conector -> OR .
+
+    VARIABLE        reduce using rule 45 (conector -> OR .)
+    INTEGER         reduce using rule 45 (conector -> OR .)
+    FLOAT           reduce using rule 45 (conector -> OR .)
+    LPAREN          reduce using rule 45 (conector -> OR .)
+
+
+state 63
+
+    (28) condicion -> valor comparador . valor
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 80
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 64
+
+    (38) comparador -> LESS_THAN .
+
+    VARIABLE        reduce using rule 38 (comparador -> LESS_THAN .)
+    INTEGER         reduce using rule 38 (comparador -> LESS_THAN .)
+    FLOAT           reduce using rule 38 (comparador -> LESS_THAN .)
+    LPAREN          reduce using rule 38 (comparador -> LESS_THAN .)
+
+
+state 65
+
+    (39) comparador -> GREATER_THAN .
+
+    VARIABLE        reduce using rule 39 (comparador -> GREATER_THAN .)
+    INTEGER         reduce using rule 39 (comparador -> GREATER_THAN .)
+    FLOAT           reduce using rule 39 (comparador -> GREATER_THAN .)
+    LPAREN          reduce using rule 39 (comparador -> GREATER_THAN .)
+
+
+state 66
+
+    (40) comparador -> EQUALS .
+
+    VARIABLE        reduce using rule 40 (comparador -> EQUALS .)
+    INTEGER         reduce using rule 40 (comparador -> EQUALS .)
+    FLOAT           reduce using rule 40 (comparador -> EQUALS .)
+    LPAREN          reduce using rule 40 (comparador -> EQUALS .)
+
+
+state 67
+
+    (41) comparador -> NOT_EQUALS .
+
+    VARIABLE        reduce using rule 41 (comparador -> NOT_EQUALS .)
+    INTEGER         reduce using rule 41 (comparador -> NOT_EQUALS .)
+    FLOAT           reduce using rule 41 (comparador -> NOT_EQUALS .)
+    LPAREN          reduce using rule 41 (comparador -> NOT_EQUALS .)
+
+
+state 68
+
+    (42) comparador -> LESS_EQUAL_THAN .
+
+    VARIABLE        reduce using rule 42 (comparador -> LESS_EQUAL_THAN .)
+    INTEGER         reduce using rule 42 (comparador -> LESS_EQUAL_THAN .)
+    FLOAT           reduce using rule 42 (comparador -> LESS_EQUAL_THAN .)
+    LPAREN          reduce using rule 42 (comparador -> LESS_EQUAL_THAN .)
+
+
+state 69
+
+    (43) comparador -> GREATER_EQUAL_THAN .
+
+    VARIABLE        reduce using rule 43 (comparador -> GREATER_EQUAL_THAN .)
+    INTEGER         reduce using rule 43 (comparador -> GREATER_EQUAL_THAN .)
+    FLOAT           reduce using rule 43 (comparador -> GREATER_EQUAL_THAN .)
+    LPAREN          reduce using rule 43 (comparador -> GREATER_EQUAL_THAN .)
+
+
+state 70
+
+    (46) solicitud -> INPUT LPAREN COMILLA . STRING COMILLA RPAREN
+
+    STRING          shift and go to state 81
+
+
+state 71
+
+    (47) sentenciaCase -> CASE valor WHEN . condicion programa WHEN condicion programa ELSE programa END
+    (28) condicion -> . valor comparador valor
+    (29) condicion -> . condicion conector condicion
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 42
+    condicion                      shift and go to state 82
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 72
+
+    (49) sentenciaWhile -> WHILE condicion programa . END
+
+    END             shift and go to state 83
+
+
+state 73
+
+    (25) list -> LCOR valores RCOR .
+
+    $end            reduce using rule 25 (list -> LCOR valores RCOR .)
+    ELSE            reduce using rule 25 (list -> LCOR valores RCOR .)
+    END             reduce using rule 25 (list -> LCOR valores RCOR .)
+    WHEN            reduce using rule 25 (list -> LCOR valores RCOR .)
+
+
+state 74
+
+    (27) valores -> valor COMMA . valores
+    (26) valores -> . valor
+    (27) valores -> . valor COMMA valores
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 48
+    valores                        shift and go to state 84
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 75
+
+    (23) declaracion -> VARIABLE EQUAL valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+    $end            reduce using rule 23 (declaracion -> VARIABLE EQUAL valor .)
+    ELSE            reduce using rule 23 (declaracion -> VARIABLE EQUAL valor .)
+    END             reduce using rule 23 (declaracion -> VARIABLE EQUAL valor .)
+    WHEN            reduce using rule 23 (declaracion -> VARIABLE EQUAL valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+    operador                       shift and go to state 31
+
+state 76
+
+    (24) declaracion -> VARIABLE EQUAL LIST .
+
+    $end            reduce using rule 24 (declaracion -> VARIABLE EQUAL LIST .)
+    ELSE            reduce using rule 24 (declaracion -> VARIABLE EQUAL LIST .)
+    END             reduce using rule 24 (declaracion -> VARIABLE EQUAL LIST .)
+    WHEN            reduce using rule 24 (declaracion -> VARIABLE EQUAL LIST .)
+
+
+state 77
+
+    (21) imprimir -> PRINT LPAREN valores RPAREN .
+
+    $end            reduce using rule 21 (imprimir -> PRINT LPAREN valores RPAREN .)
+    ELSE            reduce using rule 21 (imprimir -> PRINT LPAREN valores RPAREN .)
+    END             reduce using rule 21 (imprimir -> PRINT LPAREN valores RPAREN .)
+    WHEN            reduce using rule 21 (imprimir -> PRINT LPAREN valores RPAREN .)
+
+
+state 78
+
+    (48) sentenciaIf -> IF condicion programa ELSE . programa END
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . sentenciaIf
+    (4) programa -> . solicitud
+    (5) programa -> . sentenciaCase
+    (6) programa -> . sentenciaWhile
+    (7) programa -> . list
+    (8) programa -> . length_list
+    (9) programa -> . declaracion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (21) imprimir -> . PRINT LPAREN valores RPAREN
+    (48) sentenciaIf -> . IF condicion programa ELSE programa END
+    (46) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (47) sentenciaCase -> . CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (49) sentenciaWhile -> . WHILE condicion programa END
+    (25) list -> . LCOR valores RCOR
+    (50) length_list -> . valor POINT LENGTH
+    (23) declaracion -> . VARIABLE EQUAL valor
+    (24) declaracion -> . VARIABLE EQUAL LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    PRINT           shift and go to state 16
+    IF              shift and go to state 18
+    INPUT           shift and go to state 19
+    CASE            shift and go to state 20
+    WHILE           shift and go to state 21
+    LCOR            shift and go to state 22
+    VARIABLE        shift and go to state 23
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    programa                       shift and go to state 85
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    sentenciaIf                    shift and go to state 4
+    solicitud                      shift and go to state 5
+    sentenciaCase                  shift and go to state 6
+    sentenciaWhile                 shift and go to state 7
+    list                           shift and go to state 8
+    length_list                    shift and go to state 9
+    declaracion                    shift and go to state 10
+    valor                          shift and go to state 11
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 79
+
+    (29) condicion -> condicion conector condicion .
+    (29) condicion -> condicion . conector condicion
+    (44) conector -> . AND
+    (45) conector -> . OR
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    PRINT           reduce using rule 29 (condicion -> condicion conector condicion .)
+    IF              reduce using rule 29 (condicion -> condicion conector condicion .)
+    INPUT           reduce using rule 29 (condicion -> condicion conector condicion .)
+    CASE            reduce using rule 29 (condicion -> condicion conector condicion .)
+    WHILE           reduce using rule 29 (condicion -> condicion conector condicion .)
+    LCOR            reduce using rule 29 (condicion -> condicion conector condicion .)
+    VARIABLE        reduce using rule 29 (condicion -> condicion conector condicion .)
+    INTEGER         reduce using rule 29 (condicion -> condicion conector condicion .)
+    FLOAT           reduce using rule 29 (condicion -> condicion conector condicion .)
+    LPAREN          reduce using rule 29 (condicion -> condicion conector condicion .)
+    AND             shift and go to state 61
+    OR              shift and go to state 62
+
+  ! AND             [ reduce using rule 29 (condicion -> condicion conector condicion .) ]
+  ! OR              [ reduce using rule 29 (condicion -> condicion conector condicion .) ]
+
+    conector                       shift and go to state 60
+
+state 80
+
+    (28) condicion -> valor comparador valor .
+    (10) expresion -> valor . operador valor
+    (34) operador -> . PLUS
+    (35) operador -> . MINUS
+    (36) operador -> . TIMES
+    (37) operador -> . DIVIDE
+
+    AND             reduce using rule 28 (condicion -> valor comparador valor .)
+    OR              reduce using rule 28 (condicion -> valor comparador valor .)
+    PRINT           reduce using rule 28 (condicion -> valor comparador valor .)
+    IF              reduce using rule 28 (condicion -> valor comparador valor .)
+    INPUT           reduce using rule 28 (condicion -> valor comparador valor .)
+    CASE            reduce using rule 28 (condicion -> valor comparador valor .)
+    WHILE           reduce using rule 28 (condicion -> valor comparador valor .)
+    LCOR            reduce using rule 28 (condicion -> valor comparador valor .)
+    VARIABLE        reduce using rule 28 (condicion -> valor comparador valor .)
+    INTEGER         reduce using rule 28 (condicion -> valor comparador valor .)
+    FLOAT           reduce using rule 28 (condicion -> valor comparador valor .)
+    LPAREN          reduce using rule 28 (condicion -> valor comparador valor .)
+    PLUS            shift and go to state 33
+    MINUS           shift and go to state 34
+    TIMES           shift and go to state 35
+    DIVIDE          shift and go to state 36
+
+    operador                       shift and go to state 31
+
+state 81
+
+    (46) solicitud -> INPUT LPAREN COMILLA STRING . COMILLA RPAREN
+
+    COMILLA         shift and go to state 86
+
+
+state 82
+
+    (47) sentenciaCase -> CASE valor WHEN condicion . programa WHEN condicion programa ELSE programa END
+    (29) condicion -> condicion . conector condicion
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . sentenciaIf
+    (4) programa -> . solicitud
+    (5) programa -> . sentenciaCase
+    (6) programa -> . sentenciaWhile
+    (7) programa -> . list
+    (8) programa -> . length_list
+    (9) programa -> . declaracion
+    (44) conector -> . AND
+    (45) conector -> . OR
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (21) imprimir -> . PRINT LPAREN valores RPAREN
+    (48) sentenciaIf -> . IF condicion programa ELSE programa END
+    (46) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (47) sentenciaCase -> . CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (49) sentenciaWhile -> . WHILE condicion programa END
+    (25) list -> . LCOR valores RCOR
+    (50) length_list -> . valor POINT LENGTH
+    (23) declaracion -> . VARIABLE EQUAL valor
+    (24) declaracion -> . VARIABLE EQUAL LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    AND             shift and go to state 61
+    OR              shift and go to state 62
+    PRINT           shift and go to state 16
+    IF              shift and go to state 18
+    INPUT           shift and go to state 19
+    CASE            shift and go to state 20
+    WHILE           shift and go to state 21
+    LCOR            shift and go to state 22
+    VARIABLE        shift and go to state 23
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 11
+    programa                       shift and go to state 87
+    conector                       shift and go to state 60
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    sentenciaIf                    shift and go to state 4
+    solicitud                      shift and go to state 5
+    sentenciaCase                  shift and go to state 6
+    sentenciaWhile                 shift and go to state 7
+    list                           shift and go to state 8
+    length_list                    shift and go to state 9
+    declaracion                    shift and go to state 10
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 83
+
+    (49) sentenciaWhile -> WHILE condicion programa END .
+
+    $end            reduce using rule 49 (sentenciaWhile -> WHILE condicion programa END .)
+    ELSE            reduce using rule 49 (sentenciaWhile -> WHILE condicion programa END .)
+    END             reduce using rule 49 (sentenciaWhile -> WHILE condicion programa END .)
+    WHEN            reduce using rule 49 (sentenciaWhile -> WHILE condicion programa END .)
+
+
+state 84
+
+    (27) valores -> valor COMMA valores .
+
+    RCOR            reduce using rule 27 (valores -> valor COMMA valores .)
+    RPAREN          reduce using rule 27 (valores -> valor COMMA valores .)
+
+
+state 85
+
+    (48) sentenciaIf -> IF condicion programa ELSE programa . END
+
+    END             shift and go to state 88
+
+
+state 86
+
+    (46) solicitud -> INPUT LPAREN COMILLA STRING COMILLA . RPAREN
+
+    RPAREN          shift and go to state 89
+
+
+state 87
+
+    (47) sentenciaCase -> CASE valor WHEN condicion programa . WHEN condicion programa ELSE programa END
+
+    WHEN            shift and go to state 90
+
+
+state 88
+
+    (48) sentenciaIf -> IF condicion programa ELSE programa END .
+
+    $end            reduce using rule 48 (sentenciaIf -> IF condicion programa ELSE programa END .)
+    ELSE            reduce using rule 48 (sentenciaIf -> IF condicion programa ELSE programa END .)
+    END             reduce using rule 48 (sentenciaIf -> IF condicion programa ELSE programa END .)
+    WHEN            reduce using rule 48 (sentenciaIf -> IF condicion programa ELSE programa END .)
+
+
+state 89
+
+    (46) solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .
+
+    $end            reduce using rule 46 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
+    ELSE            reduce using rule 46 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
+    END             reduce using rule 46 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
+    WHEN            reduce using rule 46 (solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN .)
+
+
+state 90
+
+    (47) sentenciaCase -> CASE valor WHEN condicion programa WHEN . condicion programa ELSE programa END
+    (28) condicion -> . valor comparador valor
+    (29) condicion -> . condicion conector condicion
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    VARIABLE        shift and go to state 40
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 42
+    condicion                      shift and go to state 91
+    expresion                      shift and go to state 43
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 91
+
+    (47) sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion . programa ELSE programa END
+    (29) condicion -> condicion . conector condicion
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . sentenciaIf
+    (4) programa -> . solicitud
+    (5) programa -> . sentenciaCase
+    (6) programa -> . sentenciaWhile
+    (7) programa -> . list
+    (8) programa -> . length_list
+    (9) programa -> . declaracion
+    (44) conector -> . AND
+    (45) conector -> . OR
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (21) imprimir -> . PRINT LPAREN valores RPAREN
+    (48) sentenciaIf -> . IF condicion programa ELSE programa END
+    (46) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (47) sentenciaCase -> . CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (49) sentenciaWhile -> . WHILE condicion programa END
+    (25) list -> . LCOR valores RCOR
+    (50) length_list -> . valor POINT LENGTH
+    (23) declaracion -> . VARIABLE EQUAL valor
+    (24) declaracion -> . VARIABLE EQUAL LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    AND             shift and go to state 61
+    OR              shift and go to state 62
+    PRINT           shift and go to state 16
+    IF              shift and go to state 18
+    INPUT           shift and go to state 19
+    CASE            shift and go to state 20
+    WHILE           shift and go to state 21
+    LCOR            shift and go to state 22
+    VARIABLE        shift and go to state 23
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 11
+    programa                       shift and go to state 92
+    conector                       shift and go to state 60
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    sentenciaIf                    shift and go to state 4
+    solicitud                      shift and go to state 5
+    sentenciaCase                  shift and go to state 6
+    sentenciaWhile                 shift and go to state 7
+    list                           shift and go to state 8
+    length_list                    shift and go to state 9
+    declaracion                    shift and go to state 10
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 92
+
+    (47) sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa . ELSE programa END
+
+    ELSE            shift and go to state 93
+
+
+state 93
+
+    (47) sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE . programa END
+    (1) programa -> . expresion
+    (2) programa -> . imprimir
+    (3) programa -> . sentenciaIf
+    (4) programa -> . solicitud
+    (5) programa -> . sentenciaCase
+    (6) programa -> . sentenciaWhile
+    (7) programa -> . list
+    (8) programa -> . length_list
+    (9) programa -> . declaracion
+    (10) expresion -> . valor operador valor
+    (11) expresion -> . expresion_binaria
+    (12) expresion -> . expresion_par
+    (13) expresion -> . expresion_mul_div
+    (14) expresion -> . expresion_add_sub
+    (21) imprimir -> . PRINT LPAREN valores RPAREN
+    (48) sentenciaIf -> . IF condicion programa ELSE programa END
+    (46) solicitud -> . INPUT LPAREN COMILLA STRING COMILLA RPAREN
+    (47) sentenciaCase -> . CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END
+    (49) sentenciaWhile -> . WHILE condicion programa END
+    (25) list -> . LCOR valores RCOR
+    (50) length_list -> . valor POINT LENGTH
+    (23) declaracion -> . VARIABLE EQUAL valor
+    (24) declaracion -> . VARIABLE EQUAL LIST
+    (30) valor -> . VARIABLE
+    (31) valor -> . INTEGER
+    (32) valor -> . FLOAT
+    (33) valor -> . expresion
+    (15) expresion_binaria -> . expresion operador valor
+    (16) expresion_par -> . LPAREN expresion RPAREN
+    (17) expresion_mul_div -> . expresion TIMES valor
+    (18) expresion_mul_div -> . expresion DIVIDE valor
+    (19) expresion_add_sub -> . expresion PLUS valor
+    (20) expresion_add_sub -> . expresion MINUS valor
+
+    PRINT           shift and go to state 16
+    IF              shift and go to state 18
+    INPUT           shift and go to state 19
+    CASE            shift and go to state 20
+    WHILE           shift and go to state 21
+    LCOR            shift and go to state 22
+    VARIABLE        shift and go to state 23
+    INTEGER         shift and go to state 24
+    FLOAT           shift and go to state 25
+    LPAREN          shift and go to state 17
+
+    valor                          shift and go to state 11
+    programa                       shift and go to state 94
+    expresion                      shift and go to state 2
+    imprimir                       shift and go to state 3
+    sentenciaIf                    shift and go to state 4
+    solicitud                      shift and go to state 5
+    sentenciaCase                  shift and go to state 6
+    sentenciaWhile                 shift and go to state 7
+    list                           shift and go to state 8
+    length_list                    shift and go to state 9
+    declaracion                    shift and go to state 10
+    expresion_binaria              shift and go to state 12
+    expresion_par                  shift and go to state 13
+    expresion_mul_div              shift and go to state 14
+    expresion_add_sub              shift and go to state 15
+
+state 94
+
+    (47) sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa . END
+
+    END             shift and go to state 95
+
+
+state 95
+
+    (47) sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END .
+
+    $end            reduce using rule 47 (sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END .)
+    ELSE            reduce using rule 47 (sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END .)
+    END             reduce using rule 47 (sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END .)
+    WHEN            reduce using rule 47 (sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for TIMES in state 2 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 2 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 2 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 2 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 27 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 27 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 27 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 27 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 28 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 28 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 28 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 28 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 29 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 29 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 29 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 29 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 30 resolved as shift
+WARNING: shift/reduce conflict for INTEGER in state 30 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 30 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 30 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 38 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 38 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 38 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 38 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 43 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 43 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 43 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 43 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 50 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 50 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 50 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 50 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 51 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 51 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 51 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 51 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 52 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 52 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 52 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 52 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 53 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 53 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 54 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 54 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 54 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 54 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 55 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 55 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 55 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 55 resolved as shift
+WARNING: shift/reduce conflict for AND in state 79 resolved as shift
+WARNING: shift/reduce conflict for OR in state 79 resolved as shift
