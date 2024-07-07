@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND BOOLEAN BREAK CASE COLON COMILLA COMMA DEF DIVIDE ELSE END EQUAL EQUALS EXPONENT FALSE FLOAT FOR GREATER_EQUAL_THAN GREATER_THAN HASH IF IN INPUT INTEGER IP LESS_EQUAL_THAN LESS_THAN LIST LPAREN MINUS NOT NOT_EQUALS OR PLUS POINT PRINT RETURN RPAREN SEMICOLON STRING TIMES TRUE VARIABLE WHEN WHILEprograma : expresion\n                | imprimir\n                | declaracion\n                | sentenciaIf\n                | solicitud\n                | sentenciaCase\n    expresion : valor operador valor\n    expresion : expresion operador valor\n    expresion : LPAREN expresion RPARENexpresion : expresion TIMES valor\n                 | expresion DIVIDE valor\n    expresion : expresion PLUS valor\n                 | expresion MINUS valor\n    imprimir : PRINT LPAREN valores RPARENimprimir : PRINT LPAREN RPARENvalores : valor\n               | valor COMMA valores\n    sentenciaIf : IF LPAREN condicion RPAREN COLON programa ELSE programavalor : VARIABLE\n             | INTEGER\n             | FLOAT\n             | tupla\n    operador : PLUS\n                | MINUS\n                | TIMES\n                | DIVIDE\n    condicion : valor comparador valor\n                 | condicion conector condicion\n    comparador : LESS_THAN\n                  | GREATER_THAN\n                  | EQUALS\n                  | NOT_EQUALS\n                  | LESS_EQUAL_THAN\n                  | GREATER_EQUAL_THAN\n    conector : AND\n                | OR\n    tupla : LPAREN valores RPARENdeclaracion : VARIABLE EQUAL valorsolicitud : INPUT LPAREN COMILLA STRING COMILLA RPARENsentenciaCase : CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END'
+_lr_signature = 'AND BOOLEAN BREAK CASE COLON COMILLA COMMA DEF DIVIDE ELSE END EQUAL EQUALS EXPONENT FALSE FLOAT FOR GREATER_EQUAL_THAN GREATER_THAN HASH IF IN INTEGER IP LCOR LENGTH LESS_EQUAL_THAN LESS_THAN LIST LPAREN MINUS NOT NOT_EQUALS OR PLUS POINT PRINT RCOR RETURN RPAREN SEMICOLON STRING TIMES TRUE VARIABLE WHEN WHILEprograma : expresion\n                | list\n                | length_list\n                | declaracionexpresion : valor operador valordeclaracion : VARIABLE EQUAL valor\n                  | VARIABLE EQUAL LISTlist : LCOR valores RCORvalores : valor\n              | valor COMMA valorescondicion : valor comparador valor\n                 | condicion conector condicion\n    valor : VARIABLE\n             | INTEGER\n             | FLOAT\n             | expresion\n    operador : PLUS\n                | MINUS\n                | TIMES\n                | DIVIDE\n    comparador : LESS_THAN\n                  | GREATER_THAN\n                  | EQUALS\n                  | NOT_EQUALS\n                  | LESS_EQUAL_THAN\n                  | GREATER_EQUAL_THAN\n    conector : AND\n                | OR\n    length_list : valor POINT LENGTH'
     
-_lr_action_items = {'LPAREN':([0,9,10,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,31,32,33,34,37,45,46,54,58,59,60,61,62,63,64,65,66,67,69,70,71,72,77,78,79,82,],[9,9,32,34,35,37,-20,-21,-22,37,37,37,37,37,37,-23,-24,-25,-26,-19,37,37,37,37,-37,37,37,37,-35,-36,37,-29,-30,-31,-32,-33,-34,9,9,-28,-27,37,9,9,9,]),'PRINT':([0,15,16,17,31,45,69,70,71,72,78,79,82,],[10,-20,-21,-22,-19,-37,10,10,-28,-27,10,10,10,]),'VARIABLE':([0,9,14,15,16,17,18,19,20,21,22,23,24,25,26,27,31,32,33,34,37,45,46,54,58,59,60,61,62,63,64,65,66,67,69,70,71,72,77,78,79,82,],[11,31,31,-20,-21,-22,31,31,31,31,31,31,-23,-24,-25,-26,-19,31,31,31,31,-37,31,31,31,-35,-36,31,-29,-30,-31,-32,-33,-34,11,11,-28,-27,31,11,11,11,]),'IF':([0,15,16,17,31,45,69,70,71,72,78,79,82,],[12,-20,-21,-22,-19,-37,12,12,-28,-27,12,12,12,]),'INPUT':([0,15,16,17,31,45,69,70,71,72,78,79,82,],[13,-20,-21,-22,-19,-37,13,13,-28,-27,13,13,13,]),'CASE':([0,15,16,17,31,45,69,70,71,72,78,79,82,],[14,-20,-21,-22,-19,-37,14,14,-28,-27,14,14,14,]),'INTEGER':([0,9,14,15,16,17,18,19,20,21,22,23,24,25,26,27,31,32,33,34,37,45,46,54,58,59,60,61,62,63,64,65,66,67,69,70,71,72,77,78,79,82,],[15,15,15,-20,-21,-22,15,15,15,15,15,15,-23,-24,-25,-26,-19,15,15,15,15,-37,15,15,15,-35,-36,15,-29,-30,-31,-32,-33,-34,15,15,-28,-27,15,15,15,15,]),'FLOAT':([0,9,14,15,16,17,18,19,20,21,22,23,24,25,26,27,31,32,33,34,37,45,46,54,58,59,60,61,62,63,64,65,66,67,69,70,71,72,77,78,79,82,],[16,16,16,-20,-21,-22,16,16,16,16,16,16,-23,-24,-25,-26,-19,16,16,16,16,-37,16,16,16,-35,-36,16,-29,-30,-31,-32,-33,-34,16,16,-28,-27,16,16,16,16,]),'$end':([1,2,3,4,5,6,7,15,16,17,31,38,39,40,41,42,43,44,45,48,50,56,76,80,84,],[0,-1,-2,-3,-4,-5,-6,-20,-21,-22,-19,-8,-10,-11,-12,-13,-7,-9,-37,-15,-38,-14,-39,-18,-40,]),'WHEN':([2,3,4,5,6,7,15,16,17,31,36,38,39,40,41,42,43,44,45,48,50,56,74,76,80,84,],[-1,-2,-3,-4,-5,-6,-20,-21,-22,-19,54,-8,-10,-11,-12,-13,-7,-9,-37,-15,-38,-14,77,-39,-18,-40,]),'ELSE':([2,3,4,5,6,7,15,16,17,31,38,39,40,41,42,43,44,45,48,50,56,75,76,80,81,84,],[-1,-2,-3,-4,-5,-6,-20,-21,-22,-19,-8,-10,-11,-12,-13,-7,-9,-37,-15,-38,-14,78,-39,-18,82,-40,]),'END':([2,3,4,5,6,7,15,16,17,31,38,39,40,41,42,43,44,45,48,50,56,76,80,83,84,],[-1,-2,-3,-4,-5,-6,-20,-21,-22,-19,-8,-10,-11,-12,-13,-7,-9,-37,-15,-38,-14,-39,-18,84,-40,]),'TIMES':([2,8,11,15,16,17,28,30,31,38,39,40,41,42,43,44,45,],[19,26,-19,-20,-21,-22,19,26,-19,-8,-10,-11,-12,-13,-7,-9,-37,]),'DIVIDE':([2,8,11,15,16,17,28,30,31,38,39,40,41,42,43,44,45,],[20,27,-19,-20,-21,-22,20,27,-19,-8,-10,-11,-12,-13,-7,-9,-37,]),'PLUS':([2,8,11,15,16,17,28,30,31,38,39,40,41,42,43,44,45,],[21,24,-19,-20,-21,-22,21,24,-19,-8,-10,-11,-12,-13,-7,-9,-37,]),'MINUS':([2,8,11,15,16,17,28,30,31,38,39,40,41,42,43,44,45,],[22,25,-19,-20,-21,-22,22,25,-19,-8,-10,-11,-12,-13,-7,-9,-37,]),'EQUAL':([11,],[33,]),'COMMA':([15,16,17,30,31,45,49,],[-20,-21,-22,46,-19,-37,46,]),'RPAREN':([15,16,17,28,29,30,31,32,38,39,40,41,42,43,44,45,47,49,51,55,71,72,73,],[-20,-21,-22,44,45,-16,-19,48,-8,-10,-11,-12,-13,-7,-9,-37,56,-16,57,-17,-28,-27,76,]),'LESS_THAN':([15,16,17,31,45,52,],[-20,-21,-22,-19,-37,62,]),'GREATER_THAN':([15,16,17,31,45,52,],[-20,-21,-22,-19,-37,63,]),'EQUALS':([15,16,17,31,45,52,],[-20,-21,-22,-19,-37,64,]),'NOT_EQUALS':([15,16,17,31,45,52,],[-20,-21,-22,-19,-37,65,]),'LESS_EQUAL_THAN':([15,16,17,31,45,52,],[-20,-21,-22,-19,-37,66,]),'GREATER_EQUAL_THAN':([15,16,17,31,45,52,],[-20,-21,-22,-19,-37,67,]),'AND':([15,16,17,31,45,51,69,71,72,79,],[-20,-21,-22,-19,-37,59,59,59,-27,59,]),'OR':([15,16,17,31,45,51,69,71,72,79,],[-20,-21,-22,-19,-37,60,60,60,-27,60,]),'COMILLA':([35,68,],[53,73,]),'STRING':([53,],[68,]),'COLON':([57,],[70,]),}
+_lr_action_items = {'LCOR':([0,],[7,]),'VARIABLE':([0,7,11,13,14,15,16,21,25,],[8,19,19,-17,-18,-19,-20,19,19,]),'INTEGER':([0,7,11,13,14,15,16,21,25,],[9,9,9,-17,-18,-19,-20,9,9,]),'FLOAT':([0,7,11,13,14,15,16,21,25,],[10,10,10,-17,-18,-19,-20,10,10,]),'$end':([1,2,3,4,5,9,10,19,20,22,23,24,26,27,],[0,-1,-2,-3,-4,-14,-15,-13,-16,-5,-29,-8,-6,-7,]),'POINT':([2,6,8,9,10,19,20,22,],[-16,12,-13,-14,-15,-13,-16,-5,]),'PLUS':([2,6,8,9,10,18,19,20,22,26,],[-16,13,-13,-14,-15,13,-13,-16,13,13,]),'MINUS':([2,6,8,9,10,18,19,20,22,26,],[-16,14,-13,-14,-15,14,-13,-16,14,14,]),'TIMES':([2,6,8,9,10,18,19,20,22,26,],[-16,15,-13,-14,-15,15,-13,-16,15,15,]),'DIVIDE':([2,6,8,9,10,18,19,20,22,26,],[-16,16,-13,-14,-15,16,-13,-16,16,16,]),'EQUAL':([8,],[21,]),'COMMA':([9,10,18,19,20,22,],[-14,-15,25,-13,-16,-5,]),'RCOR':([9,10,17,18,19,20,22,28,],[-14,-15,24,-9,-13,-16,-5,-10,]),'LENGTH':([12,],[23,]),'LIST':([21,],[27,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'programa':([0,69,70,78,79,82,],[1,74,75,80,81,83,]),'expresion':([0,9,69,70,78,79,82,],[2,28,2,2,2,2,2,]),'imprimir':([0,69,70,78,79,82,],[3,3,3,3,3,3,]),'declaracion':([0,69,70,78,79,82,],[4,4,4,4,4,4,]),'sentenciaIf':([0,69,70,78,79,82,],[5,5,5,5,5,5,]),'solicitud':([0,69,70,78,79,82,],[6,6,6,6,6,6,]),'sentenciaCase':([0,69,70,78,79,82,],[7,7,7,7,7,7,]),'valor':([0,9,14,18,19,20,21,22,23,32,33,34,37,46,54,58,61,69,70,77,78,79,82,],[8,30,36,38,39,40,41,42,43,49,50,52,49,49,52,52,72,8,8,52,8,8,8,]),'tupla':([0,9,14,18,19,20,21,22,23,32,33,34,37,46,54,58,61,69,70,77,78,79,82,],[17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,]),'operador':([2,8,28,30,],[18,23,18,23,]),'valores':([9,32,37,46,],[29,47,29,55,]),'condicion':([34,54,58,77,],[51,69,71,79,]),'conector':([51,69,71,79,],[58,58,58,58,]),'comparador':([52,],[61,]),}
+_lr_goto_items = {'programa':([0,],[1,]),'expresion':([0,7,11,21,25,],[2,20,20,20,20,]),'list':([0,],[3,]),'length_list':([0,],[4,]),'declaracion':([0,],[5,]),'valor':([0,7,11,21,25,],[6,18,22,26,18,]),'operador':([6,18,22,26,],[11,11,11,11,]),'valores':([7,25,],[17,28,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,44 +27,33 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> programa","S'",1,None,None,None),
-  ('programa -> expresion','programa',1,'p_programa','analizador_sintactico.py',59),
-  ('programa -> imprimir','programa',1,'p_programa','analizador_sintactico.py',60),
-  ('programa -> declaracion','programa',1,'p_programa','analizador_sintactico.py',61),
-  ('programa -> sentenciaIf','programa',1,'p_programa','analizador_sintactico.py',62),
-  ('programa -> solicitud','programa',1,'p_programa','analizador_sintactico.py',63),
-  ('programa -> sentenciaCase','programa',1,'p_programa','analizador_sintactico.py',64),
-  ('expresion -> valor operador valor','expresion',3,'p_expresion','analizador_sintactico.py',69),
-  ('expresion -> expresion operador valor','expresion',3,'p_expresion_binaria','analizador_sintactico.py',74),
-  ('expresion -> LPAREN expresion RPAREN','expresion',3,'p_expresion_par','analizador_sintactico.py',78),
-  ('expresion -> expresion TIMES valor','expresion',3,'p_expresion_mul_div','analizador_sintactico.py',82),
-  ('expresion -> expresion DIVIDE valor','expresion',3,'p_expresion_mul_div','analizador_sintactico.py',83),
-  ('expresion -> expresion PLUS valor','expresion',3,'p_expresion_add_sub','analizador_sintactico.py',88),
-  ('expresion -> expresion MINUS valor','expresion',3,'p_expresion_add_sub','analizador_sintactico.py',89),
-  ('imprimir -> PRINT LPAREN valores RPAREN','imprimir',4,'p_imprimir','analizador_sintactico.py',96),
-  ('imprimir -> PRINT LPAREN RPAREN','imprimir',3,'p_imprimir_vacio','analizador_sintactico.py',100),
-  ('valores -> valor','valores',1,'p_valores','analizador_sintactico.py',104),
-  ('valores -> valor COMMA valores','valores',3,'p_valores','analizador_sintactico.py',105),
-  ('sentenciaIf -> IF LPAREN condicion RPAREN COLON programa ELSE programa','sentenciaIf',8,'p_sentenciaIf','analizador_sintactico.py',110),
-  ('valor -> VARIABLE','valor',1,'p_valor','analizador_sintactico.py',115),
-  ('valor -> INTEGER','valor',1,'p_valor','analizador_sintactico.py',116),
-  ('valor -> FLOAT','valor',1,'p_valor','analizador_sintactico.py',117),
-  ('valor -> tupla','valor',1,'p_valor','analizador_sintactico.py',118),
-  ('operador -> PLUS','operador',1,'p_operador','analizador_sintactico.py',123),
-  ('operador -> MINUS','operador',1,'p_operador','analizador_sintactico.py',124),
-  ('operador -> TIMES','operador',1,'p_operador','analizador_sintactico.py',125),
-  ('operador -> DIVIDE','operador',1,'p_operador','analizador_sintactico.py',126),
-  ('condicion -> valor comparador valor','condicion',3,'p_condicion','analizador_sintactico.py',131),
-  ('condicion -> condicion conector condicion','condicion',3,'p_condicion','analizador_sintactico.py',132),
-  ('comparador -> LESS_THAN','comparador',1,'p_comparador','analizador_sintactico.py',136),
-  ('comparador -> GREATER_THAN','comparador',1,'p_comparador','analizador_sintactico.py',137),
-  ('comparador -> EQUALS','comparador',1,'p_comparador','analizador_sintactico.py',138),
-  ('comparador -> NOT_EQUALS','comparador',1,'p_comparador','analizador_sintactico.py',139),
-  ('comparador -> LESS_EQUAL_THAN','comparador',1,'p_comparador','analizador_sintactico.py',140),
-  ('comparador -> GREATER_EQUAL_THAN','comparador',1,'p_comparador','analizador_sintactico.py',141),
-  ('conector -> AND','conector',1,'p_conector','analizador_sintactico.py',145),
-  ('conector -> OR','conector',1,'p_conector','analizador_sintactico.py',146),
-  ('tupla -> LPAREN valores RPAREN','tupla',3,'p_tupla','analizador_sintactico.py',149),
-  ('declaracion -> VARIABLE EQUAL valor','declaracion',3,'p_declaracion','analizador_sintactico.py',153),
-  ('solicitud -> INPUT LPAREN COMILLA STRING COMILLA RPAREN','solicitud',6,'p_solicitud','analizador_sintactico.py',157),
-  ('sentenciaCase -> CASE valor WHEN condicion programa WHEN condicion programa ELSE programa END','sentenciaCase',11,'p_sentenciaCase','analizador_sintactico.py',160),
+  ('programa -> expresion','programa',1,'p_programa','analizador_semantico.py',12),
+  ('programa -> list','programa',1,'p_programa','analizador_semantico.py',13),
+  ('programa -> length_list','programa',1,'p_programa','analizador_semantico.py',14),
+  ('programa -> declaracion','programa',1,'p_programa','analizador_semantico.py',15),
+  ('expresion -> valor operador valor','expresion',3,'p_expresion','analizador_semantico.py',19),
+  ('declaracion -> VARIABLE EQUAL valor','declaracion',3,'p_declaracion','analizador_semantico.py',35),
+  ('declaracion -> VARIABLE EQUAL LIST','declaracion',3,'p_declaracion','analizador_semantico.py',36),
+  ('list -> LCOR valores RCOR','list',3,'p_list','analizador_semantico.py',40),
+  ('valores -> valor','valores',1,'p_valores','analizador_semantico.py',45),
+  ('valores -> valor COMMA valores','valores',3,'p_valores','analizador_semantico.py',46),
+  ('condicion -> valor comparador valor','condicion',3,'p_condicion','analizador_semantico.py',54),
+  ('condicion -> condicion conector condicion','condicion',3,'p_condicion','analizador_semantico.py',55),
+  ('valor -> VARIABLE','valor',1,'p_valor','analizador_semantico.py',60),
+  ('valor -> INTEGER','valor',1,'p_valor','analizador_semantico.py',61),
+  ('valor -> FLOAT','valor',1,'p_valor','analizador_semantico.py',62),
+  ('valor -> expresion','valor',1,'p_valor','analizador_semantico.py',63),
+  ('operador -> PLUS','operador',1,'p_operador','analizador_semantico.py',72),
+  ('operador -> MINUS','operador',1,'p_operador','analizador_semantico.py',73),
+  ('operador -> TIMES','operador',1,'p_operador','analizador_semantico.py',74),
+  ('operador -> DIVIDE','operador',1,'p_operador','analizador_semantico.py',75),
+  ('comparador -> LESS_THAN','comparador',1,'p_comparador','analizador_semantico.py',78),
+  ('comparador -> GREATER_THAN','comparador',1,'p_comparador','analizador_semantico.py',79),
+  ('comparador -> EQUALS','comparador',1,'p_comparador','analizador_semantico.py',80),
+  ('comparador -> NOT_EQUALS','comparador',1,'p_comparador','analizador_semantico.py',81),
+  ('comparador -> LESS_EQUAL_THAN','comparador',1,'p_comparador','analizador_semantico.py',82),
+  ('comparador -> GREATER_EQUAL_THAN','comparador',1,'p_comparador','analizador_semantico.py',83),
+  ('conector -> AND','conector',1,'p_conector','analizador_semantico.py',87),
+  ('conector -> OR','conector',1,'p_conector','analizador_semantico.py',88),
+  ('length_list -> valor POINT LENGTH','length_list',3,'p_length_list','analizador_semantico.py',96),
 ]

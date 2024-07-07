@@ -20,9 +20,9 @@ reserved = {
     'break':'BREAK',
     #Termina aporte Adrian Litardo
     #Empieza aporte Carlos Cabanilla 24/06
-    'input':'INPUT',
     'case': 'CASE',
-    'when': 'WHEN'
+    'when': 'WHEN',
+    'length' : 'LENGTH'
 }
 # List of token names.   This is always required
 tokens = (
@@ -36,8 +36,8 @@ tokens = (
    #Kevin Ibarra
    'LIST',
    'BOOLEAN',
-   'LPAREN',
-   'RPAREN',
+   'LCOR',
+   'RCOR',
    'POINT',
    'VARIABLE',
    'STRING',
@@ -56,6 +56,8 @@ tokens = (
     'OR',
     'NOT',
     'HASH',
+    'LPAREN',
+    'RPAREN',
     #Termina aporte Adrian Litardo  
     # Aporte Carlos Cabanilla
     'EQUAL',
@@ -84,12 +86,14 @@ t_OR = r'\|\|'
 t_NOT = r'!'
 #Termina aporte Adrian Litardo
 #Kevin Ibarra
-t_POINT = r'.'
+t_POINT = r'\.'
+t_LCOR  = r'\['
+t_RCOR  = r'\]'
 #Aporte de Carlos Cabanilla 24/06
 t_EQUAL= r'='
 t_COMILLA = r'\"'
 #Aporte Adrian Litardo 24/06
-t_LPAREN  = r'\('
+t_LPAREN = r'\('
 t_RPAREN  = r'\)'
 
 
@@ -101,14 +105,14 @@ def t_HASH(t):
     return t
 #Termina aporte Adrian Litardo
 def t_VARIABLE(t):
-    r'[_a-zA-Z]\w{0,14}'#Acepta nombres de variables de hasta 14 caracteres, modificacion de Adrian Litardo
+    r'[_a-zA-Z]\w*'#Acepta nombres de variables de hasta 14 caracteres, modificacion de Adrian Litardo
     t.type = reserved.get(t.value,'VARIABLE')
     return t
 
 #Expresión regular para reconocer números flotantes
 def t_FLOAT(t):
     #Aporte de Adrian Litardo modificando la expresion regular
-    r'-?[0-9]+\.[0-9]+' #Ahora acepta números flotantes negativos
+    r'(\d+\.\d*|\d*\.\d+)' #Ahora acepta números flotantes negativos
     t.value = float(t.value)
     return t
 
@@ -126,9 +130,9 @@ def t_IP(t):
 #Kevin Ibarra
 def t_LIST(t):
     r'\[\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*(,\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*)*\]'
-    t.type = reserved.get(t.value, 'LIST')
+    t.value = eval(t.value)  # Convertir el string en una lista de Python
+    t.type = 'LIST'
     return t
-
 def t_STRING(t):
   r'[\"\'](\\.|[^\"\'])*[\"\']' #Acepta comillas simples o dobles
   t.value = t.value[1:-1]  # Eliminar comillas
@@ -163,9 +167,8 @@ t_ignore  = ' \t'
 # Error handling rule
 #Aporte de Adrian Litardo
 def t_error(t):
-    error_message = "Syntax error in input!"#Se modifica para emitir el registro cada vez que se encuentra un error sintactico
-    print(error_message)
-    logging.error(error_message)
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
 
 # Build the lexer
 lexer = lex.lex()
@@ -178,15 +181,15 @@ lexer = lex.lex()
 #Informacion a verificar
 data_Carlos = "La direccion IP 194.111.10.3 es 23.2 > 50 "
 #Kevin Ibarra
-data_Kevin = '[manzana, naranja, platano] [1,2,3] "Hola mundo"'
+data_Kevin = '[1, 2, 3] [1,2,3] ="Hola mundo"'
 #Adrian Litardo
 data_Adrian = 'while x < 5: -3.45 == 3e25960a79dbc69b674cd4ec67a72c62; true != false'
 #
-lexer.input(data_Carlos)
+lexer.input(data_Kevin)
 
 # Tokenize
 #while True:
-#    tok = lexer.token()
-#    if not tok:
-#        break      # No more input
-#    print(tok)
+    #tok = lexer.token()
+    #if not tok:
+        #break      # No more input
+    #print(tok)
