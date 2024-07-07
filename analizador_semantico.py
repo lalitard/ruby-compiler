@@ -184,7 +184,16 @@ def p_length_list(p):
     else:
         print(f"Error semántico: La variable {p[1]} no ha sido inicializada.")
 #Fin aporte semantico Kevin Ibarra
+#Aporte semantico Adrian Litardo
+# Regla semántica para asignación de valores booleanos
+def p_asignacion_booleana(p):
+    'asignacion_booleana : VARIABLE EQUAL BOOLEAN'
+    if p[3] in [True, False]:
+        variables[p[1]] = p[3]
+    else:
+        print(f"Error semántico: {p[1]} solo puede asignarse valores True o False.")
 
+#Fin aporte semantico Adrian Litardo
 # Regla para manejar errores sintácticos
 def p_error(p):
     error_message = "Syntax error in input!"
