@@ -5,7 +5,7 @@ import sys
 from analizador_lexico import tokens
 
 
-username= "lalitard"
+username= "carloscabani"
 # Configura el registro
 def setup_logging(username):
     now = datetime.datetime.now()
@@ -93,10 +93,6 @@ def p_imprimir(p):
 def p_imprimir_vacio(p):
     'imprimir_vacio : PRINT LPAREN RPAREN'
 
-def p_declaracion(p):
-    '''declaracion : VARIABLE EQUAL valor
-                  | VARIABLE EQUAL LIST'''
-    variables[p[1]] = p[3]
 
 def p_list(p):
     'list : LCOR valores RCOR'
@@ -168,8 +164,40 @@ def p_sentenciaCase(p):
 def p_sentenciaIf(p):
     '''sentenciaIf : IF condicion programa ELSE programa END'''
 
+
+#Aporte semantico Carlos Cabanilla
+# Regla semantica para verificar uso de variables no declaradas
+# Regla semántica para la declaración y asignación de variables
+def p_declaracion(p):
+    '''declaracion : VARIABLE EQUAL valor
+                   | VARIABLE EQUAL LIST'''
+
+    variable_name = p[1]
+    valor = p[3]
+
+    # Verificar si la variable ya ha sido declarada previamente
+    if variable_name in variables:
+        log_error(f"Error semántico: La variable {variable_name} ya ha sido declarada previamente.")
+    else:
+        variables[variable_name] = valor
+
+    p[0] = variables.get(variable_name)
+
+
+
 def p_sentenciaWhile(p):
     '''sentenciaWhile : WHILE condicion programa END'''
+
+    condicion = p[2]
+
+    # Verificar si la condición es de tipo booleano
+    if not isinstance(condicion, bool):
+        print("Error semántico: La condición del ciclo while debe ser de tipo booleano.")
+    else: 
+
+        p[0] = p[3]
+
+# Fin aporte semantico Carlos Cabanilla
 
 #Aporte semantico Kevin Ibarra 
 # Regla semántica para el tamaño de una lista
@@ -209,7 +237,7 @@ while True:
         break
     if not s:
         continue
+    
     result = parser.parse(s)
     print(result)
-    print(variables)
 #Termina aporte Adrian Litardo

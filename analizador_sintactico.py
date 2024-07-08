@@ -42,20 +42,20 @@ def p_expresion(p):
 
 #Aporte Adrian Litardo 24/06
 def p_expresion_binaria(p):
-    '''expresion : expresion operador valor'''
+    '''expresion_binaria : expresion operador valor'''
 
 def p_expresion_par(p):
-    'expresion : LPAREN expresion RPAREN'
+    'expresion_par : LPAREN expresion RPAREN'
     p[0] = p[2]
 
 def p_expresion_mul_div(p):
-    '''expresion : expresion TIMES valor
+    '''expresion_mul_div : expresion TIMES valor
                  | expresion DIVIDE valor
     '''
     p[0] = (p[2], p[1], p[3])
 
 def p_expresion_add_sub(p):
-    '''expresion : expresion PLUS valor
+    '''expresion_add_sub : expresion PLUS valor
                  | expresion MINUS valor
     '''
     p[0] = (p[2], p[1], p[3])
