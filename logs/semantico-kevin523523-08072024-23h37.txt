@@ -1,0 +1,1 @@
+Error sem�ntico: La variable a no ha sido inicializada.
