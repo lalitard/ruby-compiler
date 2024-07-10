@@ -257,8 +257,8 @@ data_Error = 'h@l4 > ? { 7'
 lexer.input(data_Error)
 
 # Tokenize
-while True:
+"""while True:
     tok = lexer.token()
     if not tok:
         break      # No more input
-    print(tok)
+    print(tok)"""

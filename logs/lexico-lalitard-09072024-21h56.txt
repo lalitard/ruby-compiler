@@ -1,0 +1,7 @@
+LexToken(WHILE,'while',1,0)
+Syntax error in input!
+LexToken(INTEGER,'4',1,6)
+LexToken(INTEGER,'5',1,8)
+LexToken(PRINT,'print',1,11)
+LexToken(END,'end',1,19)
+Syntax error in input!

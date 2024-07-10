@@ -1,0 +1,12 @@
+LexToken(VARIABLE,'h',1,0)
+Illegal character '@' at line 1
+LexToken(VARIABLE,'l4',1,2)
+Illegal character '?' at line 1
+Illegal character '{' at line 1
+LexToken(INTEGER,'7',1,11)
+LexToken(VARIABLE,'h',1,0)
+Illegal character '@' at line 1
+LexToken(VARIABLE,'l4',1,2)
+Illegal character '?' at line 1
+Illegal character '{' at line 1
+LexToken(INTEGER,'7',1,11)

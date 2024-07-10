@@ -4,7 +4,7 @@ import datetime
 import sys
 from analizador_lexico import tokens
 
-username= "lalitard"
+username= "kevin523523"
 # Configura el registro
 def setup_logging(username):
     now = datetime.datetime.now()
@@ -224,21 +224,14 @@ def p_asignacion_booleana(p):
 # Regla para manejar errores sintácticos
 def p_error(p):
     error_message = "Syntax error in input!"
-    log_error(error_message)
+
+
+#TODO def analizar_codigo(codigo):
+# este metodo analiza el codigo que le manda la interfaz y es responsable de manejar los errores
+
 
 # Construcción del analizador
 parser = yacc.yacc()
 
-# Bucle principal para leer la entrada del usuario y analizarla
-while True:
-    try:
-        s = input('lp > ')
-    except EOFError:
-        break
-    if not s:
-        continue
-    #Aporte Carlos Cabanilla 24/06
- # Configura un nuevo archivo de log para cada entrada
-    result = parser.parse(s)
-    print(result)
+
 #Termina aporte Adrian Litardo

@@ -1,0 +1,10 @@
+LexToken(VARIABLE,'hola',1,0)
+Syntax error in input!
+LexToken(WHILE,'while',1,0)
+Syntax error in input!
+LexToken(INTEGER,'7',1,7)
+LexToken(INTEGER,'4',1,9)
+LexToken(PRINT,'print',1,12)
+LexToken(INTEGER,'5',1,18)
+LexToken(END,'end',1,21)
+Syntax error in input!

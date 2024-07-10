@@ -2,17 +2,20 @@ import ply.yacc as yacc
 import logging
 import datetime
 import sys
+import os
 from analizador_lexico import tokens
 
 
-
-
 #Empieza aporte de Carlos Cabanilla 24/06
-username= "kevin523523"
+username= "lalitard"
 # Configura el registro
+
 def setup_logging(username):
     now = datetime.datetime.now()
-    log_filename = f"logs/sintactico-{username}-{now.strftime('%d%m%Y-%Hh%M')}.txt"
+    log_directory = "logs"
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory)  # Crea la carpeta si no existe
+    log_filename = f"{log_directory}/sintactico-{username}-{now.strftime('%d%m%Y-%Hh%M')}.txt"
     logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(message)s')
 
 def log_error(message):
@@ -115,10 +118,6 @@ def p_conector(p):
     '''conector : AND
                 | OR
     '''
-def p_tupla(p):
-    'tupla : LPAREN valores RPAREN'
-
-
 def p_declaracion(p):
     'declaracion : VARIABLE EQUAL valor'
 
@@ -148,7 +147,6 @@ while True:
         continue
     #Aporte Carlos Cabanilla 24/06
  # Configura un nuevo archivo de log para cada entrada
-    setup_logging(username)
     result = parser.parse(s)
     print(result)
 #Termina aporte Adrian Litardo

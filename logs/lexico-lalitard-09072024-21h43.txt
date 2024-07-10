@@ -1,0 +1,10 @@
+LexToken(VARIABLE,'h',1,0)
+Illegal character '@' at line 1
+LexToken(VARIABLE,'l4',1,2)
+Illegal character '?' at line 1
+Illegal character '{' at line 1
+LexToken(INTEGER,'7',1,11)
+LexToken(VARIABLE,'hola',1,0)
+Syntax error in input!
+LexToken(VARIABLE,'adios',1,0)
+LexToken(INTEGER,'5',1,8)
