@@ -1,2 +1,0 @@
-Error semántico: La variable x ya ha sido declarada previamente.
-Error semántico: La variable x ya ha sido declarada previamente.

@@ -2,6 +2,20 @@
 import ply.lex as lex
 import logging
 import datetime
+import sys
+
+username= "lalitard"
+# Configura el registro
+def setup_logging(username):
+    now = datetime.datetime.now()
+    log_filename = f"logs/lexico-{username}-{now.strftime('%d%m%Y-%Hh%M')}.txt"
+    logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(message)s')
+
+def log_error(message):
+    logging.error(message)
+    print(message)
+
+setup_logging(username)
 
 #Aporte de Kevin Ibarra
 reserved = {
@@ -19,6 +33,7 @@ reserved = {
     'return':'RETURN',
     'break':'BREAK',
     'input':'INPUT',
+    'nil':'NIL',
     #Termina aporte Adrian Litardo
     #Empieza aporte Carlos Cabanilla 24/06
     'case': 'CASE',
@@ -99,16 +114,22 @@ t_RPAREN  = r'\)'
 
 
 #Empieza aporte Adrian Litardo
+
+#Comentarios
+def t_COMMENT(t):
+    r'\#.*'
+    pass  # Ignorar comentarios de una sola línea
+
+def t_MULTILINE_COMMENT(t):
+    r'/\*(.|\n)*?\*/'
+    t.lexer.lineno += t.value.count('\n')
+    pass  # Ignorar comentarios de múltiples líneas
+
 #Aporte Adrian Litardo 07/07
-#Expresion regular para symbol
-def t_SYMBOL(t):
-    r':[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = 'SYMBOL'
-    return t
 #Expresion regular para nil
 def t_NIL(t):
     r'nil'
-    t.type = 'NIL'
+    t.type = reserved.get(t.value, 'NIL')
     return t
 #Expresion regular para hash
 def t_HASH(t):
@@ -179,7 +200,7 @@ t_ignore  = ' \t'
 # Error handling rule
 #Aporte de Adrian Litardo
 def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    log_error(f"Illegal character '{t.value[0]}' at line {t.lexer.lineno}")
     t.lexer.skip(1)
 
 # Build the lexer
@@ -190,18 +211,33 @@ lexer = lex.lex()
 
 #Termina aporte Adrian Litardo
 
-"""#Informacion a verificar
+#Informacion a verificar
 data_Carlos = "La direccion IP 194.111.10.3 es 23.2 > 50 "
 #Kevin Ibarra
 data_Kevin = '[1, 2, 3] [1,2,3] ="Hola mundo"'
 #Adrian Litardo
-data_Adrian = 'while x < 5: -3.45 == 3e25960a79dbc69b674cd4ec67a72c62; true != false'
+data_Adrian = '''
+# Esto es un comentario
+def myFunction():
+    x = 3 + 4.5
+    if x > 5:
+        print("x is greater than 5")
+    else:
+        print("x is not greater than 5")
+    # Comentario de una línea
+    /* Comentario
+       de múltiples líneas */
+    while x < 10:
+        x = x + 1
+    return x
+'''
+data_Error = 'h@l4 > ? { 7'
 
-lexer.input(data_Kevin)
+lexer.input(data_Error)
 
 # Tokenize
-#while True:
-    #tok = lexer.token()
-    #if not tok:
-        #break      # No more input
-    #print(tok)"""
+while True:
+    tok = lexer.token()
+    if not tok:
+        break      # No more input
+    print(tok)
