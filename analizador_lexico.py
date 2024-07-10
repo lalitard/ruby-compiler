@@ -11,7 +11,8 @@ def setup_logging(username):
     log_filename = f"logs/lexico-{username}-{now.strftime('%d%m%Y-%Hh%M')}.txt"
     logging.basicConfig(filename=log_filename, level=logging.ERROR, format='%(message)s')
 
-def log_error(message):
+def log_error(*args):
+    message = ' '.join(str(arg) for arg in args)
     logging.error(message)
     print(message)
 
@@ -130,16 +131,22 @@ def t_MULTILINE_COMMENT(t):
 def t_NIL(t):
     r'nil'
     t.type = reserved.get(t.value, 'NIL')
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 #Expresion regular para hash
 def t_HASH(t):
     r'[a-fA-F0-9]{32}' #Solo acepta hash de 32 caracteres
     t.value = reserved.get(t.value, 'HASH')
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 #Termina aporte Adrian Litardo
 def t_VARIABLE(t):
     r'[_a-zA-Z]\w*'#Acepta nombres de variables de hasta 14 caracteres, modificacion de Adrian Litardo
     t.type = reserved.get(t.value,'VARIABLE')
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 
 #Expresión regular para reconocer números flotantes
@@ -147,17 +154,23 @@ def t_FLOAT(t):
     #Aporte de Adrian Litardo modificando la expresion regular
     r'(\d+\.\d*|\d*\.\d+)' #Ahora acepta números flotantes negativos
     t.value = float(t.value)
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 
 #Expresión regular para reconocer números enteros y flotantes
 def t_INTEGER(t):
     r'\d+' #Acepta números enteros
-    t.value = int(t.value)    
+    t.value = int(t.value)
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 
 #Expresión regular para reconocer direcciones IP
 def t_IP(t):
     r'(?:\d{1,3}\.){3}\d{1,3}'
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 
 #Kevin Ibarra
@@ -165,10 +178,14 @@ def t_LIST(t):
     r'\[\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*(,\s*([a-zA-Z_][a-zA-Z0-9_]*|\d+)\s*)*\]'
     t.value = eval(t.value)  # Convertir el string en una lista de Python
     t.type = 'LIST'
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 def t_STRING(t):
   r'[\"\'](\\.|[^\"\'])*[\"\']' #Acepta comillas simples o dobles
   t.value = t.value[1:-1]  # Eliminar comillas
+  # Registro del token justo antes de retornarlo
+  log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
   return t
 
 #Empieza aporte Adrian Litardo
@@ -176,11 +193,15 @@ def t_STRING(t):
 def t_BOOLEAN(t):
     r'true|false'
     t.value = reserved.get(t.value, 'BOOLEAN')
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 #Expresion regular para while
 def t_WHILE(t):
     r'while[^:]*:'
     t.value = reserved.get(t.value, 'WHILE')
+    # Registro del token justo antes de retornarlo
+    log_error(f"LexToken({t.type},'{t.value}',{t.lineno},{t.lexpos})")
     return t
 #Termina aporte Adrian Litardo
 
