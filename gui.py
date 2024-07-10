@@ -1,7 +1,7 @@
 # Comienza aporte Kevin Ibarra
 import tkinter as tk
 from tkinter import filedialog
-from analizador_semantico import *
+from analizador_semantico_gui import *
 import sys
 from io import StringIO
 class IDE_GUI:
@@ -128,10 +128,17 @@ class IDE_GUI:
         self.actualizar_numeros_de_linea()
 
     #TODO 
-    def ejecutar_codigo(self):
+   def ejecutar_codigo(self):
         # Limpiar el área de resultados
         self.limpiar_resultados()
-        #aqui deberia de llamar al metodo analizar definido en la clase analizador_semantico
+        # Obtener el código fuente del área de texto
+        codigo_fuente = self.code_text.get("1.0", tk.END)
+        # Llamar directamente a la función analizar_codigo
+        resultado = analizar_codigo(codigo_fuente)
+        # Mostrar el resultado en el área de resultados
+        self.resultados_text.config(state=tk.NORMAL)
+        self.resultados_text.insert(tk.END, resultado)
+        self.resultados_text.config(state=tk.DISABLED)
 
     def limpiar_resultados(self):
         # Limpiar el contenido del área de resultados

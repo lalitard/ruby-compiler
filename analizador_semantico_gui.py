@@ -228,6 +228,20 @@ def p_error(p):
 
 #TODO def analizar_codigo(codigo):
 # este metodo analiza el codigo que le manda la interfaz y es responsable de manejar los errores
+def analizar_codigo(codigo):
+    # Configura el registro de errores semánticos
+    setup_logging(username)
+
+    # Intenta analizar el código fuente
+    try:
+        resultado = parser.parse(codigo)
+        if resultado is None:
+            return "Análisis completado sin errores."
+        else:
+            return str(resultado)
+    except Exception as e:
+        log_error(f"Error durante el análisis: {e}")
+        return f"Error durante el análisis: {e}"
 
 
 # Construcción del analizador
