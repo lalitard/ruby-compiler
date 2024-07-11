@@ -191,7 +191,7 @@ def p_sentenciaWhile(p):
 
     # Verificar si la condición es de tipo booleano
     if not isinstance(condicion, bool):
-        print("Error semántico: La condición del ciclo while debe ser de tipo booleano.")
+        log_error("Error semántico: La condición del ciclo while debe ser de tipo booleano.")
     else:
 
         p[0] = p[3]
@@ -224,25 +224,26 @@ def p_asignacion_booleana(p):
 # Regla para manejar errores sintácticos
 def p_error(p):
     error_message = "Syntax error in input!"
+    log_error(error_message)
 
 
 #TODO def analizar_codigo(codigo):
 # este metodo analiza el codigo que le manda la interfaz y es responsable de manejar los errores
 def analizar_codigo(codigo):
-    # Configura el registro de errores semánticos
+    global variables
+    variables = {}
     setup_logging(username)
-
-    # Intenta analizar el código fuente
+    resultado = ""
     try:
-        resultado = parser.parse(codigo)
-        if resultado is None:
-            return "Análisis completado sin errores."
-        else:
-            return str(resultado)
+        parser.parse(codigo)
     except Exception as e:
         log_error(f"Error durante el análisis: {e}")
-        return f"Error durante el análisis: {e}"
-
+        resultado = f"Error durante el análisis: {e}"
+    
+    with open(logging.getLogger().handlers[0].baseFilename, 'r') as f:
+        resultado += f.read()
+    
+    return resultado
 
 # Construcción del analizador
 parser = yacc.yacc()

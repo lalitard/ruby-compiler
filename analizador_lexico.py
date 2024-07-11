@@ -224,8 +224,19 @@ def t_error(t):
     log_error(f"Illegal character '{t.value[0]}' at line {t.lexer.lineno}")
     t.lexer.skip(1)
 
+
 # Build the lexer
 lexer = lex.lex()
+
+if __name__ == "__main__":
+    data_Error = 'h@l4 > ? { 7'
+    lexer.input(data_Error)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        print(tok)
+
 
 #Aporte de Adrian Litardo
 #Creacion de logging automatizado para cada usuario
@@ -233,11 +244,11 @@ lexer = lex.lex()
 #Termina aporte Adrian Litardo
 
 #Informacion a verificar
-data_Carlos = "La direccion IP 194.111.10.3 es 23.2 > 50 "
+#data_Carlos = "La direccion IP 194.111.10.3 es 23.2 > 50 "
 #Kevin Ibarra
-data_Kevin = '[1, 2, 3] [1,2,3] ="Hola mundo"'
+#data_Kevin = '[1, 2, 3] [1,2,3] ="Hola mundo"'
 #Adrian Litardo
-data_Adrian = '''
+'''data_Adrian = 
 # Esto es un comentario
 def myFunction():
     x = 3 + 4.5
@@ -252,9 +263,9 @@ def myFunction():
         x = x + 1
     return x
 '''
-data_Error = 'h@l4 > ? { 7'
+#data_Error = 'h@l4 > ? { 7'
 
-lexer.input(data_Error)
+#lexer.input(data_Error)
 
 # Tokenize
 """while True:

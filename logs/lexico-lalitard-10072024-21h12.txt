@@ -1,0 +1,25 @@
+LexToken(VARIABLE,'x',1,0)
+LexToken(INTEGER,'1',1,4)
+LexToken(PRINT,'print',2,6)
+Syntax error in input!
+LexToken(VARIABLE,'x',3,14)
+LexToken(INTEGER,'8',3,18)
+LexToken(WHILE,'while',4,0)
+LexToken(STRING,'hello',4,6)
+Syntax error in input!
+LexToken(PRINT,'print',4,14)
+LexToken(END,'end',4,22)
+Syntax error in input!
+LexToken(WHILE,'while',5,0)
+LexToken(TRUE,'true',5,6)
+Syntax error in input!
+LexToken(PRINT,'print',5,11)
+LexToken(END,'end',5,19)
+Syntax error in input!
+LexToken(WHILE,'while',6,0)
+LexToken(TRUE,'true',6,6)
+Syntax error in input!
+LexToken(VARIABLE,'x',6,11)
+LexToken(INTEGER,'7',6,13)
+LexToken(END,'end',6,15)
+Syntax error in input!

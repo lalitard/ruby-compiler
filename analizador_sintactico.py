@@ -137,16 +137,29 @@ def p_error(p):
 # Construcción del analizador
 parser = yacc.yacc()
 
+if __name__ == "__main__":
+    while True:
+        try:
+            s = input('lp > ')
+        except EOFError:
+            break
+        if not s:
+            continue
+        result = parser.parse(s)
+        print(result)
+
+
+
 # Bucle principal para leer la entrada del usuario y analizarla
-while True:
-    try:
-        s = input('lp > ')
-    except EOFError:
-        break
-    if not s:
-        continue
+#while True:
+    #try:
+     #   s = input('lp > ')
+    #except EOFError:
+     #   break
+    #if not s:
+    #    continue
     #Aporte Carlos Cabanilla 24/06
  # Configura un nuevo archivo de log para cada entrada
-    result = parser.parse(s)
-    print(result)
+    #result = parser.parse(s)
+    #print(result)
 #Termina aporte Adrian Litardo

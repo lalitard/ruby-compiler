@@ -1,0 +1,13 @@
+LexToken(VARIABLE,'x',1,0)
+LexToken(INTEGER,'1',1,4)
+LexToken(PRINT,'print',1,0)
+LexToken(VARIABLE,'x',1,0)
+LexToken(INTEGER,'55',1,4)
+LexToken(VARIABLE,'x',1,0)
+Syntax error in input!
+LexToken(VARIABLE,'x',1,0)
+LexToken(INTEGER,'88',1,4)
+LexToken(VARIABLE,'python',1,0)
+LexToken(VARIABLE,'analizador_semantico_gui',1,7)
+Syntax error in input!
+LexToken(VARIABLE,'py',1,32)

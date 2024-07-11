@@ -1,0 +1,3 @@
+LexToken(WHILE,'while',1,0)
+LexToken(STRING,'hello',1,6)
+LexToken(VARIABLE,'x',2,0)
